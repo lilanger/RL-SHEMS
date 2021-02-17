@@ -1,0 +1,24 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+ERROR: LoadError: MethodError: no method matching test(::Shems{Reinforce.ShemsEnv.ShemsState{Float32},Reinforce.ShemsEnv.ShemsAction{Float32}})
+Closest candidates are:
+  test(::Shems, !Matched::Any, !Matched::Any; render) at /net/work/llanger/functions.jl:119
+Stacktrace:
+ [1] run_episodes(::Shems{Reinforce.ShemsEnv.ShemsState{Float32},Reinforce.ShemsEnv.ShemsAction{Float32}}, ::Array{Float32,1}, ::Array{Float32,1}, ::Float32, ::Array{Float32,2}, ::Array{Float32,2}) at /net/work/llanger/functions.jl:172
+ [2] top-level scope at /net/work/llanger/DDPG_reinforce_v11_nf.jl:15
+ [3] include(::Function, ::Module, ::String) at ./Base.jl:380
+ [4] include(::Module, ::String) at ./Base.jl:368
+ [5] exec_options(::Base.JLOptions) at ./client.jl:296
+ [6] _start() at ./client.jl:506
+in expression starting at /net/work/llanger/DDPG_reinforce_v11_nf.jl:11
+Max steps: 24, Max episodes: 3000, Layer 1: 300 nodes, Layer 2: 600 nodes, Case: Yu_input_norm, Time to start: 1 minute
+Episode: 1 | Mean Step Score:    -0.320 | grep: /var/gpu/[0-9]/*: No such file or directory
+cat: /sys/fs/cgroup/devices/llanger_J770834.1/tasks: No such file or directory
+rmdir: failed to remove ‘/sys/fs/cgroup/devices/llanger_J770834.1’: No such file or directory
+-- Removal of cgroup failed !
+cat: /sys/fs/cgroup/devices/llanger_J770834.1/tasks: No such file or directory
+-- PID still in task list: 

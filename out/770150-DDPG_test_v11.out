@@ -1,0 +1,49 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+ERROR: LoadError: GPU compilation of kernel broadcast_kernel(CUDA.CuKernelContext, CuDeviceArray{Float32,2,1}, Base.Broadcast.Broadcasted{Nothing,Tuple{Base.OneTo{Int64},Base.OneTo{Int64}},typeof(/),Tuple{Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(-),Tuple{Base.Broadcast.Extruded{Array{Float32,1},Tuple{Bool},Tuple{Int64}},Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}}}},Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(+),Tuple{Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(-),Tuple{Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}},Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}}}},Float32}}}}, Int64) failed
+KernelError: passing and using non-bitstype argument
+
+Argument 4 to your kernel function is of type Base.Broadcast.Broadcasted{Nothing,Tuple{Base.OneTo{Int64},Base.OneTo{Int64}},typeof(/),Tuple{Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(-),Tuple{Base.Broadcast.Extruded{Array{Float32,1},Tuple{Bool},Tuple{Int64}},Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}}}},Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(+),Tuple{Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(-),Tuple{Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}},Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}}}},Float32}}}}, which is not isbits:
+  .args is of type Tuple{Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(-),Tuple{Base.Broadcast.Extruded{Array{Float32,1},Tuple{Bool},Tuple{Int64}},Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}}}},Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(+),Tuple{Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(-),Tuple{Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}},Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}}}},Float32}}} which is not isbits.
+    .1 is of type Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(-),Tuple{Base.Broadcast.Extruded{Array{Float32,1},Tuple{Bool},Tuple{Int64}},Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}}}} which is not isbits.
+      .args is of type Tuple{Base.Broadcast.Extruded{Array{Float32,1},Tuple{Bool},Tuple{Int64}},Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}}} which is not isbits.
+        .1 is of type Base.Broadcast.Extruded{Array{Float32,1},Tuple{Bool},Tuple{Int64}} which is not isbits.
+          .x is of type Array{Float32,1} which is not isbits.
+
+
+Stacktrace:
+ [1] check_invocation(::GPUCompiler.CompilerJob, ::LLVM.Function) at /homes2/ipdm/llanger/.julia/packages/GPUCompiler/uTpNx/src/validation.jl:68
+ [2] macro expansion at /homes2/ipdm/llanger/.julia/packages/GPUCompiler/uTpNx/src/driver.jl:238 [inlined]
+ [3] macro expansion at /homes2/ipdm/llanger/.julia/packages/TimerOutputs/ZmKD7/src/TimerOutput.jl:206 [inlined]
+ [4] codegen(::Symbol, ::GPUCompiler.CompilerJob; libraries::Bool, deferred_codegen::Bool, optimize::Bool, strip::Bool, validate::Bool, only_entry::Bool) at /homes2/ipdm/llanger/.julia/packages/GPUCompiler/uTpNx/src/driver.jl:237
+ [5] compile(::Symbol, ::GPUCompiler.CompilerJob; libraries::Bool, deferred_codegen::Bool, optimize::Bool, strip::Bool, validate::Bool, only_entry::Bool) at /homes2/ipdm/llanger/.julia/packages/GPUCompiler/uTpNx/src/driver.jl:39
+ [6] compile at /homes2/ipdm/llanger/.julia/packages/GPUCompiler/uTpNx/src/driver.jl:35 [inlined]
+ [7] cufunction_compile(::GPUCompiler.FunctionSpec; kwargs::Base.Iterators.Pairs{Union{},Union{},Tuple{},NamedTuple{(),Tuple{}}}) at /homes2/ipdm/llanger/.julia/packages/CUDA/FlHUF/src/compiler/execution.jl:302
+ [8] cufunction_compile(::GPUCompiler.FunctionSpec) at /homes2/ipdm/llanger/.julia/packages/CUDA/FlHUF/src/compiler/execution.jl:297
+ [9] check_cache(::Dict{UInt64,Any}, ::Any, ::Any, ::GPUCompiler.FunctionSpec{GPUArrays.var"#broadcast_kernel#12",Tuple{CUDA.CuKernelContext,CuDeviceArray{Float32,2,1},Base.Broadcast.Broadcasted{Nothing,Tuple{Base.OneTo{Int64},Base.OneTo{Int64}},typeof(/),Tuple{Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(-),Tuple{Base.Broadcast.Extruded{Array{Float32,1},Tuple{Bool},Tuple{Int64}},Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}}}},Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(+),Tuple{Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(-),Tuple{Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}},Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}}}},Float32}}}},Int64}}, ::UInt64; kwargs::Base.Iterators.Pairs{Union{},Union{},Tuple{},NamedTuple{(),Tuple{}}}) at /homes2/ipdm/llanger/.julia/packages/GPUCompiler/uTpNx/src/cache.jl:40
+ [10] broadcast_kernel at /homes2/ipdm/llanger/.julia/packages/GPUArrays/WV76E/src/host/broadcast.jl:60 [inlined]
+ [11] cached_compilation at /homes2/ipdm/llanger/.julia/packages/GPUCompiler/uTpNx/src/cache.jl:65 [inlined]
+ [12] cufunction(::GPUArrays.var"#broadcast_kernel#12", ::Type{Tuple{CUDA.CuKernelContext,CuDeviceArray{Float32,2,1},Base.Broadcast.Broadcasted{Nothing,Tuple{Base.OneTo{Int64},Base.OneTo{Int64}},typeof(/),Tuple{Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(-),Tuple{Base.Broadcast.Extruded{Array{Float32,1},Tuple{Bool},Tuple{Int64}},Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}}}},Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(+),Tuple{Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(-),Tuple{Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}},Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}}}},Float32}}}},Int64}}; name::Nothing, kwargs::Base.Iterators.Pairs{Union{},Union{},Tuple{},NamedTuple{(),Tuple{}}}) at /homes2/ipdm/llanger/.julia/packages/CUDA/FlHUF/src/compiler/execution.jl:289
+ [13] cufunction(::GPUArrays.var"#broadcast_kernel#12", ::Type{Tuple{CUDA.CuKernelContext,CuDeviceArray{Float32,2,1},Base.Broadcast.Broadcasted{Nothing,Tuple{Base.OneTo{Int64},Base.OneTo{Int64}},typeof(/),Tuple{Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(-),Tuple{Base.Broadcast.Extruded{Array{Float32,1},Tuple{Bool},Tuple{Int64}},Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}}}},Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(+),Tuple{Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{2},Nothing,typeof(-),Tuple{Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}},Base.Broadcast.Extruded{CuDeviceArray{Float32,2,1},Tuple{Bool,Bool},Tuple{Int64,Int64}}}},Float32}}}},Int64}}) at /homes2/ipdm/llanger/.julia/packages/CUDA/FlHUF/src/compiler/execution.jl:286
+ [14] macro expansion at /homes2/ipdm/llanger/.julia/packages/CUDA/FlHUF/src/compiler/execution.jl:100 [inlined]
+ [15] #launch_heuristic#857 at /homes2/ipdm/llanger/.julia/packages/CUDA/FlHUF/src/gpuarrays.jl:17 [inlined]
+ [16] launch_heuristic at /homes2/ipdm/llanger/.julia/packages/CUDA/FlHUF/src/gpuarrays.jl:17 [inlined]
+ [17] copyto! at /homes2/ipdm/llanger/.julia/packages/GPUArrays/WV76E/src/host/broadcast.jl:66 [inlined]
+ [18] copyto! at ./broadcast.jl:886 [inlined]
+ [19] copy at ./broadcast.jl:862 [inlined]
+ [20] materialize at ./broadcast.jl:837 [inlined]
+ [21] normalize(::Array{Float32,1}; s_min::CuArray{Float32,2}, s_max::CuArray{Float32,2}) at /net/work/llanger/functions.jl:159
+ [22] normalize(::Array{Float32,1}) at /net/work/llanger/functions.jl:159
+ [23] episode!(::Shems{Reinforce.ShemsEnv.ShemsState{Float32},Reinforce.ShemsEnv.ShemsAction{Float32}}; train::Bool, render::Bool) at /net/work/llanger/functions.jl:87
+ [24] run_episodes(::Shems{Reinforce.ShemsEnv.ShemsState{Float32},Reinforce.ShemsEnv.ShemsAction{Float32}}, ::Array{Float32,1}, ::Array{Float32,1}, ::Float32, ::CuArray{Float32,2}, ::CuArray{Float32,2}) at /net/work/llanger/functions.jl:166
+ [25] top-level scope at /net/work/llanger/DDPG_reinforce_v11_nf.jl:15
+ [26] include(::Function, ::Module, ::String) at ./Base.jl:380
+ [27] include(::Module, ::String) at ./Base.jl:368
+ [28] exec_options(::Base.JLOptions) at ./client.jl:296
+ [29] _start() at ./client.jl:506
+in expression starting at /net/work/llanger/DDPG_reinforce_v11_nf.jl:11
+Max steps: 24, Max episodes: 3000, Layer 1: 300 nodes, Layer 2: 600 nodes, Case: Yu_update-norm_action-cpu, Time to start: 1 minute

@@ -1,0 +1,28 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+ERROR: LoadError: ArgumentError: cannot take the CPU address of a CuArray{Float32,2}
+Stacktrace:
+ [1] unsafe_convert(::Type{Ptr{Float32}}, ::CuArray{Float32,2}) at /homes2/ipdm/llanger/.julia/packages/CUDA/FlHUF/src/array.jl:211
+ [2] gemm!(::Char, ::Char, ::Float32, ::CuArray{Float32,2}, ::Array{Float32,2}, ::Float32, ::Array{Float32,2}) at /buildworker/worker/package_linux64/build/usr/share/julia/stdlib/v1.5/LinearAlgebra/src/blas.jl:1374
+ [3] gemm_wrapper!(::Array{Float32,2}, ::Char, ::Char, ::CuArray{Float32,2}, ::Array{Float32,2}, ::LinearAlgebra.MulAddMul{true,true,Bool,Bool}) at /buildworker/worker/package_linux64/build/usr/share/julia/stdlib/v1.5/LinearAlgebra/src/matmul.jl:597
+ [4] mul! at /buildworker/worker/package_linux64/build/usr/share/julia/stdlib/v1.5/LinearAlgebra/src/matmul.jl:169 [inlined]
+ [5] mul! at /buildworker/worker/package_linux64/build/usr/share/julia/stdlib/v1.5/LinearAlgebra/src/matmul.jl:208 [inlined]
+ [6] * at /buildworker/worker/package_linux64/build/usr/share/julia/stdlib/v1.5/LinearAlgebra/src/matmul.jl:160 [inlined]
+ [7] Dense at /homes2/ipdm/llanger/.julia/packages/Flux/YO4zY/src/layers/basic.jl:123 [inlined]
+ [8] Dense at /homes2/ipdm/llanger/.julia/packages/Flux/YO4zY/src/layers/basic.jl:134 [inlined]
+ [9] applychain(::Tuple{Dense{typeof(relu),CuArray{Float32,2},CuArray{Float32,1}},Dense{typeof(relu),CuArray{Float32,2},CuArray{Float32,1}},Dense{typeof(tanh),CuArray{Float32,2},CuArray{Float32,1}}}, ::Array{Float32,2}) at /homes2/ipdm/llanger/.julia/packages/Flux/YO4zY/src/layers/basic.jl:36
+ [10] (::Chain{Tuple{Dense{typeof(relu),CuArray{Float32,2},CuArray{Float32,1}},Dense{typeof(relu),CuArray{Float32,2},CuArray{Float32,1}},Dense{typeof(tanh),CuArray{Float32,2},CuArray{Float32,1}}}})(::Array{Float32,2}) at /homes2/ipdm/llanger/.julia/packages/Flux/YO4zY/src/layers/basic.jl:38
+ [11] action(::Array{Float32,2}; train::Bool) at /net/work/llanger/functions.jl:76
+ [12] episode!(::Shems{Reinforce.ShemsEnv.ShemsState{Float32},Reinforce.ShemsEnv.ShemsAction{Float32}}; train::Bool, render::Bool) at /net/work/llanger/functions.jl:88
+ [13] run_episodes(::Shems{Reinforce.ShemsEnv.ShemsState{Float32},Reinforce.ShemsEnv.ShemsAction{Float32}}, ::Array{Float32,1}, ::Array{Float32,1}, ::Float32) at /net/work/llanger/functions.jl:166
+ [14] top-level scope at /net/work/llanger/DDPG_reinforce_v11_nf.jl:14
+ [15] include(::Function, ::Module, ::String) at ./Base.jl:380
+ [16] include(::Module, ::String) at ./Base.jl:368
+ [17] exec_options(::Base.JLOptions) at ./client.jl:296
+ [18] _start() at ./client.jl:506
+in expression starting at /net/work/llanger/DDPG_reinforce_v11_nf.jl:10
+Max steps: 24, Max episodes: 3000, Layer 1: 300 nodes, Layer 2: 600 nodes, Case: Yu_input_gpu, Time to start: 1 minute

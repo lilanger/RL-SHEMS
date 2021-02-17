@@ -1,0 +1,64 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+
+signal (11): Segmentation fault
+in expression starting at /net/work/llanger/DDPG_reinforce_v11_nf.jl:10
+jl_egal at /buildworker/worker/package_linux64/build/src/builtins.c:171
+with_tvar at /buildworker/worker/package_linux64/build/src/subtype.c:731
+subtype_unionall at /buildworker/worker/package_linux64/build/src/subtype.c:833 [inlined]
+subtype at /buildworker/worker/package_linux64/build/src/subtype.c:1276
+exists_subtype at /buildworker/worker/package_linux64/build/src/subtype.c:1420 [inlined]
+forall_exists_subtype at /buildworker/worker/package_linux64/build/src/subtype.c:1448
+jl_subtype_env at /buildworker/worker/package_linux64/build/src/subtype.c:1877
+jl_subtype_matching at /buildworker/worker/package_linux64/build/src/subtype.c:3414
+jl_typemap_entry_assoc_by_type at /buildworker/worker/package_linux64/build/src/typemap.c:462
+jl_typemap_assoc_by_type at /buildworker/worker/package_linux64/build/src/typemap.c:608
+jl_typemap_assoc_by_type at /buildworker/worker/package_linux64/build/src/typemap.c:599
+jl_mt_assoc_by_type at /buildworker/worker/package_linux64/build/src/gf.c:1186
+jl_lookup_generic_ at /buildworker/worker/package_linux64/build/src/gf.c:2363 [inlined]
+jl_apply_generic at /buildworker/worker/package_linux64/build/src/gf.c:2394
+jl_apply at /buildworker/worker/package_linux64/build/src/julia.h:1690 [inlined]
+do_apply at /buildworker/worker/package_linux64/build/src/builtins.c:655
+getData at /net/work/llanger/functions.jl:11
+min_max_buffer at /net/work/llanger/functions.jl:154
+unknown function (ip: 0x145653bdd792)
+_jl_invoke at /buildworker/worker/package_linux64/build/src/gf.c:2214 [inlined]
+jl_apply_generic at /buildworker/worker/package_linux64/build/src/gf.c:2398
+run_episodes at /net/work/llanger/functions.jl:173
+unknown function (ip: 0x145653bf3c60)
+_jl_invoke at /buildworker/worker/package_linux64/build/src/gf.c:2231 [inlined]
+jl_apply_generic at /buildworker/worker/package_linux64/build/src/gf.c:2398
+jl_apply at /buildworker/worker/package_linux64/build/src/julia.h:1690 [inlined]
+do_call at /buildworker/worker/package_linux64/build/src/interpreter.c:117
+eval_value at /buildworker/worker/package_linux64/build/src/interpreter.c:206
+eval_stmt_value at /buildworker/worker/package_linux64/build/src/interpreter.c:157 [inlined]
+eval_body at /buildworker/worker/package_linux64/build/src/interpreter.c:566
+jl_interpret_toplevel_thunk at /buildworker/worker/package_linux64/build/src/interpreter.c:660
+jl_toplevel_eval_flex at /buildworker/worker/package_linux64/build/src/toplevel.c:840
+jl_parse_eval_all at /buildworker/worker/package_linux64/build/src/ast.c:913
+jl_load_rewrite at /buildworker/worker/package_linux64/build/src/toplevel.c:914
+include at ./Base.jl:380
+include at ./Base.jl:368
+_jl_invoke at /buildworker/worker/package_linux64/build/src/gf.c:2214 [inlined]
+jl_apply_generic at /buildworker/worker/package_linux64/build/src/gf.c:2398
+exec_options at ./client.jl:296
+_start at ./client.jl:506
+jfptr__start_60376.clone_1 at /afs/math.tu-berlin.de/software/julia/1.5.2/lib/julia/sys.so (unknown line)
+_jl_invoke at /buildworker/worker/package_linux64/build/src/gf.c:2214 [inlined]
+jl_apply_generic at /buildworker/worker/package_linux64/build/src/gf.c:2398
+unknown function (ip: 0x401931)
+unknown function (ip: 0x401533)
+__libc_start_main at /usr/lib64/libc.so.6 (unknown line)
+unknown function (ip: 0x4015d4)
+Allocations: 338619225 (Pool: 338306378; Big: 312847); GC: 523
+/var/spool/sge/node790/job_scripts/769963: line 15: 20033 Segmentation fault      (core dumped) julia DDPG_reinforce_v11_nf.jl
+grep: /var/gpu/[0-9]/*: No such file or directory
+cat: /sys/fs/cgroup/devices/llanger_J769963.1/tasks: No such file or directory
+rmdir: failed to remove ‘/sys/fs/cgroup/devices/llanger_J769963.1’: No such file or directory
+-- Removal of cgroup failed !
+cat: /sys/fs/cgroup/devices/llanger_J769963.1/tasks: No such file or directory
+-- PID still in task list: 
