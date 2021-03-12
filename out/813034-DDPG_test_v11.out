@@ -1,0 +1,24 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+ERROR: LoadError: SystemError: opening file "out/bson/DDPG_Shems_v11_36_3000_300_600_summer_abort_mem-smaller_more-steps_actor.bson": No such file or directory
+Stacktrace:
+ [1] systemerror(::String, ::Int32; extrainfo::Nothing) at ./error.jl:168
+ [2] #systemerror#48 at ./error.jl:167 [inlined]
+ [3] systemerror at ./error.jl:167 [inlined]
+ [4] open(::String; lock::Bool, read::Nothing, write::Nothing, create::Nothing, truncate::Nothing, append::Nothing) at ./iostream.jl:284
+ [5] open at ./iostream.jl:273 [inlined]
+ [6] open(::typeof(BSON.parse), ::String; kwargs::Base.Iterators.Pairs{Union{},Union{},Tuple{},NamedTuple{(),Tuple{}}}) at ./io.jl:323
+ [7] open at ./io.jl:323 [inlined]
+ [8] parse at /homes2/ipdm/llanger/.julia/packages/BSON/XAts7/src/read.jl:102 [inlined]
+ [9] load(::String) at /homes2/ipdm/llanger/.julia/packages/BSON/XAts7/src/read.jl:104
+ [10] top-level scope at /homes2/ipdm/llanger/.julia/packages/BSON/XAts7/src/BSON.jl:52
+ [11] top-level scope at /net/work/llanger/DDPG_reinforce_v11_nf.jl:42
+ [12] include(::Function, ::Module, ::String) at ./Base.jl:380
+ [13] include(::Module, ::String) at ./Base.jl:368
+ [14] exec_options(::Base.JLOptions) at ./client.jl:296
+ [15] _start() at ./client.jl:506
+in expression starting at /net/work/llanger/DDPG_reinforce_v11_nf.jl:14

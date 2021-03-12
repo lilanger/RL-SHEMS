@@ -23,7 +23,7 @@ track = false
 season = "winter"
 case = "$(season)_abort_mem-less"
 
-NUM_STEPS = 36 #24 #36
+NUM_STEPS = 24 #36
 NUM_EP = 3_000 #50_000
 L1 = 300 #400
 L2 = 600 #300

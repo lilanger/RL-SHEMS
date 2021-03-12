@@ -61,6 +61,12 @@ git-tree-sha1 = "e2f47f6d8337369411569fd45ae5753ca10394c6"
 uuid = "83423d85-b0ee-5818-9007-b63ccbeb887a"
 version = "1.16.0+6"
 
+[[CategoricalArrays]]
+deps = ["DataAPI", "Future", "JSON", "Missings", "Printf", "Statistics", "StructTypes", "Unicode"]
+git-tree-sha1 = "5861101791fa76fafe8dddefd70ffbfe4e33ecae"
+uuid = "324d7699-5711-5eae-9e2f-1d82baa6b597"
+version = "0.9.0"
+
 [[ChainRules]]
 deps = ["ChainRulesCore", "Compat", "LinearAlgebra", "Random", "Reexport", "Requires", "Statistics"]
 git-tree-sha1 = "0af5c12e5528fc2df87a5f084195f10bfbf03a28"
@@ -127,10 +133,21 @@ git-tree-sha1 = "9f02045d934dc030edad45944ea80dbd1f0ebea7"
 uuid = "d38c429a-6771-53c6-b99e-75d170b6e991"
 version = "0.5.7"
 
+[[Crayons]]
+git-tree-sha1 = "3f71217b538d7aaee0b69ab47d9b7724ca8afa0d"
+uuid = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
+version = "4.0.4"
+
 [[DataAPI]]
 git-tree-sha1 = "ad84f52c0b8f05aa20839484dbaf01690b41ff84"
 uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
 version = "1.4.0"
+
+[[DataFrames]]
+deps = ["CategoricalArrays", "Compat", "DataAPI", "Future", "InvertedIndices", "IteratorInterfaceExtensions", "LinearAlgebra", "Markdown", "Missings", "PooledArrays", "PrettyTables", "Printf", "REPL", "Reexport", "SortingAlgorithms", "Statistics", "TableTraits", "Tables", "Unicode"]
+git-tree-sha1 = "b0db5579803eabb33f1274ca7ca2f472fdfb7f2a"
+uuid = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+version = "0.22.5"
 
 [[DataStructures]]
 deps = ["Compat", "InteractiveUtils", "OrderedCollections"]
@@ -259,6 +276,10 @@ git-tree-sha1 = "f40adc6422f548176bb4351ebd29e4abf773040a"
 uuid = "d9f16b24-f501-4c13-a1f2-28368ffc5196"
 version = "0.1.0"
 
+[[Future]]
+deps = ["Random"]
+uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
+
 [[GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pkg", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll"]
 git-tree-sha1 = "a1bbf700b5388bffc3d882f4f4d625cf1c714fd7"
@@ -333,6 +354,12 @@ version = "0.5.0"
 [[InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+
+[[InvertedIndices]]
+deps = ["Test"]
+git-tree-sha1 = "15732c475062348b0165684ffe28e85ea8396afc"
+uuid = "41ab1584-1d38-5bbf-9106-f11c6c58b48f"
+version = "1.0.0"
 
 [[IterTools]]
 git-tree-sha1 = "05110a2ab1fc5f932622ffea2a003221f4782c18"
@@ -615,6 +642,18 @@ git-tree-sha1 = "4797acb266b8d9ff316f4581924e71c6709f152d"
 uuid = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 version = "1.10.1"
 
+[[PooledArrays]]
+deps = ["DataAPI"]
+git-tree-sha1 = "6bc8aafa79d5c31747d95051d263c72747c6dc09"
+uuid = "2dfb63ee-cc39-5dd5-95bd-886bf059d720"
+version = "1.0.0"
+
+[[PrettyTables]]
+deps = ["Crayons", "Formatting", "Markdown", "Reexport", "Tables"]
+git-tree-sha1 = "574a6b3ea95f04e8757c0280bb9c29f1a5e35138"
+uuid = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
+version = "0.11.1"
+
 [[Printf]]
 deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
@@ -764,6 +803,12 @@ deps = ["Adapt", "DataAPI", "Tables"]
 git-tree-sha1 = "8099ed9fb90b6e754d6ba8c6ed8670f010eadca0"
 uuid = "09ab397b-f2b6-538f-b94a-2f83cf4a842a"
 version = "0.4.4"
+
+[[StructTypes]]
+deps = ["Dates", "UUIDs"]
+git-tree-sha1 = "d7f4287dbc1e590265f50ceda1b40ed2bb31bbbb"
+uuid = "856f2bd8-1eba-4b0a-8007-ebc267875bd4"
+version = "1.4.0"
 
 [[SuiteSparse]]
 deps = ["Libdl", "LinearAlgebra", "Serialization", "SparseArrays"]

@@ -1,0 +1,22 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+ERROR: LoadError: ArgumentError: "data/winter_training.csv" is not a valid file
+Stacktrace:
+ [1] Header at /homes2/ipdm/llanger/.julia/packages/CSV/la2cd/src/header.jl:90 [inlined]
+ [2] CSV.File(::String; header::Int64, normalizenames::Bool, datarow::Int64, skipto::Nothing, footerskip::Int64, transpose::Bool, comment::Nothing, use_mmap::Nothing, ignoreemptylines::Bool, select::Nothing, drop::Nothing, missingstrings::Array{String,1}, missingstring::String, delim::Nothing, ignorerepeated::Bool, quotechar::Char, openquotechar::Nothing, closequotechar::Nothing, escapechar::Char, dateformat::Nothing, dateformats::Nothing, decimal::UInt8, truestrings::Array{String,1}, falsestrings::Array{String,1}, type::Nothing, types::Nothing, typemap::Dict{Type,Type}, pool::Float64, lazystrings::Bool, strict::Bool, silencewarnings::Bool, debug::Bool, parsingdebug::Bool, kw::Base.Iterators.Pairs{Union{},Union{},Tuple{},NamedTuple{(),Tuple{}}}) at /homes2/ipdm/llanger/.julia/packages/CSV/la2cd/src/file.jl:217
+ [3] CSV.File(::String) at /homes2/ipdm/llanger/.julia/packages/CSV/la2cd/src/file.jl:217
+ [4] read(::String, ::Type{T} where T; copycols::Bool, kwargs::Base.Iterators.Pairs{Union{},Union{},Tuple{},NamedTuple{(),Tuple{}}}) at /homes2/ipdm/llanger/.julia/packages/CSV/la2cd/src/CSV.jl:45
+ [5] read at /homes2/ipdm/llanger/.julia/packages/CSV/la2cd/src/CSV.jl:42 [inlined]
+ [6] reset_state!(::Shems{Reinforce.ShemsEnv.ShemsState{Float32},Reinforce.ShemsEnv.ShemsAction{Float32}}) at /homes2/ipdm/llanger/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:196
+ [7] reset! at /homes2/ipdm/llanger/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:182 [inlined]
+ [8] populate_memory(::Shems{Reinforce.ShemsEnv.ShemsState{Float32},Reinforce.ShemsEnv.ShemsAction{Float32}}) at /net/work/llanger/memory.jl:28
+ [9] top-level scope at /net/work/llanger/DDPG_reinforce_v11_nf.jl:7
+ [10] include(::Function, ::Module, ::String) at ./Base.jl:380
+ [11] include(::Module, ::String) at ./Base.jl:368
+ [12] exec_options(::Base.JLOptions) at ./client.jl:296
+ [13] _start() at ./client.jl:506
+in expression starting at /net/work/llanger/DDPG_reinforce_v11_nf.jl:7

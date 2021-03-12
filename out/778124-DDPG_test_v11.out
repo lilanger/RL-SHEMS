@@ -1,0 +1,19 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+ERROR: LoadError: LoadError: MethodError: no method matching Shems(::Int64, ::String)
+Closest candidates are:
+  Shems(::Any) at /homes2/ipdm/llanger/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:175
+Stacktrace:
+ [1] top-level scope at /net/work/llanger/input.jl:33
+ [2] include(::String) at ./client.jl:457
+ [3] top-level scope at /net/work/llanger/DDPG_reinforce_v11_nf.jl:1
+ [4] include(::Function, ::Module, ::String) at ./Base.jl:380
+ [5] include(::Module, ::String) at ./Base.jl:368
+ [6] exec_options(::Base.JLOptions) at ./client.jl:296
+ [7] _start() at ./client.jl:506
+in expression starting at /net/work/llanger/input.jl:33
+in expression starting at /net/work/llanger/DDPG_reinforce_v11_nf.jl:1

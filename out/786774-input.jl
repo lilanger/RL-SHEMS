@@ -13,29 +13,30 @@ using Reinforce
 using Reinforce.ShemsEnv: Shems
 using Dates
 using Plots, Measures
-using CSV, DataFrames
+using CSV
 gr()
 
-train = true
-plot_result = true
-render = false
-track = false
-season = "winter"
-case = "$(season)_abort_mem-less"
-
-NUM_STEPS = 36 #24 #36
+NUM_STEPS = 24 #36
 NUM_EP = 3_000 #50_000
 L1 = 300 #400
 L2 = 600 #300
+case = "summer_abort_mem_intial_smaller"
+plot_result = true
+save_result = true
+render_test = false
 
 rng = StableRNG(123)
 Random.seed!(123)
 start_time = now()
 
 #Load game environment
-env = Shems(NUM_STEPS, "data/$(season)_training.csv")
-env_eval = Shems(NUM_STEPS, "data/$(season)_evaluation.csv")
-env_test = Shems(NUM_STEPS, "data/$(season)_testing.csv")
+# env = Shems(NUM_STEPS, "data/winter_training.csv")
+# env_eval = Shems(NUM_STEPS, "data/winter_evaluation.csv")
+# env_test = Shems(NUM_STEPS, "data/winter_testing.csv")
+
+env = Shems(NUM_STEPS, "data/summer_training.csv")
+env_eval = Shems(NUM_STEPS, "data/summer_evaluation.csv")
+env_test = Shems(NUM_STEPS, "data/summer_testing.csv")
 
 # ----------------------------- Environment Parameters -------------------------
 STATE_SIZE = length(env.state)

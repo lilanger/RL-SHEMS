@@ -13,29 +13,26 @@ using Reinforce
 using Reinforce.ShemsEnv: Shems
 using Dates
 using Plots, Measures
-using CSV, DataFrames
+using CSV
 gr()
 
-train = true
-plot_result = true
-render = false
-track = false
-season = "winter"
-case = "$(season)_abort_mem-less"
-
-NUM_STEPS = 36 #24 #36
+NUM_STEPS = 24 #36
 NUM_EP = 3_000 #50_000
 L1 = 300 #400
 L2 = 600 #300
+case = "Yu_abort"
+plot_result = true
+save_result = true
+render_test = false
 
 rng = StableRNG(123)
 Random.seed!(123)
 start_time = now()
 
 #Load game environment
-env = Shems(NUM_STEPS, "data/$(season)_training.csv")
-env_eval = Shems(NUM_STEPS, "data/$(season)_evaluation.csv")
-env_test = Shems(NUM_STEPS, "data/$(season)_testing.csv")
+env = Shems(NUM_STEPS, "data/summer_training.csv")
+env_eval = Shems(NUM_STEPS, "data/summer_evaluation.csv")
+env_test = Shems(NUM_STEPS, "data/summer_testing.csv")
 
 # ----------------------------- Environment Parameters -------------------------
 STATE_SIZE = length(env.state)
@@ -46,7 +43,7 @@ ACTION_BOUND_LO = Float32[-4.6f0, -3.0f0] #Float32(actions(env, env.state).lo[1]
 # --------------------------------- Memory ------------------------------------
 BATCH_SIZE = 120 #64
 MEM_SIZE = 24_000 #1_000_000
-MIN_EXP_SIZE = 1_200 #24_000 #50_000
+MIN_EXP_SIZE = 24_000 #1_200 #50_000
 
 memory = CircularBuffer{Any}(MEM_SIZE)
 

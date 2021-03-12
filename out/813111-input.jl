@@ -13,20 +13,20 @@ using Reinforce
 using Reinforce.ShemsEnv: Shems
 using Dates
 using Plots, Measures
-using CSV, DataFrames
+using CSV
 gr()
 
 train = true
 plot_result = true
-render = false
-track = false
-season = "winter"
-case = "$(season)_abort_mem-less"
+render_test = false
+season = "summer"
 
 NUM_STEPS = 36 #24 #36
 NUM_EP = 3_000 #50_000
 L1 = 300 #400
 L2 = 600 #300
+case = "$(season)_abort_more_steps_mem-less"
+
 
 rng = StableRNG(123)
 Random.seed!(123)
