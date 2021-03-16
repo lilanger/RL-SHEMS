@@ -1,0 +1,17 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+ERROR: LoadError: LoadError: UndefVarError: ACTION_SIZE not defined
+Stacktrace:
+ [1] top-level scope at /net/work/llanger/out/835786-input.jl:64
+ [2] include(::String) at ./client.jl:457
+ [3] top-level scope at /net/work/llanger/DDPG_reinforce_v12_nf.jl:1
+ [4] include(::Function, ::Module, ::String) at ./Base.jl:380
+ [5] include(::Module, ::String) at ./Base.jl:368
+ [6] exec_options(::Base.JLOptions) at ./client.jl:296
+ [7] _start() at ./client.jl:506
+in expression starting at /net/work/llanger/out/835786-input.jl:64
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:1

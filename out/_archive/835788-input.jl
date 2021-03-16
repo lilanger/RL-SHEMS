@@ -2,7 +2,7 @@
 # https://github.com/msinto93/DDPG/blob/master/train.py
 # https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/experiments/rl_envs/JuliaRL_DDPG_Pendulum.jl
 # https://github.com/FluxML/model-zoo/blob/master/contrib/games/differentiable-programming/pendulum/DDPG.jl
-using Flux, Printf, Zygote#, CUDA
+using Flux, Printf, Zygote, CUDA
 using Flux.Optimise: update!
 using BSON
 using Statistics: mean
@@ -16,10 +16,10 @@ using Plots, Measures
 using CSV, DataFrames
 gr()
 
-train = 0
-plot_result = 0
-render = 1
-track = 0
+train = true
+plot_result = true
+render = false
+track = false
 season = "summer"
 case = "$(season)_abort_mem-less"
 

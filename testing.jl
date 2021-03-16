@@ -13,16 +13,26 @@ function test(env::Shems; render=false, track=false)
   return (reward / 100.)
 end
 
-# runs steps through data set without reset
-function inference(;render=true, track=false)
+# runs steps through data set without reset, rendering decisions
+function inference(;render=false, track=false)
   reward = 0f0
+  learn_steps = NUM_STEPS
   global NUM_STEPS = 383 # whole evaluation set 1 month
   env_eval = Shems(NUM_STEPS, "data/$(season)_evaluation.csv")
-  if track == false
-    reward = episode!(env_eval, train=false, render=render, track=track)
-  elseif track == true
-    reward, results = episode!(env_eval, train=false, render=render, track=track)
+  # tracking flows
+  if track == true
+    reward, results = episode!(env_eval, train=false, render=render, track=true)
+    write_to_results_file(results, learn_steps)
+    return nothing
+  # rendering flows
+  elseif render == true && track == false
+    reward = episode!(env_eval, train=false, render=true, track=false)
+    return nothing
+  # return mean reward over 100 eps
+  else
+    for e = 1:100
+        reward += episode!(env_eval, train=false, render=render, track=track)
+    end
+    return (reward / 100.)
   end
-  write_to_results_file(results)
-  return nothing
 end

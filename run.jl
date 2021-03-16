@@ -81,8 +81,10 @@ function episode!(env::Shems; train=true, render=false, track=false)
 	finished(env, s_prime) && break
 
 	if render == true
-		sleep(1f0)
-		gui(plot(env))
+		#sleep(1f-2)
+		#gui(plot(env))
+		plot(env)
+		frame(anim)
 	end
 
 	if train == true

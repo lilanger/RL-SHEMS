@@ -1,0 +1,8 @@
+ERROR: LoadError: UndefVarError: JOB_ID not defined
+Stacktrace:
+ [1] top-level scope at /net/work/llanger/DDPG_reinforce_v12_nf.jl:1
+ [2] include(::Function, ::Module, ::String) at ./Base.jl:380
+ [3] include(::Module, ::String) at ./Base.jl:368
+ [4] exec_options(::Base.JLOptions) at ./client.jl:296
+ [5] _start() at ./client.jl:506
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:1

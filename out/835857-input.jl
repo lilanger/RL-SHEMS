@@ -2,7 +2,7 @@
 # https://github.com/msinto93/DDPG/blob/master/train.py
 # https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/experiments/rl_envs/JuliaRL_DDPG_Pendulum.jl
 # https://github.com/FluxML/model-zoo/blob/master/contrib/games/differentiable-programming/pendulum/DDPG.jl
-using Flux, Printf, Zygote#, CUDA
+using Flux, Printf, Zygote, CUDA
 using Flux.Optimise: update!
 using BSON
 using Statistics: mean
@@ -16,12 +16,12 @@ using Plots, Measures
 using CSV, DataFrames
 gr()
 
-train = 0
-plot_result = 0
-render = 1
+train = 1
+plot_result = 1
+render = 0
 track = 0
-season = "summer"
-case = "$(season)_abort_mem-less"
+season = "winter"
+case = "$(season)_abort_memsize+"
 
 NUM_STEPS = 24 #36
 NUM_EP = 3_000 #50_000
@@ -34,7 +34,7 @@ start_time = now()
 
 # --------------------------------- Memory ------------------------------------
 BATCH_SIZE = 120 #64
-MEM_SIZE = 24_000 #1_000_000
+MEM_SIZE = 1_000_000 #24_000 #1_000_000
 MIN_EXP_SIZE = 1_200 #24_000 #50_000
 
 memory = CircularBuffer{Any}(MEM_SIZE)

@@ -2,7 +2,7 @@
 # https://github.com/msinto93/DDPG/blob/master/train.py
 # https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/experiments/rl_envs/JuliaRL_DDPG_Pendulum.jl
 # https://github.com/FluxML/model-zoo/blob/master/contrib/games/differentiable-programming/pendulum/DDPG.jl
-using Flux, Printf, Zygote#, CUDA
+using Flux, Printf, Zygote, CUDA
 using Flux.Optimise: update!
 using BSON
 using Statistics: mean
@@ -16,10 +16,10 @@ using Plots, Measures
 using CSV, DataFrames
 gr()
 
-train = 0
-plot_result = 0
-render = 1
-track = 0
+train = true
+plot_result = true
+render = false
+track = false
 season = "summer"
 case = "$(season)_abort_mem-less"
 
@@ -38,17 +38,6 @@ MEM_SIZE = 24_000 #1_000_000
 MIN_EXP_SIZE = 1_200 #24_000 #50_000
 
 memory = CircularBuffer{Any}(MEM_SIZE)
-
-# --------------------------------- Game environment ---------------------------
-env = Shems(NUM_STEPS, "data/$(season)_training.csv")
-env_eval = Shems(NUM_STEPS, "data/$(season)_evaluation.csv")
-env_test = Shems(NUM_STEPS, "data/$(season)_testing.csv")
-
-# ----------------------------- Environment Parameters -------------------------
-STATE_SIZE = length(env.state)
-ACTION_SIZE = length(env.a)
-ACTION_BOUND_HI = Float32[4.6f0, 3.0f0] #Float32(actions(env, env.state).hi[1])
-ACTION_BOUND_LO = Float32[-4.6f0, -3.0f0] #Float32(actions(env, env.state).lo[1])
 
 # ------------------------------- Action Noise --------------------------------
 struct OUNoise
@@ -90,6 +79,18 @@ init_final(dims...) = 6f-3rand(rng, Float32, dims...) .- 3f-3
 # Optimizers
 opt_crit = ADAM(η_crit)
 opt_act  = ADAM(η_act)
+
+#Load game environment
+env = Shems(NUM_STEPS, "data/$(season)_training.csv")
+env_eval = Shems(NUM_STEPS, "data/$(season)_evaluation.csv")
+env_test = Shems(NUM_STEPS, "data/$(season)_testing.csv")
+
+# ----------------------------- Environment Parameters -------------------------
+STATE_SIZE = length(env.state)
+ACTION_SIZE = length(env.a)
+ACTION_BOUND_HI = Float32[4.6f0, 3.0f0] #Float32(actions(env, env.state).hi[1])
+ACTION_BOUND_LO = Float32[-4.6f0, -3.0f0] #Float32(actions(env, env.state).lo[1])
+
 
 # ----------------------------- Model Architecture -----------------------------
 actor = Chain(

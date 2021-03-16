@@ -1,8 +1,9 @@
+#include("out/$(ENV["JOB_ID"])-input.jl") # contains the input data
 include("input.jl") # contains the input data
 include("memory.jl") # contains all data buffer functions
 include("run.jl") # contains all training functions
 include("testing.jl") # contains testing functions
-include("plotting.jl") # contains all ploting and rendering functions
+include("plotting_saving.jl") # contains all ploting and rendering functions
 
 populate_memory(env)
 # initialization for normalization
@@ -21,13 +22,14 @@ if train == true
 	saveBSON(actor, actor_target, critic, critic_target)
 else
 	# ------------------------- render evaluation ---------------------------------------
+	actor, actor_target, critic, critic_target, total_reward, score_mean = loadBSON()
 	if render == true
-		actor, actor_target, critic, critic_target, total_reward, score_mean = loadBSON()
 		gr()
-		inference(render=render, track=track)
+		global anim = Animation()
+		inference(render=true, track=false)
+		gif(anim, "analysis/DDPG_Shems_v12_$(NUM_STEPS)_$(NUM_EP)_$(L1)_$(L2)_$(case).gif", fps=5)
 	elseif track == true
-		actor, actor_target, critic, critic_target, total_reward, score_mean = loadBSON()
-		inference(render=render, track=track)
+		inference(render=false, track=true)
 	end
 end
 
