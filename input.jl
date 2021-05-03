@@ -2,7 +2,7 @@
 # https://github.com/msinto93/DDPG/blob/master/train.py
 # https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/experiments/rl_envs/JuliaRL_DDPG_Pendulum.jl
 # https://github.com/FluxML/model-zoo/blob/master/contrib/games/differentiable-programming/pendulum/DDPG.jl
-using Flux, Printf, Zygote#, CUDA
+using Flux, Printf, Zygote, CUDA
 using Flux.Optimise: update!
 using BSON
 using Statistics: mean
@@ -16,9 +16,9 @@ using Plots, Measures
 using CSV, DataFrames
 gr()
 
-train = 0
+train = 1
 plot_result = 0
-render = 1
+render = 0
 track = 0
 season = "summer"
 case = "$(season)_abort_mem-less"
@@ -80,7 +80,7 @@ ou = OUNoise(μ, θ, σ, dt, zeros(Float32, ACTION_SIZE))
 τ = 1f-3       # Parameter for soft target network updates
 η_act = 1f-4   # Learning rate actor
 η_crit = 1f-3  # Learning rate critic
-
+β = (0.9, 0.999) # Decay of momentums optimizer
 L2_DECAY = 0.01f0
 UPDATE_EVERY = 1
 
@@ -88,14 +88,14 @@ init = Flux.glorot_uniform(rng)
 init_final(dims...) = 6f-3rand(rng, Float32, dims...) .- 3f-3
 
 # Optimizers
-opt_crit = ADAM(η_crit)
-opt_act  = ADAM(η_act)
+opt_crit = ADAMW(η_crit, β, L2_DECAY)
+opt_act  = ADAMW(η_act, β, L2_DECAY)
 
 # ----------------------------- Model Architecture -----------------------------
 actor = Chain(
-					Dense(STATE_SIZE, L1, relu, initW=init, initb=init),
-	      	Dense(L1, L2, relu; initW=init, initb=init),
-          Dense(L2, ACTION_SIZE, tanh; initW=init_final, initb=init_final)) |> gpu
+			Dense(STATE_SIZE, L1, relu, init=init),
+	      	Dense(L1, L2, relu; init=init),
+          	Dense(L2, ACTION_SIZE, tanh; init=init_final)) |> gpu
 
 actor_target = deepcopy(actor)
 
@@ -115,14 +115,14 @@ function (c::crit)(state, action)
 end
 
 Base.deepcopy(c::crit) = crit(deepcopy(c.state_crit),
-							  							deepcopy(c.act_crit),
-							  							deepcopy(c.sa_crit))
+							  deepcopy(c.act_crit),
+							  deepcopy(c.sa_crit))
 
 critic = crit(
-					Chain(
-						Dense(STATE_SIZE, L1, relu, initW=init, initb=init),
-						Dense(L1, L2, initW=init, initb=init)) |> gpu,
-          			Dense(ACTION_SIZE, L2, initW=init, initb=init) |> gpu,
-	      						Dense(L2, 1, initW=init_final, initb=init_final) |> gpu)
+			Chain(
+				Dense(STATE_SIZE, L1, relu, init=init),
+				Dense(L1, L2, init=init)) |> gpu,
+  			Dense(ACTION_SIZE, L2, init=init) |> gpu,
+  			Dense(L2, 1, init=init_final) |> gpu)
 
 critic_target = deepcopy(critic)

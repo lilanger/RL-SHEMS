@@ -24,12 +24,13 @@ end
 
 # ---------------------------------- Training ----------------------------------
 # Losses
-function L2_loss(model)
-  l2_loss = sum(map(p->sum(p.^2), params(model)))
-  return L2_DECAY * l2_loss
-end
+# function L2_loss(model)
+#   para = params(model)
+#   l2_loss = sum(map(p->sum(p.^2), para))
+#   return L2_DECAY * l2_loss
+# end
 
-loss_crit(y, s, a) = Flux.mse(critic(s, a), y) + L2_loss(critic) # L2 loss has huge pos. impact
+loss_crit(y, s, a) = Flux.mse(critic(s, a), y) #+ L2_loss(critic) # L2 loss has huge pos. impact
 
 function loss_act(s_norm)
   actions = actor(s_norm)
