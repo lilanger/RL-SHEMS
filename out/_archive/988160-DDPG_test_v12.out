@@ -1,0 +1,25 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+  Activating environment at `/net/work/llanger/Project.toml`
+ERROR: LoadError: MethodError: no method matching -(::Int64, ::CuArray{Bool, 2})
+For element-wise subtraction, use broadcasting with dot syntax: scalar .- array
+Closest candidates are:
+  -(::Union{Int128, Int16, Int32, Int64, Int8, UInt128, UInt16, UInt32, UInt64, UInt8}) at int.jl:85
+  -(::T, !Matched::T) where T<:Union{Int128, Int16, Int32, Int64, Int8, UInt128, UInt16, UInt32, UInt64, UInt8} at int.jl:86
+  -(::Union{Int16, Int32, Int64, Int8}, !Matched::BigInt) at gmp.jl:536
+  ...
+Stacktrace:
+ [1] replay()
+   @ Main /net/work/llanger/run.jl:45
+ [2] episode!(env::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}; NUM_STEPS::Int64, train::Bool, render::Int64, track::Bool, rng::Int64)
+   @ Main /net/work/llanger/run.jl:93
+ [3] run_episodes(env::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}, env_eval::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}, total_reward::Vector{Float32}, score_mean::Matrix{Float64}, noise_scale::Float32; render::Int64, track::Bool)
+   @ Main /net/work/llanger/run.jl:106
+ [4] top-level scope
+   @ /net/work/llanger/DDPG_reinforce_v12_nf.jl:20
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:16
+Max steps: 24, Max episodes: 3001, Layer 1: 300 nodes, Layer 2: 600 nodes, Case: winter_L2_no-noise-scale, Time to start: 1 minute

@@ -1,0 +1,45 @@
+ERROR: LoadError: LoadError: syntax: missing comma or ) in argument list
+Stacktrace:
+  [1] top-level scope
+    @ ~/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:102
+  [2] include(mod::Module, _path::String)
+    @ Base ./Base.jl:386
+  [3] include(x::String)
+    @ Reinforce ~/.julia/packages/Reinforce/PDz1M/src/Reinforce.jl:1
+  [4] top-level scope
+    @ ~/.julia/packages/Reinforce/PDz1M/src/Reinforce.jl:140
+  [5] include
+    @ ./Base.jl:386 [inlined]
+  [6] include_package_for_output(pkg::Base.PkgId, input::String, depot_path::Vector{String}, dl_load_path::Vector{String}, load_path::Vector{String}, concrete_deps::Vector{Pair{Base.PkgId, UInt64}}, source::String)
+    @ Base ./loading.jl:1213
+  [7] top-level scope
+    @ none:1
+  [8] eval
+    @ ./boot.jl:360 [inlined]
+  [9] eval(x::Expr)
+    @ Base.MainInclude ./client.jl:446
+ [10] top-level scope
+    @ none:1
+in expression starting at /homes2/ipdm/llanger/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:102
+in expression starting at /homes2/ipdm/llanger/.julia/packages/Reinforce/PDz1M/src/Reinforce.jl:1
+  Activating environment at `/net/work/llanger/Project.toml`
+ERROR: LoadError: LoadError: Failed to precompile Reinforce [0376cc21-f8a9-5fcf-8891-fde1415a4fd3] to /homes2/ipdm/llanger/.julia/compiled/v1.6/Reinforce/jl_sVSlOw.
+Stacktrace:
+ [1] error(s::String)
+   @ Base ./error.jl:33
+ [2] compilecache(pkg::Base.PkgId, path::String, internal_stderr::IOStream, internal_stdout::IOStream)
+   @ Base ./loading.jl:1360
+ [3] compilecache(pkg::Base.PkgId, path::String)
+   @ Base ./loading.jl:1306
+ [4] _require(pkg::Base.PkgId)
+   @ Base ./loading.jl:1021
+ [5] require(uuidkey::Base.PkgId)
+   @ Base ./loading.jl:914
+ [6] require(into::Module, mod::Symbol)
+   @ Base ./loading.jl:901
+ [7] include(fname::String)
+   @ Base.MainInclude ./client.jl:444
+ [8] top-level scope
+   @ /net/work/llanger/DDPG_reinforce_v12_nf.jl:2
+in expression starting at /net/work/llanger/input.jl:14
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:2

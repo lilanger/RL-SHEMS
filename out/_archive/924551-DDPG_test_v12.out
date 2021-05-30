@@ -1,0 +1,902 @@
+Loading clusterenv
+  Loading requirement: gridengine intel/2019.3 pgi/19.7 ompi/gcc/2.1.1
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+Max steps: 24, Max episodes: 3000, Layer 1: 300 nodes, Layer 2: 600 nodes, Case: summer_no-L2_no-day+price_yu-shems_B_GR-fix, Time to start: 0 minutes
+Episode: 1 | Mean Step Score:     0.174 | Mean score over 100 evaluation episodes:    -6.613 | Time elapsed: 1 minute
+Episode: 2 | Mean Step Score:    -7.832 | Time elapsed: 1 minute
+Episode: 3 | Mean Step Score:    -2.308 | Time elapsed: 2 minutes
+Episode: 4 | Mean Step Score:    -2.944 | Time elapsed: 2 minutes
+Episode: 5 | Mean Step Score:    -3.524 | Time elapsed: 2 minutes
+Episode: 6 | Mean Step Score:    -2.725 | Time elapsed: 2 minutes
+Episode: 7 | Mean Step Score:    -9.613 | Time elapsed: 2 minutes
+Episode: 8 | Mean Step Score:    -3.233 | Time elapsed: 2 minutes
+Episode: 9 | Mean Step Score:    -3.632 | Time elapsed: 2 minutes
+Episode: 10 | Mean Step Score:    -3.783 | Time elapsed: 2 minutes
+Episode: 11 | Mean Step Score:    -4.822 | Mean score over 100 evaluation episodes:    -6.926 | Time elapsed: 2 minutes
+Episode: 12 | Mean Step Score:    -4.368 | Time elapsed: 2 minutes
+Episode: 13 | Mean Step Score:    -6.303 | Time elapsed: 2 minutes
+Episode: 14 | Mean Step Score:    -3.650 | Time elapsed: 2 minutes
+Episode: 15 | Mean Step Score:    -4.987 | Time elapsed: 2 minutes
+Episode: 16 | Mean Step Score:    -4.837 | Time elapsed: 2 minutes
+Episode: 17 | Mean Step Score:    -4.512 | Time elapsed: 2 minutes
+Episode: 18 | Mean Step Score:    -5.230 | Time elapsed: 2 minutes
+Episode: 19 | Mean Step Score:    -3.976 | Time elapsed: 2 minutes
+Episode: 20 | Mean Step Score:    -4.954 | Time elapsed: 2 minutes
+Episode: 21 | Mean Step Score:    -7.209 | Mean score over 100 evaluation episodes:    -7.321 | Time elapsed: 2 minutes
+Episode: 22 | Mean Step Score:    -3.574 | Time elapsed: 2 minutes
+Episode: 23 | Mean Step Score:    -4.063 | Time elapsed: 2 minutes
+Episode: 24 | Mean Step Score:    -5.494 | Time elapsed: 2 minutes
+Episode: 25 | Mean Step Score:    -4.175 | Time elapsed: 2 minutes
+Episode: 26 | Mean Step Score:    -6.222 | Time elapsed: 2 minutes
+Episode: 27 | Mean Step Score:    -3.319 | Time elapsed: 2 minutes
+Episode: 28 | Mean Step Score:    -7.082 | Time elapsed: 2 minutes
+Episode: 29 | Mean Step Score:    -7.094 | Time elapsed: 2 minutes
+Episode: 30 | Mean Step Score:    -7.023 | Time elapsed: 2 minutes
+Episode: 31 | Mean Step Score:    -6.710 | Mean score over 100 evaluation episodes:    -7.211 | Time elapsed: 2 minutes
+Episode: 32 | Mean Step Score:    -3.960 | Time elapsed: 2 minutes
+Episode: 33 | Mean Step Score:    -6.192 | Time elapsed: 2 minutes
+Episode: 34 | Mean Step Score:    -5.351 | Time elapsed: 2 minutes
+Episode: 35 | Mean Step Score:    -7.476 | Time elapsed: 2 minutes
+Episode: 36 | Mean Step Score:    -7.045 | Time elapsed: 2 minutes
+Episode: 37 | Mean Step Score:    -6.017 | Time elapsed: 2 minutes
+Episode: 38 | Mean Step Score:    -4.132 | Time elapsed: 2 minutes
+Episode: 39 | Mean Step Score:    -4.779 | Time elapsed: 2 minutes
+Episode: 40 | Mean Step Score:    -4.276 | Time elapsed: 2 minutes
+Episode: 41 | Mean Step Score:    -6.995 | Mean score over 100 evaluation episodes:    -7.413 | Time elapsed: 2 minutes
+Episode: 42 | Mean Step Score:    -4.482 | Time elapsed: 2 minutes
+Episode: 43 | Mean Step Score:    -5.309 | Time elapsed: 2 minutes
+Episode: 44 | Mean Step Score:    -6.488 | Time elapsed: 2 minutes
+Episode: 45 | Mean Step Score:    -7.955 | Time elapsed: 2 minutes
+Episode: 46 | Mean Step Score:    -5.462 | Time elapsed: 2 minutes
+Episode: 47 | Mean Step Score:    -7.061 | Time elapsed: 2 minutes
+Episode: 48 | Mean Step Score:    -4.070 | Time elapsed: 2 minutes
+Episode: 49 | Mean Step Score:    -4.311 | Time elapsed: 2 minutes
+Episode: 50 | Mean Step Score:    -5.116 | Time elapsed: 2 minutes
+Episode: 51 | Mean Step Score:    -4.444 | Mean score over 100 evaluation episodes:    -7.409 | Time elapsed: 2 minutes
+Episode: 52 | Mean Step Score:    -3.951 | Time elapsed: 2 minutes
+Episode: 53 | Mean Step Score:   -42.689 | Time elapsed: 2 minutes
+Episode: 54 | Mean Step Score:    -5.927 | Time elapsed: 2 minutes
+Episode: 55 | Mean Step Score:    -5.654 | Time elapsed: 2 minutes
+Episode: 56 | Mean Step Score:    -4.603 | Time elapsed: 2 minutes
+Episode: 57 | Mean Step Score:    -5.424 | Time elapsed: 2 minutes
+Episode: 58 | Mean Step Score:    -3.407 | Time elapsed: 2 minutes
+Episode: 59 | Mean Step Score:    -5.585 | Time elapsed: 2 minutes
+Episode: 60 | Mean Step Score:    -5.802 | Time elapsed: 2 minutes
+Episode: 61 | Mean Step Score:    -4.307 | Mean score over 100 evaluation episodes:    -8.596 | Time elapsed: 2 minutes
+Episode: 62 | Mean Step Score:    -5.465 | Time elapsed: 2 minutes
+Episode: 63 | Mean Step Score:    -7.559 | Time elapsed: 2 minutes
+Episode: 64 | Mean Step Score:    -5.914 | Time elapsed: 2 minutes
+Episode: 65 | Mean Step Score:    -6.309 | Time elapsed: 2 minutes
+Episode: 66 | Mean Step Score:    -4.478 | Time elapsed: 2 minutes
+Episode: 67 | Mean Step Score:    -7.667 | Time elapsed: 2 minutes
+Episode: 68 | Mean Step Score:    -3.532 | Time elapsed: 2 minutes
+Episode: 69 | Mean Step Score:    -4.048 | Time elapsed: 2 minutes
+Episode: 70 | Mean Step Score:    -3.769 | Time elapsed: 2 minutes
+Episode: 71 | Mean Step Score:    -3.817 | Mean score over 100 evaluation episodes:    -7.918 | Time elapsed: 2 minutes
+Episode: 72 | Mean Step Score:    -4.101 | Time elapsed: 2 minutes
+Episode: 73 | Mean Step Score:   -53.905 | Time elapsed: 2 minutes
+Episode: 74 | Mean Step Score:    -6.063 | Time elapsed: 2 minutes
+Episode: 75 | Mean Step Score:    -3.950 | Time elapsed: 2 minutes
+Episode: 76 | Mean Step Score:    -5.157 | Time elapsed: 2 minutes
+Episode: 77 | Mean Step Score:    -5.068 | Time elapsed: 2 minutes
+Episode: 78 | Mean Step Score:    -4.635 | Time elapsed: 2 minutes
+Episode: 79 | Mean Step Score:    -6.076 | Time elapsed: 2 minutes
+Episode: 80 | Mean Step Score:    -6.275 | Time elapsed: 2 minutes
+Episode: 81 | Mean Step Score:    -5.600 | Mean score over 100 evaluation episodes:    -7.774 | Time elapsed: 2 minutes
+Episode: 82 | Mean Step Score:    -5.295 | Time elapsed: 2 minutes
+Episode: 83 | Mean Step Score:    -4.666 | Time elapsed: 2 minutes
+Episode: 84 | Mean Step Score:   -11.048 | Time elapsed: 2 minutes
+Episode: 85 | Mean Step Score:    -3.542 | Time elapsed: 2 minutes
+Episode: 86 | Mean Step Score:    -3.284 | Time elapsed: 2 minutes
+Episode: 87 | Mean Step Score:    -4.154 | Time elapsed: 2 minutes
+Episode: 88 | Mean Step Score:    -4.121 | Time elapsed: 2 minutes
+Episode: 89 | Mean Step Score:    -3.077 | Time elapsed: 2 minutes
+Episode: 90 | Mean Step Score:    -3.738 | Time elapsed: 2 minutes
+Episode: 91 | Mean Step Score:    -4.010 | Mean score over 100 evaluation episodes:    -9.551 | Time elapsed: 2 minutes
+Episode: 92 | Mean Step Score:    -5.294 | Time elapsed: 2 minutes
+Episode: 93 | Mean Step Score:   -11.426 | Time elapsed: 2 minutes
+Episode: 94 | Mean Step Score:   -15.436 | Time elapsed: 2 minutes
+Episode: 95 | Mean Step Score:    -4.967 | Time elapsed: 2 minutes
+Episode: 96 | Mean Step Score:    -4.061 | Time elapsed: 2 minutes
+Episode: 97 | Mean Step Score:    -2.885 | Time elapsed: 2 minutes
+Episode: 98 | Mean Step Score:    -3.698 | Time elapsed: 2 minutes
+Episode: 99 | Mean Step Score:    -4.947 | Time elapsed: 2 minutes
+Episode: 100 | Mean Step Score:    -3.196 | Time elapsed: 2 minutes
+Episode: 101 | Mean Step Score:    -2.431 | Mean score over 100 evaluation episodes:    -5.687 | Time elapsed: 2 minutes
+Episode: 102 | Mean Step Score:    -3.218 | Time elapsed: 2 minutes
+Episode: 103 | Mean Step Score:   -15.192 | Time elapsed: 2 minutes
+Episode: 104 | Mean Step Score:    -4.646 | Time elapsed: 2 minutes
+Episode: 105 | Mean Step Score:    -3.166 | Time elapsed: 2 minutes
+Episode: 106 | Mean Step Score:    -2.202 | Time elapsed: 2 minutes
+Episode: 107 | Mean Step Score:   -11.773 | Time elapsed: 2 minutes
+Episode: 108 | Mean Step Score:    -1.850 | Time elapsed: 2 minutes
+Episode: 109 | Mean Step Score:    -3.327 | Time elapsed: 2 minutes
+Episode: 110 | Mean Step Score:    -8.903 | Time elapsed: 2 minutes
+Episode: 111 | Mean Step Score:   -96.165 | Mean score over 100 evaluation episodes:    -5.420 | Time elapsed: 2 minutes
+Episode: 112 | Mean Step Score:    -1.964 | Time elapsed: 2 minutes
+Episode: 113 | Mean Step Score:    -2.568 | Time elapsed: 2 minutes
+Episode: 114 | Mean Step Score:   -22.288 | Time elapsed: 2 minutes
+Episode: 115 | Mean Step Score:    -3.226 | Time elapsed: 2 minutes
+Episode: 116 | Mean Step Score:    -1.458 | Time elapsed: 2 minutes
+Episode: 117 | Mean Step Score:    -1.454 | Time elapsed: 2 minutes
+Episode: 118 | Mean Step Score:    -2.803 | Time elapsed: 2 minutes
+Episode: 119 | Mean Step Score:    -2.501 | Time elapsed: 2 minutes
+Episode: 120 | Mean Step Score:   -18.521 | Time elapsed: 2 minutes
+Episode: 121 | Mean Step Score:    -1.648 | Mean score over 100 evaluation episodes:    -5.967 | Time elapsed: 2 minutes
+Episode: 122 | Mean Step Score:    -7.042 | Time elapsed: 2 minutes
+Episode: 123 | Mean Step Score:    -2.657 | Time elapsed: 2 minutes
+Episode: 124 | Mean Step Score:    -4.588 | Time elapsed: 2 minutes
+Episode: 125 | Mean Step Score:    -1.809 | Time elapsed: 2 minutes
+Episode: 126 | Mean Step Score:   -18.639 | Time elapsed: 2 minutes
+Episode: 127 | Mean Step Score:    -1.089 | Time elapsed: 2 minutes
+Episode: 128 | Mean Step Score:    -3.261 | Time elapsed: 2 minutes
+Episode: 129 | Mean Step Score:   -41.508 | Time elapsed: 2 minutes
+Episode: 130 | Mean Step Score:    -1.540 | Time elapsed: 2 minutes
+Episode: 131 | Mean Step Score:     0.106 | Mean score over 100 evaluation episodes:    -6.236 | Time elapsed: 2 minutes
+Episode: 132 | Mean Step Score:    -9.992 | Time elapsed: 2 minutes
+Episode: 133 | Mean Step Score:    -3.779 | Time elapsed: 2 minutes
+Episode: 134 | Mean Step Score:    -4.411 | Time elapsed: 2 minutes
+Episode: 135 | Mean Step Score:    -0.241 | Time elapsed: 2 minutes
+Episode: 136 | Mean Step Score:    -0.005 | Time elapsed: 2 minutes
+Episode: 137 | Mean Step Score:   -18.430 | Time elapsed: 2 minutes
+Episode: 138 | Mean Step Score:    -9.622 | Time elapsed: 2 minutes
+Episode: 139 | Mean Step Score:    -2.426 | Time elapsed: 2 minutes
+Episode: 140 | Mean Step Score:    -1.503 | Time elapsed: 2 minutes
+Episode: 141 | Mean Step Score:    -1.547 | Mean score over 100 evaluation episodes:    -7.005 | Time elapsed: 2 minutes
+Episode: 142 | Mean Step Score:    -1.893 | Time elapsed: 2 minutes
+Episode: 143 | Mean Step Score:    -2.169 | Time elapsed: 2 minutes
+Episode: 144 | Mean Step Score:    -2.397 | Time elapsed: 2 minutes
+Episode: 145 | Mean Step Score:    -5.905 | Time elapsed: 2 minutes
+Episode: 146 | Mean Step Score:    -3.297 | Time elapsed: 2 minutes
+Episode: 147 | Mean Step Score:    -2.510 | Time elapsed: 2 minutes
+Episode: 148 | Mean Step Score:   -20.259 | Time elapsed: 2 minutes
+Episode: 149 | Mean Step Score:    -4.873 | Time elapsed: 2 minutes
+Episode: 150 | Mean Step Score:   -11.475 | Time elapsed: 2 minutes
+Episode: 151 | Mean Step Score:    -1.981 | Mean score over 100 evaluation episodes:    -7.110 | Time elapsed: 2 minutes
+Episode: 152 | Mean Step Score:    -6.448 | Time elapsed: 2 minutes
+Episode: 153 | Mean Step Score:    -3.029 | Time elapsed: 2 minutes
+Episode: 154 | Mean Step Score:    -3.225 | Time elapsed: 2 minutes
+Episode: 155 | Mean Step Score:   -15.385 | Time elapsed: 2 minutes
+Episode: 156 | Mean Step Score:   -26.373 | Time elapsed: 2 minutes
+Episode: 157 | Mean Step Score:    -1.386 | Time elapsed: 2 minutes
+Episode: 158 | Mean Step Score:    -8.102 | Time elapsed: 2 minutes
+Episode: 159 | Mean Step Score:    -3.229 | Time elapsed: 2 minutes
+Episode: 160 | Mean Step Score:    -2.720 | Time elapsed: 2 minutes
+Episode: 161 | Mean Step Score:    -4.060 | Mean score over 100 evaluation episodes:    -5.465 | Time elapsed: 2 minutes
+Episode: 162 | Mean Step Score:    -2.138 | Time elapsed: 2 minutes
+Episode: 163 | Mean Step Score:    -2.235 | Time elapsed: 2 minutes
+Episode: 164 | Mean Step Score:    -6.343 | Time elapsed: 2 minutes
+Episode: 165 | Mean Step Score:    -1.631 | Time elapsed: 2 minutes
+Episode: 166 | Mean Step Score:    -3.862 | Time elapsed: 2 minutes
+Episode: 167 | Mean Step Score:    -2.361 | Time elapsed: 2 minutes
+Episode: 168 | Mean Step Score:   -11.279 | Time elapsed: 2 minutes
+Episode: 169 | Mean Step Score:    -2.779 | Time elapsed: 2 minutes
+Episode: 170 | Mean Step Score:    -2.566 | Time elapsed: 2 minutes
+Episode: 171 | Mean Step Score:    -1.689 | Mean score over 100 evaluation episodes:    -5.156 | Time elapsed: 3 minutes
+Episode: 172 | Mean Step Score:    -3.926 | Time elapsed: 3 minutes
+Episode: 173 | Mean Step Score:    -2.723 | Time elapsed: 3 minutes
+Episode: 174 | Mean Step Score:    -4.125 | Time elapsed: 3 minutes
+Episode: 175 | Mean Step Score:    -2.669 | Time elapsed: 3 minutes
+Episode: 176 | Mean Step Score:    -5.829 | Time elapsed: 3 minutes
+Episode: 177 | Mean Step Score:    -4.074 | Time elapsed: 3 minutes
+Episode: 178 | Mean Step Score:   -13.268 | Time elapsed: 3 minutes
+Episode: 179 | Mean Step Score:    -4.727 | Time elapsed: 3 minutes
+Episode: 180 | Mean Step Score:    -1.908 | Time elapsed: 3 minutes
+Episode: 181 | Mean Step Score:    -3.495 | Mean score over 100 evaluation episodes:    -5.607 | Time elapsed: 3 minutes
+Episode: 182 | Mean Step Score:    -2.120 | Time elapsed: 3 minutes
+Episode: 183 | Mean Step Score:    -1.738 | Time elapsed: 3 minutes
+Episode: 184 | Mean Step Score:    -1.326 | Time elapsed: 3 minutes
+Episode: 185 | Mean Step Score:    -3.340 | Time elapsed: 3 minutes
+Episode: 186 | Mean Step Score:    -3.506 | Time elapsed: 3 minutes
+Episode: 187 | Mean Step Score:    -1.436 | Time elapsed: 3 minutes
+Episode: 188 | Mean Step Score:    -1.288 | Time elapsed: 3 minutes
+Episode: 189 | Mean Step Score:     0.060 | Time elapsed: 3 minutes
+Episode: 190 | Mean Step Score:    -1.247 | Time elapsed: 3 minutes
+Episode: 191 | Mean Step Score:    -6.387 | Mean score over 100 evaluation episodes:    -5.887 | Time elapsed: 3 minutes
+Episode: 192 | Mean Step Score:    -1.226 | Time elapsed: 3 minutes
+Episode: 193 | Mean Step Score:   -12.454 | Time elapsed: 3 minutes
+Episode: 194 | Mean Step Score:    -3.130 | Time elapsed: 3 minutes
+Episode: 195 | Mean Step Score:    -1.764 | Time elapsed: 3 minutes
+Episode: 196 | Mean Step Score:    -0.649 | Time elapsed: 3 minutes
+Episode: 197 | Mean Step Score:    -1.441 | Time elapsed: 3 minutes
+Episode: 198 | Mean Step Score:    -0.952 | Time elapsed: 3 minutes
+Episode: 199 | Mean Step Score:    -4.802 | Time elapsed: 3 minutes
+Episode: 200 | Mean Step Score:    -2.657 | Time elapsed: 3 minutes
+Episode: 201 | Mean Step Score:    -1.642 | Mean score over 100 evaluation episodes:    -7.970 | Time elapsed: 3 minutes
+Episode: 202 | Mean Step Score:    -0.281 | Time elapsed: 3 minutes
+Episode: 203 | Mean Step Score:    -1.417 | Time elapsed: 3 minutes
+Episode: 204 | Mean Step Score:    -2.015 | Time elapsed: 3 minutes
+Episode: 205 | Mean Step Score:    -2.565 | Time elapsed: 3 minutes
+Episode: 206 | Mean Step Score:    -1.434 | Time elapsed: 3 minutes
+Episode: 207 | Mean Step Score:    -7.085 | Time elapsed: 3 minutes
+Episode: 208 | Mean Step Score:    -2.105 | Time elapsed: 3 minutes
+Episode: 209 | Mean Step Score:    -2.518 | Time elapsed: 3 minutes
+Episode: 210 | Mean Step Score:    -0.888 | Time elapsed: 3 minutes
+Episode: 211 | Mean Step Score:    -9.696 | Mean score over 100 evaluation episodes:    -6.517 | Time elapsed: 3 minutes
+Episode: 212 | Mean Step Score:    -1.004 | Time elapsed: 3 minutes
+Episode: 213 | Mean Step Score:    -2.435 | Time elapsed: 3 minutes
+Episode: 214 | Mean Step Score:    -2.775 | Time elapsed: 3 minutes
+Episode: 215 | Mean Step Score:   -14.189 | Time elapsed: 3 minutes
+Episode: 216 | Mean Step Score:    -5.273 | Time elapsed: 3 minutes
+Episode: 217 | Mean Step Score:    -2.025 | Time elapsed: 3 minutes
+Episode: 218 | Mean Step Score:    -0.785 | Time elapsed: 3 minutes
+Episode: 219 | Mean Step Score:    -2.228 | Time elapsed: 3 minutes
+Episode: 220 | Mean Step Score:    -1.689 | Time elapsed: 3 minutes
+Episode: 221 | Mean Step Score:    -2.128 | Mean score over 100 evaluation episodes:    -5.567 | Time elapsed: 3 minutes
+Episode: 222 | Mean Step Score:    -6.699 | Time elapsed: 3 minutes
+Episode: 223 | Mean Step Score:    -4.458 | Time elapsed: 3 minutes
+Episode: 224 | Mean Step Score:    -4.090 | Time elapsed: 3 minutes
+Episode: 225 | Mean Step Score:    -0.815 | Time elapsed: 3 minutes
+Episode: 226 | Mean Step Score:    -0.595 | Time elapsed: 3 minutes
+Episode: 227 | Mean Step Score:    -3.118 | Time elapsed: 3 minutes
+Episode: 228 | Mean Step Score:    -7.254 | Time elapsed: 3 minutes
+Episode: 229 | Mean Step Score:   -28.351 | Time elapsed: 3 minutes
+Episode: 230 | Mean Step Score:    -4.527 | Time elapsed: 3 minutes
+Episode: 231 | Mean Step Score:    -1.834 | Mean score over 100 evaluation episodes:    -6.846 | Time elapsed: 3 minutes
+Episode: 232 | Mean Step Score:    -0.457 | Time elapsed: 3 minutes
+Episode: 233 | Mean Step Score:    -1.729 | Time elapsed: 3 minutes
+Episode: 234 | Mean Step Score:    -4.946 | Time elapsed: 3 minutes
+Episode: 235 | Mean Step Score:    -7.207 | Time elapsed: 3 minutes
+Episode: 236 | Mean Step Score:    -1.798 | Time elapsed: 3 minutes
+Episode: 237 | Mean Step Score:   -16.914 | Time elapsed: 3 minutes
+Episode: 238 | Mean Step Score:    -1.468 | Time elapsed: 3 minutes
+Episode: 239 | Mean Step Score:    -0.994 | Time elapsed: 3 minutes
+Episode: 240 | Mean Step Score:    -2.321 | Time elapsed: 3 minutes
+Episode: 241 | Mean Step Score:    -1.861 | Mean score over 100 evaluation episodes:    -5.327 | Time elapsed: 3 minutes
+Episode: 242 | Mean Step Score:    -2.875 | Time elapsed: 3 minutes
+Episode: 243 | Mean Step Score:    -8.414 | Time elapsed: 3 minutes
+Episode: 244 | Mean Step Score:    -0.638 | Time elapsed: 3 minutes
+Episode: 245 | Mean Step Score:   -12.964 | Time elapsed: 3 minutes
+Episode: 246 | Mean Step Score:    -4.234 | Time elapsed: 3 minutes
+Episode: 247 | Mean Step Score:    -3.109 | Time elapsed: 3 minutes
+Episode: 248 | Mean Step Score:   -10.258 | Time elapsed: 3 minutes
+Episode: 249 | Mean Step Score:    -1.825 | Time elapsed: 3 minutes
+Episode: 250 | Mean Step Score:    -3.533 | Time elapsed: 3 minutes
+Episode: 251 | Mean Step Score:    -1.158 | Mean score over 100 evaluation episodes:    -5.475 | Time elapsed: 3 minutes
+Episode: 252 | Mean Step Score:    -3.915 | Time elapsed: 3 minutes
+Episode: 253 | Mean Step Score:    -0.824 | Time elapsed: 3 minutes
+Episode: 254 | Mean Step Score:    -1.395 | Time elapsed: 3 minutes
+Episode: 255 | Mean Step Score:   -27.808 | Time elapsed: 3 minutes
+Episode: 256 | Mean Step Score:    -2.022 | Time elapsed: 3 minutes
+Episode: 257 | Mean Step Score:    -5.621 | Time elapsed: 3 minutes
+Episode: 258 | Mean Step Score:    -1.863 | Time elapsed: 3 minutes
+Episode: 259 | Mean Step Score:    -0.613 | Time elapsed: 3 minutes
+Episode: 260 | Mean Step Score:    -4.714 | Time elapsed: 3 minutes
+Episode: 261 | Mean Step Score:    -5.129 | Mean score over 100 evaluation episodes:    -5.908 | Time elapsed: 3 minutes
+Episode: 262 | Mean Step Score:    -0.745 | Time elapsed: 3 minutes
+Episode: 263 | Mean Step Score:   -38.947 | Time elapsed: 3 minutes
+Episode: 264 | Mean Step Score:    -6.197 | Time elapsed: 3 minutes
+Episode: 265 | Mean Step Score:    -1.607 | Time elapsed: 3 minutes
+Episode: 266 | Mean Step Score:    -2.211 | Time elapsed: 3 minutes
+Episode: 267 | Mean Step Score:    -7.134 | Time elapsed: 3 minutes
+Episode: 268 | Mean Step Score:   -65.112 | Time elapsed: 3 minutes
+Episode: 269 | Mean Step Score:    -2.814 | Time elapsed: 3 minutes
+Episode: 270 | Mean Step Score:    -3.830 | Time elapsed: 3 minutes
+Episode: 271 | Mean Step Score:    -9.376 | Mean score over 100 evaluation episodes:    -8.177 | Time elapsed: 4 minutes
+Episode: 272 | Mean Step Score:    -0.806 | Time elapsed: 4 minutes
+Episode: 273 | Mean Step Score:    -2.886 | Time elapsed: 4 minutes
+Episode: 274 | Mean Step Score:    -3.278 | Time elapsed: 4 minutes
+Episode: 275 | Mean Step Score:    -1.670 | Time elapsed: 4 minutes
+Episode: 276 | Mean Step Score:    -1.335 | Time elapsed: 4 minutes
+Episode: 277 | Mean Step Score:    -4.672 | Time elapsed: 4 minutes
+Episode: 278 | Mean Step Score:    -0.664 | Time elapsed: 4 minutes
+Episode: 279 | Mean Step Score:    -1.829 | Time elapsed: 4 minutes
+Episode: 280 | Mean Step Score:    -3.248 | Time elapsed: 4 minutes
+Episode: 281 | Mean Step Score:    -5.705 | Mean score over 100 evaluation episodes:    -5.610 | Time elapsed: 4 minutes
+Episode: 282 | Mean Step Score:    -2.391 | Time elapsed: 4 minutes
+Episode: 283 | Mean Step Score:    -4.435 | Time elapsed: 4 minutes
+Episode: 284 | Mean Step Score:    -3.347 | Time elapsed: 4 minutes
+Episode: 285 | Mean Step Score:    -6.827 | Time elapsed: 4 minutes
+Episode: 286 | Mean Step Score:    -0.880 | Time elapsed: 4 minutes
+Episode: 287 | Mean Step Score:   -20.534 | Time elapsed: 4 minutes
+Episode: 288 | Mean Step Score:    -2.109 | Time elapsed: 4 minutes
+Episode: 289 | Mean Step Score:    -9.006 | Time elapsed: 4 minutes
+Episode: 290 | Mean Step Score:    -2.235 | Time elapsed: 4 minutes
+Episode: 291 | Mean Step Score:   -27.032 | Mean score over 100 evaluation episodes:    -5.222 | Time elapsed: 4 minutes
+Episode: 292 | Mean Step Score:    -8.522 | Time elapsed: 4 minutes
+Episode: 293 | Mean Step Score:   -13.789 | Time elapsed: 4 minutes
+Episode: 294 | Mean Step Score:   -16.655 | Time elapsed: 4 minutes
+Episode: 295 | Mean Step Score:    -2.828 | Time elapsed: 4 minutes
+Episode: 296 | Mean Step Score:    -1.656 | Time elapsed: 4 minutes
+Episode: 297 | Mean Step Score:    -4.464 | Time elapsed: 4 minutes
+Episode: 298 | Mean Step Score:    -0.820 | Time elapsed: 4 minutes
+Episode: 299 | Mean Step Score:    -5.325 | Time elapsed: 4 minutes
+Episode: 300 | Mean Step Score:    -8.707 | Time elapsed: 4 minutes
+Episode: 301 | Mean Step Score:    -6.302 | Mean score over 100 evaluation episodes:    -6.306 | Time elapsed: 4 minutes
+Episode: 302 | Mean Step Score:    -2.258 | Time elapsed: 4 minutes
+Episode: 303 | Mean Step Score:    -5.125 | Time elapsed: 4 minutes
+Episode: 304 | Mean Step Score:    -9.027 | Time elapsed: 4 minutes
+Episode: 305 | Mean Step Score:    -4.989 | Time elapsed: 4 minutes
+Episode: 306 | Mean Step Score:    -0.650 | Time elapsed: 4 minutes
+Episode: 307 | Mean Step Score:    -0.105 | Time elapsed: 4 minutes
+Episode: 308 | Mean Step Score:    -2.872 | Time elapsed: 4 minutes
+Episode: 309 | Mean Step Score:    -3.759 | Time elapsed: 4 minutes
+Episode: 310 | Mean Step Score:    -9.817 | Time elapsed: 4 minutes
+Episode: 311 | Mean Step Score:    -5.993 | Mean score over 100 evaluation episodes:    -6.401 | Time elapsed: 4 minutes
+Episode: 312 | Mean Step Score:    -5.757 | Time elapsed: 4 minutes
+Episode: 313 | Mean Step Score:    -3.960 | Time elapsed: 4 minutes
+Episode: 314 | Mean Step Score:    -4.546 | Time elapsed: 4 minutes
+Episode: 315 | Mean Step Score:    -5.416 | Time elapsed: 4 minutes
+Episode: 316 | Mean Step Score:   -20.355 | Time elapsed: 4 minutes
+Episode: 317 | Mean Step Score:   -21.834 | Time elapsed: 4 minutes
+Episode: 318 | Mean Step Score:    -5.496 | Time elapsed: 4 minutes
+Episode: 319 | Mean Step Score:    -0.506 | Time elapsed: 4 minutes
+Episode: 320 | Mean Step Score:    -1.873 | Time elapsed: 4 minutes
+Episode: 321 | Mean Step Score:    -0.681 | Mean score over 100 evaluation episodes:    -4.943 | Time elapsed: 4 minutes
+Episode: 322 | Mean Step Score:    -4.793 | Time elapsed: 4 minutes
+Episode: 323 | Mean Step Score:    -1.617 | Time elapsed: 4 minutes
+Episode: 324 | Mean Step Score:    -3.126 | Time elapsed: 4 minutes
+Episode: 325 | Mean Step Score:    -3.376 | Time elapsed: 4 minutes
+Episode: 326 | Mean Step Score:    -9.119 | Time elapsed: 4 minutes
+Episode: 327 | Mean Step Score:    -5.472 | Time elapsed: 4 minutes
+Episode: 328 | Mean Step Score:    -0.320 | Time elapsed: 4 minutes
+Episode: 329 | Mean Step Score:    -7.931 | Time elapsed: 4 minutes
+Episode: 330 | Mean Step Score:    -3.299 | Time elapsed: 4 minutes
+Episode: 331 | Mean Step Score:    -0.385 | Mean score over 100 evaluation episodes:    -7.086 | Time elapsed: 4 minutes
+Episode: 332 | Mean Step Score:    -3.165 | Time elapsed: 4 minutes
+Episode: 333 | Mean Step Score:    -9.184 | Time elapsed: 4 minutes
+Episode: 334 | Mean Step Score:    -4.249 | Time elapsed: 4 minutes
+Episode: 335 | Mean Step Score:    -3.281 | Time elapsed: 4 minutes
+Episode: 336 | Mean Step Score:    -4.205 | Time elapsed: 4 minutes
+Episode: 337 | Mean Step Score:    -1.081 | Time elapsed: 4 minutes
+Episode: 338 | Mean Step Score:    -4.832 | Time elapsed: 4 minutes
+Episode: 339 | Mean Step Score:    -1.918 | Time elapsed: 4 minutes
+Episode: 340 | Mean Step Score:    -9.972 | Time elapsed: 4 minutes
+Episode: 341 | Mean Step Score:    -3.504 | Mean score over 100 evaluation episodes:    -5.383 | Time elapsed: 4 minutes
+Episode: 342 | Mean Step Score:   -15.009 | Time elapsed: 4 minutes
+Episode: 343 | Mean Step Score:     0.115 | Time elapsed: 4 minutes
+Episode: 344 | Mean Step Score:    -3.685 | Time elapsed: 4 minutes
+Episode: 345 | Mean Step Score:     0.041 | Time elapsed: 4 minutes
+Episode: 346 | Mean Step Score:    -0.440 | Time elapsed: 4 minutes
+Episode: 347 | Mean Step Score:     0.055 | Time elapsed: 4 minutes
+Episode: 348 | Mean Step Score:    -4.574 | Time elapsed: 4 minutes
+Episode: 349 | Mean Step Score:    -0.552 | Time elapsed: 4 minutes
+Episode: 350 | Mean Step Score:    -3.978 | Time elapsed: 4 minutes
+Episode: 351 | Mean Step Score:     0.083 | Mean score over 100 evaluation episodes:    -4.401 | Time elapsed: 4 minutes
+Episode: 352 | Mean Step Score:    -3.121 | Time elapsed: 4 minutes
+Episode: 353 | Mean Step Score:    -0.190 | Time elapsed: 4 minutes
+Episode: 354 | Mean Step Score:    -0.338 | Time elapsed: 4 minutes
+Episode: 355 | Mean Step Score:    -1.738 | Time elapsed: 4 minutes
+Episode: 356 | Mean Step Score:    -2.281 | Time elapsed: 4 minutes
+Episode: 357 | Mean Step Score:    -2.119 | Time elapsed: 4 minutes
+Episode: 358 | Mean Step Score:     0.033 | Time elapsed: 4 minutes
+Episode: 359 | Mean Step Score:     0.115 | Time elapsed: 4 minutes
+Episode: 360 | Mean Step Score:    -6.481 | Time elapsed: 4 minutes
+Episode: 361 | Mean Step Score:     0.002 | Mean score over 100 evaluation episodes:    -5.394 | Time elapsed: 4 minutes
+Episode: 362 | Mean Step Score:    -1.266 | Time elapsed: 4 minutes
+Episode: 363 | Mean Step Score:    -1.415 | Time elapsed: 4 minutes
+Episode: 364 | Mean Step Score:    -0.869 | Time elapsed: 4 minutes
+Episode: 365 | Mean Step Score:    -0.160 | Time elapsed: 4 minutes
+Episode: 366 | Mean Step Score:     0.164 | Time elapsed: 4 minutes
+Episode: 367 | Mean Step Score:    -0.093 | Time elapsed: 5 minutes
+Episode: 368 | Mean Step Score:    -6.050 | Time elapsed: 5 minutes
+Episode: 369 | Mean Step Score:     0.162 | Time elapsed: 5 minutes
+Episode: 370 | Mean Step Score:    -4.214 | Time elapsed: 5 minutes
+Episode: 371 | Mean Step Score:    -0.301 | Mean score over 100 evaluation episodes:    -4.326 | Time elapsed: 5 minutes
+Episode: 372 | Mean Step Score:    -1.311 | Time elapsed: 5 minutes
+Episode: 373 | Mean Step Score:    -3.369 | Time elapsed: 5 minutes
+Episode: 374 | Mean Step Score:    -1.279 | Time elapsed: 5 minutes
+Episode: 375 | Mean Step Score:    -0.345 | Time elapsed: 5 minutes
+Episode: 376 | Mean Step Score:    -4.209 | Time elapsed: 5 minutes
+Episode: 377 | Mean Step Score:    -0.405 | Time elapsed: 5 minutes
+Episode: 378 | Mean Step Score:   -10.238 | Time elapsed: 5 minutes
+Episode: 379 | Mean Step Score:     0.009 | Time elapsed: 5 minutes
+Episode: 380 | Mean Step Score:    -0.514 | Time elapsed: 5 minutes
+Episode: 381 | Mean Step Score:     0.192 | Mean score over 100 evaluation episodes:    -3.909 | Time elapsed: 5 minutes
+Episode: 382 | Mean Step Score:    -3.721 | Time elapsed: 5 minutes
+Episode: 383 | Mean Step Score:     0.042 | Time elapsed: 5 minutes
+Episode: 384 | Mean Step Score:    -2.033 | Time elapsed: 5 minutes
+Episode: 385 | Mean Step Score:    -5.210 | Time elapsed: 5 minutes
+Episode: 386 | Mean Step Score:    -4.060 | Time elapsed: 5 minutes
+Episode: 387 | Mean Step Score:    -1.145 | Time elapsed: 5 minutes
+Episode: 388 | Mean Step Score:    -1.716 | Time elapsed: 5 minutes
+Episode: 389 | Mean Step Score:     0.095 | Time elapsed: 5 minutes
+Episode: 390 | Mean Step Score:    -6.227 | Time elapsed: 5 minutes
+Episode: 391 | Mean Step Score:    -1.681 | Mean score over 100 evaluation episodes:    -3.425 | Time elapsed: 5 minutes
+Episode: 392 | Mean Step Score:    -5.201 | Time elapsed: 5 minutes
+Episode: 393 | Mean Step Score:    -0.620 | Time elapsed: 5 minutes
+Episode: 394 | Mean Step Score:     0.250 | Time elapsed: 5 minutes
+Episode: 395 | Mean Step Score:     0.195 | Time elapsed: 5 minutes
+Episode: 396 | Mean Step Score:   -28.753 | Time elapsed: 5 minutes
+Episode: 397 | Mean Step Score:     0.241 | Time elapsed: 5 minutes
+Episode: 398 | Mean Step Score:     0.236 | Time elapsed: 5 minutes
+Episode: 399 | Mean Step Score:    -1.638 | Time elapsed: 5 minutes
+Episode: 400 | Mean Step Score:     0.196 | Time elapsed: 5 minutes
+Episode: 401 | Mean Step Score:    -0.985 | Mean score over 100 evaluation episodes:    -2.907 | Time elapsed: 5 minutes
+Episode: 402 | Mean Step Score:     0.070 | Time elapsed: 5 minutes
+Episode: 403 | Mean Step Score:   -22.254 | Time elapsed: 5 minutes
+Episode: 404 | Mean Step Score:     0.129 | Time elapsed: 5 minutes
+Episode: 405 | Mean Step Score:    -1.028 | Time elapsed: 5 minutes
+Episode: 406 | Mean Step Score:     0.229 | Time elapsed: 5 minutes
+Episode: 407 | Mean Step Score:    -9.464 | Time elapsed: 5 minutes
+Episode: 408 | Mean Step Score:     0.238 | Time elapsed: 5 minutes
+Episode: 409 | Mean Step Score:     0.258 | Time elapsed: 5 minutes
+Episode: 410 | Mean Step Score:    -0.535 | Time elapsed: 5 minutes
+Episode: 411 | Mean Step Score:     0.228 | Mean score over 100 evaluation episodes:    -2.243 | Time elapsed: 5 minutes
+Episode: 412 | Mean Step Score:    -0.101 | Time elapsed: 5 minutes
+Episode: 413 | Mean Step Score:     0.205 | Time elapsed: 5 minutes
+Episode: 414 | Mean Step Score:     0.144 | Time elapsed: 5 minutes
+Episode: 415 | Mean Step Score:    -3.457 | Time elapsed: 5 minutes
+Episode: 416 | Mean Step Score:     0.198 | Time elapsed: 5 minutes
+Episode: 417 | Mean Step Score:     0.130 | Time elapsed: 5 minutes
+Episode: 418 | Mean Step Score:     0.080 | Time elapsed: 5 minutes
+Episode: 419 | Mean Step Score:     0.137 | Time elapsed: 5 minutes
+Episode: 420 | Mean Step Score:     0.213 | Time elapsed: 5 minutes
+Episode: 421 | Mean Step Score:     0.064 | Mean score over 100 evaluation episodes:    -1.747 | Time elapsed: 5 minutes
+Episode: 422 | Mean Step Score:     0.221 | Time elapsed: 5 minutes
+Episode: 423 | Mean Step Score:     0.189 | Time elapsed: 5 minutes
+Episode: 424 | Mean Step Score:     0.134 | Time elapsed: 5 minutes
+Episode: 425 | Mean Step Score:     0.201 | Time elapsed: 5 minutes
+Episode: 426 | Mean Step Score:     0.115 | Time elapsed: 5 minutes
+Episode: 427 | Mean Step Score:     0.125 | Time elapsed: 5 minutes
+Episode: 428 | Mean Step Score:     0.175 | Time elapsed: 5 minutes
+Episode: 429 | Mean Step Score:     0.215 | Time elapsed: 5 minutes
+Episode: 430 | Mean Step Score:     0.075 | Time elapsed: 5 minutes
+Episode: 431 | Mean Step Score:    -3.959 | Mean score over 100 evaluation episodes:    -1.248 | Time elapsed: 5 minutes
+Episode: 432 | Mean Step Score:     0.101 | Time elapsed: 5 minutes
+Episode: 433 | Mean Step Score:     0.195 | Time elapsed: 5 minutes
+Episode: 434 | Mean Step Score:    -0.354 | Time elapsed: 5 minutes
+Episode: 435 | Mean Step Score:     0.241 | Time elapsed: 5 minutes
+Episode: 436 | Mean Step Score:    -0.205 | Time elapsed: 5 minutes
+Episode: 437 | Mean Step Score:     0.090 | Time elapsed: 5 minutes
+Episode: 438 | Mean Step Score:     0.213 | Time elapsed: 5 minutes
+Episode: 439 | Mean Step Score:     0.188 | Time elapsed: 5 minutes
+Episode: 440 | Mean Step Score:    -4.268 | Time elapsed: 5 minutes
+Episode: 441 | Mean Step Score:    -3.517 | Mean score over 100 evaluation episodes:    -0.848 | Time elapsed: 5 minutes
+Episode: 442 | Mean Step Score:     0.238 | Time elapsed: 5 minutes
+Episode: 443 | Mean Step Score:     0.259 | Time elapsed: 5 minutes
+Episode: 444 | Mean Step Score:    -2.592 | Time elapsed: 5 minutes
+Episode: 445 | Mean Step Score:     0.072 | Time elapsed: 5 minutes
+Episode: 446 | Mean Step Score:     0.229 | Time elapsed: 5 minutes
+Episode: 447 | Mean Step Score:    -0.118 | Time elapsed: 5 minutes
+Episode: 448 | Mean Step Score:    -4.487 | Time elapsed: 5 minutes
+Episode: 449 | Mean Step Score:    -2.076 | Time elapsed: 6 minutes
+Episode: 450 | Mean Step Score:     0.099 | Time elapsed: 6 minutes
+Episode: 451 | Mean Step Score:    -3.541 | Mean score over 100 evaluation episodes:    -4.621 | Time elapsed: 6 minutes
+Episode: 452 | Mean Step Score:    -6.612 | Time elapsed: 6 minutes
+Episode: 453 | Mean Step Score:    -5.677 | Time elapsed: 6 minutes
+Episode: 454 | Mean Step Score:    -3.379 | Time elapsed: 6 minutes
+Episode: 455 | Mean Step Score:    -1.799 | Time elapsed: 6 minutes
+Episode: 456 | Mean Step Score:    -2.572 | Time elapsed: 6 minutes
+Episode: 457 | Mean Step Score:   -37.882 | Time elapsed: 6 minutes
+Episode: 458 | Mean Step Score:    -2.934 | Time elapsed: 6 minutes
+Episode: 459 | Mean Step Score:    -3.994 | Time elapsed: 6 minutes
+Episode: 460 | Mean Step Score:    -2.693 | Time elapsed: 6 minutes
+Episode: 461 | Mean Step Score:    -2.263 | Mean score over 100 evaluation episodes:    -4.246 | Time elapsed: 6 minutes
+Episode: 462 | Mean Step Score:    -2.643 | Time elapsed: 6 minutes
+Episode: 463 | Mean Step Score:    -3.017 | Time elapsed: 6 minutes
+Episode: 464 | Mean Step Score:    -4.167 | Time elapsed: 6 minutes
+Episode: 465 | Mean Step Score:     0.095 | Time elapsed: 6 minutes
+Episode: 466 | Mean Step Score:    -4.666 | Time elapsed: 6 minutes
+Episode: 467 | Mean Step Score:    -6.880 | Time elapsed: 6 minutes
+Episode: 468 | Mean Step Score:    -4.644 | Time elapsed: 6 minutes
+Episode: 469 | Mean Step Score:    -3.928 | Time elapsed: 6 minutes
+Episode: 470 | Mean Step Score:     0.206 | Time elapsed: 6 minutes
+Episode: 471 | Mean Step Score:    -4.564 | Mean score over 100 evaluation episodes:    -7.835 | Time elapsed: 6 minutes
+Episode: 472 | Mean Step Score:    -3.160 | Time elapsed: 6 minutes
+Episode: 473 | Mean Step Score:    -3.342 | Time elapsed: 6 minutes
+Episode: 474 | Mean Step Score:    -1.755 | Time elapsed: 6 minutes
+Episode: 475 | Mean Step Score:   -18.982 | Time elapsed: 6 minutes
+Episode: 476 | Mean Step Score:    -4.018 | Time elapsed: 6 minutes
+Episode: 477 | Mean Step Score:    -3.743 | Time elapsed: 6 minutes
+Episode: 478 | Mean Step Score:    -2.108 | Time elapsed: 6 minutes
+Episode: 479 | Mean Step Score:    -6.405 | Time elapsed: 6 minutes
+Episode: 480 | Mean Step Score:    -2.500 | Time elapsed: 6 minutes
+Episode: 481 | Mean Step Score:   -58.285 | Mean score over 100 evaluation episodes:   -12.542 | Time elapsed: 6 minutes
+Episode: 482 | Mean Step Score:    -3.357 | Time elapsed: 6 minutes
+Episode: 483 | Mean Step Score:    -5.372 | Time elapsed: 6 minutes
+Episode: 484 | Mean Step Score:    -3.669 | Time elapsed: 6 minutes
+Episode: 485 | Mean Step Score:    -1.872 | Time elapsed: 6 minutes
+Episode: 486 | Mean Step Score:   -12.122 | Time elapsed: 6 minutes
+Episode: 487 | Mean Step Score:   -11.735 | Time elapsed: 6 minutes
+Episode: 488 | Mean Step Score:   -86.691 | Time elapsed: 6 minutes
+Episode: 489 | Mean Step Score:    -3.809 | Time elapsed: 6 minutes
+Episode: 490 | Mean Step Score:   -13.910 | Time elapsed: 6 minutes
+Episode: 491 | Mean Step Score:    -4.401 | Mean score over 100 evaluation episodes:   -15.307 | Time elapsed: 6 minutes
+Episode: 492 | Mean Step Score:   -26.534 | Time elapsed: 6 minutes
+Episode: 493 | Mean Step Score:   -47.091 | Time elapsed: 6 minutes
+Episode: 494 | Mean Step Score:    -2.761 | Time elapsed: 6 minutes
+Episode: 495 | Mean Step Score:    -6.733 | Time elapsed: 6 minutes
+Episode: 496 | Mean Step Score:   -40.054 | Time elapsed: 6 minutes
+Episode: 497 | Mean Step Score:   -15.290 | Time elapsed: 6 minutes
+Episode: 498 | Mean Step Score:    -8.173 | Time elapsed: 6 minutes
+Episode: 499 | Mean Step Score:    -6.133 | Time elapsed: 6 minutes
+Episode: 500 | Mean Step Score:    -2.893 | Time elapsed: 6 minutes
+Episode: 501 | Mean Step Score:    -4.014 | Mean score over 100 evaluation episodes:   -15.330 | Time elapsed: 6 minutes
+Episode: 502 | Mean Step Score:    -6.926 | Time elapsed: 6 minutes
+Episode: 503 | Mean Step Score:    -2.933 | Time elapsed: 6 minutes
+Episode: 504 | Mean Step Score:   -35.918 | Time elapsed: 6 minutes
+Episode: 505 | Mean Step Score:    -5.063 | Time elapsed: 6 minutes
+Episode: 506 | Mean Step Score:   -21.946 | Time elapsed: 6 minutes
+Episode: 507 | Mean Step Score:   -69.731 | Time elapsed: 6 minutes
+Episode: 508 | Mean Step Score:    -4.907 | Time elapsed: 6 minutes
+Episode: 509 | Mean Step Score:    -2.880 | Time elapsed: 6 minutes
+Episode: 510 | Mean Step Score:    -8.658 | Time elapsed: 6 minutes
+Episode: 511 | Mean Step Score:    -6.505 | Mean score over 100 evaluation episodes:   -12.397 | Time elapsed: 6 minutes
+Episode: 512 | Mean Step Score:    -4.579 | Time elapsed: 6 minutes
+Episode: 513 | Mean Step Score:    -2.598 | Time elapsed: 6 minutes
+Episode: 514 | Mean Step Score:   -56.303 | Time elapsed: 6 minutes
+Episode: 515 | Mean Step Score:    -5.804 | Time elapsed: 6 minutes
+Episode: 516 | Mean Step Score:   -10.970 | Time elapsed: 6 minutes
+Episode: 517 | Mean Step Score:    -3.728 | Time elapsed: 6 minutes
+Episode: 518 | Mean Step Score:    -1.746 | Time elapsed: 6 minutes
+Episode: 519 | Mean Step Score:    -9.483 | Time elapsed: 6 minutes
+Episode: 520 | Mean Step Score:    -3.885 | Time elapsed: 6 minutes
+Episode: 521 | Mean Step Score:    -2.393 | Mean score over 100 evaluation episodes:    -8.932 | Time elapsed: 6 minutes
+Episode: 522 | Mean Step Score:    -7.131 | Time elapsed: 6 minutes
+Episode: 523 | Mean Step Score:    -5.598 | Time elapsed: 6 minutes
+Episode: 524 | Mean Step Score:    -6.667 | Time elapsed: 6 minutes
+Episode: 525 | Mean Step Score:    -2.678 | Time elapsed: 6 minutes
+Episode: 526 | Mean Step Score:   -27.667 | Time elapsed: 6 minutes
+Episode: 527 | Mean Step Score:    -5.886 | Time elapsed: 6 minutes
+Episode: 528 | Mean Step Score:    -3.798 | Time elapsed: 6 minutes
+Episode: 529 | Mean Step Score:    -1.953 | Time elapsed: 6 minutes
+Episode: 530 | Mean Step Score:    -4.194 | Time elapsed: 6 minutes
+Episode: 531 | Mean Step Score:    -4.181 | Mean score over 100 evaluation episodes:    -6.930 | Time elapsed: 6 minutes
+Episode: 532 | Mean Step Score:    -2.122 | Time elapsed: 6 minutes
+Episode: 533 | Mean Step Score:    -4.301 | Time elapsed: 6 minutes
+Episode: 534 | Mean Step Score:     0.116 | Time elapsed: 6 minutes
+Episode: 535 | Mean Step Score:    -0.316 | Time elapsed: 6 minutes
+Episode: 536 | Mean Step Score:    -2.170 | Time elapsed: 6 minutes
+Episode: 537 | Mean Step Score:    -3.820 | Time elapsed: 6 minutes
+Episode: 538 | Mean Step Score:    -5.326 | Time elapsed: 6 minutes
+Episode: 539 | Mean Step Score:    -1.616 | Time elapsed: 6 minutes
+Episode: 540 | Mean Step Score:    -6.336 | Time elapsed: 6 minutes
+Episode: 541 | Mean Step Score:    -3.041 | Mean score over 100 evaluation episodes:    -7.492 | Time elapsed: 6 minutes
+Episode: 542 | Mean Step Score:   -24.207 | Time elapsed: 6 minutes
+Episode: 543 | Mean Step Score:    -1.411 | Time elapsed: 6 minutes
+Episode: 544 | Mean Step Score:    -4.156 | Time elapsed: 6 minutes
+Episode: 545 | Mean Step Score:    -7.474 | Time elapsed: 6 minutes
+Episode: 546 | Mean Step Score:    -5.179 | Time elapsed: 6 minutes
+Episode: 547 | Mean Step Score:   -22.458 | Time elapsed: 6 minutes
+Episode: 548 | Mean Step Score:    -3.414 | Time elapsed: 6 minutes
+Episode: 549 | Mean Step Score:     0.050 | Time elapsed: 6 minutes
+Episode: 550 | Mean Step Score:     0.278 | Time elapsed: 6 minutes
+Episode: 551 | Mean Step Score:    -2.374 | Mean score over 100 evaluation episodes:    -4.534 | Time elapsed: 6 minutes
+Episode: 552 | Mean Step Score:   -44.496 | Time elapsed: 6 minutes
+Episode: 553 | Mean Step Score:   -14.175 | Time elapsed: 6 minutes
+Episode: 554 | Mean Step Score:    -2.115 | Time elapsed: 6 minutes
+Episode: 555 | Mean Step Score:    -2.826 | Time elapsed: 6 minutes
+Episode: 556 | Mean Step Score:    -3.470 | Time elapsed: 6 minutes
+Episode: 557 | Mean Step Score:   -23.210 | Time elapsed: 6 minutes
+Episode: 558 | Mean Step Score:    -4.377 | Time elapsed: 6 minutes
+Episode: 559 | Mean Step Score:    -2.704 | Time elapsed: 6 minutes
+Episode: 560 | Mean Step Score:    -4.164 | Time elapsed: 6 minutes
+Episode: 561 | Mean Step Score:     0.204 | Mean score over 100 evaluation episodes:    -5.803 | Time elapsed: 6 minutes
+Episode: 562 | Mean Step Score:    -4.461 | Time elapsed: 6 minutes
+Episode: 563 | Mean Step Score:    -5.616 | Time elapsed: 6 minutes
+Episode: 564 | Mean Step Score:   -63.002 | Time elapsed: 6 minutes
+Episode: 565 | Mean Step Score:    -6.869 | Time elapsed: 6 minutes
+Episode: 566 | Mean Step Score:    -4.571 | Time elapsed: 6 minutes
+Episode: 567 | Mean Step Score:    -1.624 | Time elapsed: 6 minutes
+Episode: 568 | Mean Step Score:    -4.806 | Time elapsed: 6 minutes
+Episode: 569 | Mean Step Score:    -3.337 | Time elapsed: 6 minutes
+Episode: 570 | Mean Step Score:    -4.771 | Time elapsed: 6 minutes
+Episode: 571 | Mean Step Score:   -13.697 | Mean score over 100 evaluation episodes:    -3.662 | Time elapsed: 6 minutes
+Episode: 572 | Mean Step Score:    -2.175 | Time elapsed: 6 minutes
+Episode: 573 | Mean Step Score:    -2.869 | Time elapsed: 6 minutes
+Episode: 574 | Mean Step Score:     0.177 | Time elapsed: 6 minutes
+Episode: 575 | Mean Step Score:    -3.847 | Time elapsed: 6 minutes
+Episode: 576 | Mean Step Score:    -3.025 | Time elapsed: 6 minutes
+Episode: 577 | Mean Step Score:    -1.208 | Time elapsed: 6 minutes
+Episode: 578 | Mean Step Score:    -0.401 | Time elapsed: 6 minutes
+Episode: 579 | Mean Step Score:    -0.005 | Time elapsed: 6 minutes
+Episode: 580 | Mean Step Score:   -14.796 | Time elapsed: 6 minutes
+Episode: 581 | Mean Step Score:    -1.954 | Mean score over 100 evaluation episodes:    -4.808 | Time elapsed: 6 minutes
+Episode: 582 | Mean Step Score:     0.146 | Time elapsed: 7 minutes
+Episode: 583 | Mean Step Score:    -1.216 | Time elapsed: 7 minutes
+Episode: 584 | Mean Step Score:    -3.470 | Time elapsed: 7 minutes
+Episode: 585 | Mean Step Score:    -0.151 | Time elapsed: 7 minutes
+Episode: 586 | Mean Step Score:    -4.455 | Time elapsed: 7 minutes
+Episode: 587 | Mean Step Score:    -3.701 | Time elapsed: 7 minutes
+Episode: 588 | Mean Step Score:    -3.373 | Time elapsed: 7 minutes
+Episode: 589 | Mean Step Score:     0.151 | Time elapsed: 7 minutes
+Episode: 590 | Mean Step Score:     0.050 | Time elapsed: 7 minutes
+Episode: 591 | Mean Step Score:    -1.398 | Mean score over 100 evaluation episodes:    -6.116 | Time elapsed: 7 minutes
+Episode: 592 | Mean Step Score:    -5.754 | Time elapsed: 7 minutes
+Episode: 593 | Mean Step Score:    -0.524 | Time elapsed: 7 minutes
+Episode: 594 | Mean Step Score:    -1.572 | Time elapsed: 7 minutes
+Episode: 595 | Mean Step Score:   -26.387 | Time elapsed: 7 minutes
+Episode: 596 | Mean Step Score:   -15.053 | Time elapsed: 7 minutes
+Episode: 597 | Mean Step Score:   -42.761 | Time elapsed: 7 minutes
+Episode: 598 | Mean Step Score:    -8.700 | Time elapsed: 7 minutes
+Episode: 599 | Mean Step Score:    -0.073 | Time elapsed: 7 minutes
+Episode: 600 | Mean Step Score:   -12.104 | Time elapsed: 7 minutes
+Episode: 601 | Mean Step Score:    -4.234 | Mean score over 100 evaluation episodes:    -5.119 | Time elapsed: 7 minutes
+Episode: 602 | Mean Step Score:   -31.326 | Time elapsed: 7 minutes
+Episode: 603 | Mean Step Score:    -1.221 | Time elapsed: 7 minutes
+Episode: 604 | Mean Step Score:    -5.753 | Time elapsed: 7 minutes
+Episode: 605 | Mean Step Score:   -26.753 | Time elapsed: 7 minutes
+Episode: 606 | Mean Step Score:   -22.194 | Time elapsed: 7 minutes
+Episode: 607 | Mean Step Score:   -26.091 | Time elapsed: 7 minutes
+Episode: 608 | Mean Step Score:    -3.445 | Time elapsed: 7 minutes
+Episode: 609 | Mean Step Score:    -5.510 | Time elapsed: 7 minutes
+Episode: 610 | Mean Step Score:    -4.424 | Time elapsed: 7 minutes
+Episode: 611 | Mean Step Score:    -2.127 | Mean score over 100 evaluation episodes:    -6.023 | Time elapsed: 7 minutes
+Episode: 612 | Mean Step Score:    -7.748 | Time elapsed: 7 minutes
+Episode: 613 | Mean Step Score:    -4.299 | Time elapsed: 7 minutes
+Episode: 614 | Mean Step Score:   -10.733 | Time elapsed: 7 minutes
+Episode: 615 | Mean Step Score:    -3.461 | Time elapsed: 7 minutes
+Episode: 616 | Mean Step Score:    -3.396 | Time elapsed: 7 minutes
+Episode: 617 | Mean Step Score:   -13.385 | Time elapsed: 7 minutes
+Episode: 618 | Mean Step Score:    -3.933 | Time elapsed: 7 minutes
+Episode: 619 | Mean Step Score:   -31.059 | Time elapsed: 7 minutes
+Episode: 620 | Mean Step Score:    -4.550 | Time elapsed: 7 minutes
+Episode: 621 | Mean Step Score:    -3.298 | Mean score over 100 evaluation episodes:    -7.949 | Time elapsed: 7 minutes
+Episode: 622 | Mean Step Score:    -2.295 | Time elapsed: 7 minutes
+Episode: 623 | Mean Step Score:   -11.023 | Time elapsed: 7 minutes
+Episode: 624 | Mean Step Score:    -6.580 | Time elapsed: 7 minutes
+Episode: 625 | Mean Step Score:    -5.731 | Time elapsed: 7 minutes
+Episode: 626 | Mean Step Score:    -9.185 | Time elapsed: 7 minutes
+Episode: 627 | Mean Step Score:    -2.786 | Time elapsed: 7 minutes
+Episode: 628 | Mean Step Score:    -2.670 | Time elapsed: 7 minutes
+Episode: 629 | Mean Step Score:    -1.439 | Time elapsed: 7 minutes
+Episode: 630 | Mean Step Score:   -14.219 | Time elapsed: 7 minutes
+Episode: 631 | Mean Step Score:    -8.807 | Mean score over 100 evaluation episodes:    -8.774 | Time elapsed: 7 minutes
+Episode: 632 | Mean Step Score:     0.243 | Time elapsed: 7 minutes
+Episode: 633 | Mean Step Score:    -4.496 | Time elapsed: 7 minutes
+Episode: 634 | Mean Step Score:    -4.285 | Time elapsed: 7 minutes
+Episode: 635 | Mean Step Score:    -3.089 | Time elapsed: 7 minutes
+Episode: 636 | Mean Step Score:    -5.854 | Time elapsed: 7 minutes
+Episode: 637 | Mean Step Score:    -3.688 | Time elapsed: 7 minutes
+Episode: 638 | Mean Step Score:    -2.435 | Time elapsed: 7 minutes
+Episode: 639 | Mean Step Score:    -2.984 | Time elapsed: 7 minutes
+Episode: 640 | Mean Step Score:    -3.048 | Time elapsed: 7 minutes
+Episode: 641 | Mean Step Score:    -5.756 | Mean score over 100 evaluation episodes:    -7.249 | Time elapsed: 7 minutes
+Episode: 642 | Mean Step Score:    -2.606 | Time elapsed: 7 minutes
+Episode: 643 | Mean Step Score:   -24.620 | Time elapsed: 7 minutes
+Episode: 644 | Mean Step Score:    -1.394 | Time elapsed: 7 minutes
+Episode: 645 | Mean Step Score:    -0.723 | Time elapsed: 7 minutes
+Episode: 646 | Mean Step Score:   -12.921 | Time elapsed: 7 minutes
+Episode: 647 | Mean Step Score:    -2.580 | Time elapsed: 7 minutes
+Episode: 648 | Mean Step Score:    -4.987 | Time elapsed: 7 minutes
+Episode: 649 | Mean Step Score:    -4.459 | Time elapsed: 7 minutes
+Episode: 650 | Mean Step Score:    -1.012 | Time elapsed: 7 minutes
+Episode: 651 | Mean Step Score:    -2.519 | Mean score over 100 evaluation episodes:    -8.360 | Time elapsed: 7 minutes
+Episode: 652 | Mean Step Score:    -1.515 | Time elapsed: 7 minutes
+Episode: 653 | Mean Step Score:    -3.281 | Time elapsed: 7 minutes
+Episode: 654 | Mean Step Score:    -2.301 | Time elapsed: 7 minutes
+Episode: 655 | Mean Step Score:    -3.283 | Time elapsed: 7 minutes
+Episode: 656 | Mean Step Score:    -3.601 | Time elapsed: 7 minutes
+Episode: 657 | Mean Step Score:    -1.291 | Time elapsed: 7 minutes
+Episode: 658 | Mean Step Score:    -6.572 | Time elapsed: 7 minutes
+Episode: 659 | Mean Step Score:    -5.531 | Time elapsed: 7 minutes
+Episode: 660 | Mean Step Score:    -8.933 | Time elapsed: 7 minutes
+Episode: 661 | Mean Step Score:    -3.904 | Mean score over 100 evaluation episodes:    -9.667 | Time elapsed: 7 minutes
+Episode: 662 | Mean Step Score:   -11.343 | Time elapsed: 7 minutes
+Episode: 663 | Mean Step Score:    -4.036 | Time elapsed: 7 minutes
+Episode: 664 | Mean Step Score:    -2.000 | Time elapsed: 7 minutes
+Episode: 665 | Mean Step Score:   -60.891 | Time elapsed: 7 minutes
+Episode: 666 | Mean Step Score:   -37.421 | Time elapsed: 7 minutes
+Episode: 667 | Mean Step Score:    -3.097 | Time elapsed: 7 minutes
+Episode: 668 | Mean Step Score:    -5.978 | Time elapsed: 7 minutes
+Episode: 669 | Mean Step Score:    -4.673 | Time elapsed: 7 minutes
+Episode: 670 | Mean Step Score:    -3.666 | Time elapsed: 7 minutes
+Episode: 671 | Mean Step Score:   -11.706 | Mean score over 100 evaluation episodes:    -7.470 | Time elapsed: 7 minutes
+Episode: 672 | Mean Step Score:    -6.093 | Time elapsed: 7 minutes
+Episode: 673 | Mean Step Score:    -2.626 | Time elapsed: 7 minutes
+Episode: 674 | Mean Step Score:    -3.062 | Time elapsed: 7 minutes
+Episode: 675 | Mean Step Score:   -52.018 | Time elapsed: 7 minutes
+Episode: 676 | Mean Step Score:    -4.877 | Time elapsed: 7 minutes
+Episode: 677 | Mean Step Score:    -6.577 | Time elapsed: 7 minutes
+Episode: 678 | Mean Step Score:    -2.577 | Time elapsed: 7 minutes
+Episode: 679 | Mean Step Score:    -6.248 | Time elapsed: 7 minutes
+Episode: 680 | Mean Step Score:   -10.659 | Time elapsed: 7 minutes
+Episode: 681 | Mean Step Score:    -6.169 | Mean score over 100 evaluation episodes:    -9.348 | Time elapsed: 7 minutes
+Episode: 682 | Mean Step Score:    -9.536 | Time elapsed: 7 minutes
+Episode: 683 | Mean Step Score:    -5.717 | Time elapsed: 7 minutes
+Episode: 684 | Mean Step Score:    -5.462 | Time elapsed: 7 minutes
+Episode: 685 | Mean Step Score:    -0.329 | Time elapsed: 7 minutes
+Episode: 686 | Mean Step Score:    -6.103 | Time elapsed: 7 minutes
+Episode: 687 | Mean Step Score:    -2.395 | Time elapsed: 7 minutes
+Episode: 688 | Mean Step Score:    -5.213 | Time elapsed: 7 minutes
+Episode: 689 | Mean Step Score:   -22.871 | Time elapsed: 7 minutes
+Episode: 690 | Mean Step Score:    -1.153 | Time elapsed: 7 minutes
+Episode: 691 | Mean Step Score:    -4.527 | Mean score over 100 evaluation episodes:    -7.232 | Time elapsed: 7 minutes
+Episode: 692 | Mean Step Score:    -5.256 | Time elapsed: 7 minutes
+Episode: 693 | Mean Step Score:    -4.430 | Time elapsed: 7 minutes
+Episode: 694 | Mean Step Score:    -4.421 | Time elapsed: 7 minutes
+Episode: 695 | Mean Step Score:    -6.892 | Time elapsed: 7 minutes
+Episode: 696 | Mean Step Score:    -4.703 | Time elapsed: 7 minutes
+Episode: 697 | Mean Step Score:    -6.321 | Time elapsed: 7 minutes
+Episode: 698 | Mean Step Score:    -5.870 | Time elapsed: 7 minutes
+Episode: 699 | Mean Step Score:    -6.070 | Time elapsed: 7 minutes
+Episode: 700 | Mean Step Score:    -6.660 | Time elapsed: 7 minutes
+Episode: 701 | Mean Step Score:    -6.479 | Mean score over 100 evaluation episodes:   -12.601 | Time elapsed: 7 minutes
+Episode: 702 | Mean Step Score:    -6.895 | Time elapsed: 7 minutes
+Episode: 703 | Mean Step Score:    -3.451 | Time elapsed: 8 minutes
+Episode: 704 | Mean Step Score:   -13.387 | Time elapsed: 8 minutes
+Episode: 705 | Mean Step Score:    -9.989 | Time elapsed: 8 minutes
+Episode: 706 | Mean Step Score:    -8.642 | Time elapsed: 8 minutes
+Episode: 707 | Mean Step Score:   -13.811 | Time elapsed: 8 minutes
+Episode: 708 | Mean Step Score:   -36.793 | Time elapsed: 8 minutes
+Episode: 709 | Mean Step Score:   -45.694 | Time elapsed: 8 minutes
+Episode: 710 | Mean Step Score:    -4.551 | Time elapsed: 8 minutes
+Episode: 711 | Mean Step Score:   -15.828 | Mean score over 100 evaluation episodes:    -7.888 | Time elapsed: 8 minutes
+Episode: 712 | Mean Step Score:   -11.102 | Time elapsed: 8 minutes
+Episode: 713 | Mean Step Score:   -18.464 | Time elapsed: 8 minutes
+Episode: 714 | Mean Step Score:    -7.505 | Time elapsed: 8 minutes
+Episode: 715 | Mean Step Score:    -1.981 | Time elapsed: 8 minutes
+Episode: 716 | Mean Step Score:    -9.229 | Time elapsed: 8 minutes
+Episode: 717 | Mean Step Score:   -24.513 | Time elapsed: 8 minutes
+Episode: 718 | Mean Step Score:   -20.549 | Time elapsed: 8 minutes
+Episode: 719 | Mean Step Score:   -24.632 | Time elapsed: 8 minutes
+Episode: 720 | Mean Step Score:   -61.295 | Time elapsed: 8 minutes
+Episode: 721 | Mean Step Score:    -9.782 | Mean score over 100 evaluation episodes:   -15.395 | Time elapsed: 8 minutes
+Episode: 722 | Mean Step Score:    -3.433 | Time elapsed: 8 minutes
+Episode: 723 | Mean Step Score:    -6.383 | Time elapsed: 8 minutes
+Episode: 724 | Mean Step Score:   -13.417 | Time elapsed: 8 minutes
+Episode: 725 | Mean Step Score:   -32.485 | Time elapsed: 8 minutes
+Episode: 726 | Mean Step Score:   -10.662 | Time elapsed: 8 minutes
+Episode: 727 | Mean Step Score:    -2.087 | Time elapsed: 8 minutes
+Episode: 728 | Mean Step Score:    -4.418 | Time elapsed: 8 minutes
+Episode: 729 | Mean Step Score:    -2.565 | Time elapsed: 8 minutes
+Episode: 730 | Mean Step Score:    -5.173 | Time elapsed: 8 minutes
+Episode: 731 | Mean Step Score:   -27.357 | Mean score over 100 evaluation episodes:    -8.908 | Time elapsed: 8 minutes
+Episode: 732 | Mean Step Score:    -5.276 | Time elapsed: 8 minutes
+Episode: 733 | Mean Step Score:   -10.085 | Time elapsed: 8 minutes
+Episode: 734 | Mean Step Score:   -20.590 | Time elapsed: 8 minutes
+Episode: 735 | Mean Step Score:    -5.579 | Time elapsed: 8 minutes
+Episode: 736 | Mean Step Score:    -8.522 | Time elapsed: 8 minutes
+Episode: 737 | Mean Step Score:    -2.700 | Time elapsed: 8 minutes
+Episode: 738 | Mean Step Score:   -37.309 | Time elapsed: 8 minutes
+Episode: 739 | Mean Step Score:    -9.823 | Time elapsed: 8 minutes
+Episode: 740 | Mean Step Score:    -4.987 | Time elapsed: 8 minutes
+Episode: 741 | Mean Step Score:    -8.858 | Mean score over 100 evaluation episodes:   -12.437 | Time elapsed: 8 minutes
+Episode: 742 | Mean Step Score:   -23.107 | Time elapsed: 8 minutes
+Episode: 743 | Mean Step Score:   -17.066 | Time elapsed: 8 minutes
+Episode: 744 | Mean Step Score:    -3.047 | Time elapsed: 8 minutes
+Episode: 745 | Mean Step Score:    -6.079 | Time elapsed: 8 minutes
+Episode: 746 | Mean Step Score:    -4.500 | Time elapsed: 8 minutes
+Episode: 747 | Mean Step Score:    -1.271 | Time elapsed: 8 minutes
+Episode: 748 | Mean Step Score:    -0.841 | Time elapsed: 8 minutes
+Episode: 749 | Mean Step Score:    -8.226 | Time elapsed: 8 minutes
+Episode: 750 | Mean Step Score:    -3.985 | Time elapsed: 8 minutes
+Episode: 751 | Mean Step Score:    -3.317 | Mean score over 100 evaluation episodes:    -9.042 | Time elapsed: 8 minutes
+Episode: 752 | Mean Step Score:   -40.030 | Time elapsed: 8 minutes
+Episode: 753 | Mean Step Score:   -11.449 | Time elapsed: 8 minutes
+Episode: 754 | Mean Step Score:    -4.629 | Time elapsed: 8 minutes
+Episode: 755 | Mean Step Score:   -12.196 | Time elapsed: 8 minutes
+Episode: 756 | Mean Step Score:    -2.148 | Time elapsed: 8 minutes
+Episode: 757 | Mean Step Score:   -31.092 | Time elapsed: 8 minutes
+Episode: 758 | Mean Step Score:   -12.568 | Time elapsed: 8 minutes
+Episode: 759 | Mean Step Score:    -2.882 | Time elapsed: 8 minutes
+Episode: 760 | Mean Step Score:    -7.203 | Time elapsed: 8 minutes
+Episode: 761 | Mean Step Score:    -9.360 | Mean score over 100 evaluation episodes:   -13.468 | Time elapsed: 8 minutes
+Episode: 762 | Mean Step Score:    -6.909 | Time elapsed: 8 minutes
+Episode: 763 | Mean Step Score:    -2.166 | Time elapsed: 8 minutes
+Episode: 764 | Mean Step Score:   -24.124 | Time elapsed: 8 minutes
+Episode: 765 | Mean Step Score:    -6.038 | Time elapsed: 8 minutes
+Episode: 766 | Mean Step Score:    -6.853 | Time elapsed: 8 minutes
+Episode: 767 | Mean Step Score:    -5.255 | Time elapsed: 8 minutes
+Episode: 768 | Mean Step Score:   -28.651 | Time elapsed: 8 minutes
+Episode: 769 | Mean Step Score:    -1.334 | Time elapsed: 8 minutes
+Episode: 770 | Mean Step Score:    -1.361 | Time elapsed: 8 minutes
+Episode: 771 | Mean Step Score:    -3.204 | Mean score over 100 evaluation episodes:    -9.203 | Time elapsed: 8 minutes
+Episode: 772 | Mean Step Score:    -3.074 | Time elapsed: 8 minutes
+Episode: 773 | Mean Step Score:    -2.975 | Time elapsed: 8 minutes
+Episode: 774 | Mean Step Score:    -4.674 | Time elapsed: 8 minutes
+Episode: 775 | Mean Step Score:    -5.049 | Time elapsed: 8 minutes
+Episode: 776 | Mean Step Score:    -2.197 | Time elapsed: 8 minutes
+Episode: 777 | Mean Step Score:    -8.102 | Time elapsed: 8 minutes
+Episode: 778 | Mean Step Score:    -2.671 | Time elapsed: 8 minutes
+Episode: 779 | Mean Step Score:    -6.834 | Time elapsed: 8 minutes
+Episode: 780 | Mean Step Score:   -15.189 | Time elapsed: 8 minutes
+Episode: 781 | Mean Step Score:    -2.131 | Mean score over 100 evaluation episodes:    -7.245 | Time elapsed: 8 minutes
+Episode: 782 | Mean Step Score:    -4.938 | Time elapsed: 8 minutes
+Episode: 783 | Mean Step Score:   -11.323 | Time elapsed: 8 minutes
+Episode: 784 | Mean Step Score:    -3.433 | Time elapsed: 8 minutes
+Episode: 785 | Mean Step Score:    -5.191 | Time elapsed: 8 minutes
+Episode: 786 | Mean Step Score:    -2.794 | Time elapsed: 8 minutes
+Episode: 787 | Mean Step Score:    -2.878 | Time elapsed: 8 minutes
+Episode: 788 | Mean Step Score:   -11.061 | Time elapsed: 8 minutes
+Episode: 789 | Mean Step Score:    -5.463 | Time elapsed: 8 minutes
+Episode: 790 | Mean Step Score:    -4.818 | Time elapsed: 8 minutes
+Episode: 791 | Mean Step Score:    -5.764 | Mean score over 100 evaluation episodes:    -7.761 | Time elapsed: 8 minutes
+Episode: 792 | Mean Step Score:    -6.971 | Time elapsed: 8 minutes
+Episode: 793 | Mean Step Score:   -42.566 | Time elapsed: 8 minutes
+Episode: 794 | Mean Step Score:    -4.996 | Time elapsed: 8 minutes
+Episode: 795 | Mean Step Score:    -9.368 | Time elapsed: 8 minutes
+Episode: 796 | Mean Step Score:    -1.847 | Time elapsed: 8 minutes
+Episode: 797 | Mean Step Score:    -1.487 | Time elapsed: 8 minutes
+Episode: 798 | Mean Step Score:    -4.988 | Time elapsed: 8 minutes
+Episode: 799 | Mean Step Score:    -5.701 | Time elapsed: 8 minutes
+Episode: 800 | Mean Step Score:   -13.484 | Time elapsed: 8 minutes
+Episode: 801 | Mean Step Score:    -4.964 | Mean score over 100 evaluation episodes:    -6.317 | Time elapsed: 8 minutes
+Episode: 802 | Mean Step Score:    -1.115 | Time elapsed: 8 minutes
+Episode: 803 | Mean Step Score:   -10.149 | Time elapsed: 8 minutes
+Episode: 804 | Mean Step Score:    -4.541 | Time elapsed: 8 minutes
+Episode: 805 | Mean Step Score:    -7.429 | Time elapsed: 8 minutes
+Episode: 806 | Mean Step Score:    -8.047 | Time elapsed: 8 minutes
+Episode: 807 | Mean Step Score:    -3.340 | Time elapsed: 8 minutes
+Episode: 808 | Mean Step Score:    -7.955 | Time elapsed: 8 minutes
+Episode: 809 | Mean Step Score:    -0.970 | Time elapsed: 8 minutes
+Episode: 810 | Mean Step Score:    -4.377 | Time elapsed: 8 minutes
+Episode: 811 | Mean Step Score:    -6.935 | Mean score over 100 evaluation episodes:    -6.813 | Time elapsed: 8 minutes
+Episode: 812 | Mean Step Score:    -0.007 | Time elapsed: 8 minutes
+Episode: 813 | Mean Step Score:    -3.070 | Time elapsed: 8 minutes
+Episode: 814 | Mean Step Score:    -4.105 | Time elapsed: 8 minutes
+Episode: 815 | Mean Step Score:    -1.727 | Time elapsed: 8 minutes
+Episode: 816 | Mean Step Score:    -1.392 | Time elapsed: 8 minutes
+Episode: 817 | Mean Step Score:    -7.962 | Time elapsed: 8 minutes
+Episode: 818 | Mean Step Score:    -7.519 | Time elapsed: 8 minutes
+Episode: 819 | Mean Step Score:    -9.524 | Time elapsed: 8 minutes
+Episode: 820 | Mean Step Score:    -3.302 | Time elapsed: 8 minutes
+Episode: 821 | Mean Step Score:    -6.636 | Mean score over 100 evaluation episodes:    -5.626 | Time elapsed: 8 minutes
+Episode: 822 | Mean Step Score:    -4.472 | Time elapsed: 8 minutes
+Episode: 823 | Mean Step Score:    -2.512 | Time elapsed: 8 minutes
+Episode: 824 | Mean Step Score:    -4.262 | Time elapsed: 8 minutes
+Episode: 825 | Mean Step Score:    -0.304 | Time elapsed: 8 minutes
+Episode: 826 | Mean Step Score:    -1.224 | Time elapsed: 8 minutes
+Episode: 827 | Mean Step Score:    -4.301 | Time elapsed: 8 minutes
+Episode: 828 | Mean Step Score:   -21.069 | Time elapsed: 8 minutes
+Episode: 829 | Mean Step Score:    -6.660 | Time elapsed: 8 minutes
+Episode: 830 | Mean Step Score:    -2.756 | Time elapsed: 8 minutes
+Episode: 831 | Mean Step Score:    -0.920 | Mean score over 100 evaluation episodes:    -5.348 | Time elapsed: 8 minutes
+Episode: 832 | Mean Step Score:    -8.447 | Time elapsed: 8 minutes
+Episode: 833 | Mean Step Score:   -27.398 | Time elapsed: 8 minutes
+Episode: 834 | Mean Step Score:    -9.980 | Time elapsed: 8 minutes
+Episode: 835 | Mean Step Score:    -2.859 | Time elapsed: 9 minutes
+Episode: 836 | Mean Step Score:    -4.047 | Time elapsed: 9 minutes
+Episode: 837 | Mean Step Score:   -47.971 | Time elapsed: 9 minutes
+Episode: 838 | Mean Step Score:    -2.210 | Time elapsed: 9 minutes
+Episode: 839 | Mean Step Score:    -4.843 | Time elapsed: 9 minutes
+Episode: 840 | Mean Step Score:    -5.037 | Time elapsed: 9 minutes
+Episode: 841 | Mean Step Score:    -7.708 | Mean score over 100 evaluation episodes:    -5.387 | Time elapsed: 9 minutes
+Episode: 842 | Mean Step Score:    -7.600 | Time elapsed: 9 minutes
+Episode: 843 | Mean Step Score:    -1.167 | Time elapsed: 9 minutes
+Episode: 844 | Mean Step Score:    -3.010 | Time elapsed: 9 minutes
+Episode: 845 | Mean Step Score:   -41.540 | Time elapsed: 9 minutes
+Episode: 846 | Mean Step Score:    -0.908 | Time elapsed: 9 minutes
+Episode: 847 | Mean Step Score:    -7.374 | Time elapsed: 9 minutes
+Episode: 848 | Mean Step Score:    -6.039 | Time elapsed: 9 minutes
+Episode: 849 | Mean Step Score:    -4.576 | Time elapsed: 9 minutes
+Episode: 850 | Mean Step Score:    -5.753 | Time elapsed: 9 minutes
+Episode: 851 | Mean Step Score:    -0.276 | Mean score over 100 evaluation episodes:    -3.844 | Time elapsed: 9 minutes
+Episode: 852 | Mean Step Score:    -1.238 | Time elapsed: 9 minutes
+Episode: 853 | Mean Step Score:    -5.379 | Time elapsed: 9 minutes
+Episode: 854 | Mean Step Score:    -6.026 | Time elapsed: 9 minutes
+Episode: 855 | Mean Step Score:    -8.646 | Time elapsed: 9 minutes
+Episode: 856 | Mean Step Score:    -7.964 | Time elapsed: 9 minutes
+Episode: 857 | Mean Step Score:    -2.411 | Time elapsed: 9 minutes
+Episode: 858 | Mean Step Score:    -5.262 | Time elapsed: 9 minutes
+Episode: 859 | Mean Step Score:    -0.715 | Time elapsed: 9 minutes
+Episode: 860 | Mean Step Score:   -11.542 | Time elapsed: 9 minutes
+Episode: 861 | Mean Step Score:    -2.981 | Mean score over 100 evaluation episodes:    -5.797 | Time elapsed: 9 minutes
+Episode: 862 | Mean Step Score:    -0.564 | Time elapsed: 9 minutes
+Episode: 863 | Mean Step Score:   -10.961 | Time elapsed: 9 minutes
+Episode: 864 | Mean Step Score:    -9.590 | Time elapsed: 9 minutes
+Episode: 865 | Mean Step Score:    -4.350 | Time elapsed: 9 minutes
+Episode: 866 | Mean Step Score:    -0.309 | Time elapsed: 9 minutes
+Episode: 867 | Mean Step Score:    -6.476 | Time elapsed: 9 minutes
+Episode: 868 | Mean Step Score:    -3.447 | Time elapsed: 9 minutes
+Episode: 869 | Mean Step Score:   -33.635 | Time elapsed: 9 minutes
+Episode: 870 | Mean Step Score:    -2.369 | Time elapsed: 9 minutes
+Episode: 871 | Mean Step Score:    -4.054 | Mean score over 100 evaluation episodes:    -4.746 | Time elapsed: 9 minutes
+Episode: 872 | Mean Step Score:    -1.076 | Time elapsed: 9 minutes
+Episode: 873 | Mean Step Score:    -4.413 | Time elapsed: 9 minutes
+Episode: 874 | Mean Step Score:    -3.543 | Time elapsed: 9 minutes
+Episode: 875 | Mean Step Score:    -2.819 | Time elapsed: 9 minutes
+Episode: 876 | Mean Step Score:    -6.713 | Time elapsed: 9 minutes
+Episode: 877 | Mean Step Score:    -0.503 | Time elapsed: 9 minutes
+Episode: 878 | Mean Step Score:    -7.860 | Time elapsed: 9 minutes
+Episode: 879 | Mean Step Score:    -5.093 | Time elapsed: 9 minutes
+Episode: 880 | Mean Step Score:    -6.477 | Time elapsed: 9 minutes
+Episode: 881 | Mean Step Score:    -5.645 | Mean score over 100 evaluation episodes:    -7.139 | Time elapsed: 9 minutes
+Episode: 882 | Mean Step Score:    -3.367 | Time elapsed: 9 minutes
+Episode: 883 | Mean Step Score:   -44.964 | Time elapsed: 9 minutes
+Episode: 884 | Mean Step Score:    -4.867 | Time elapsed: 9 minutes
+Episode: 885 | Mean Step Score:    -3.254 | Time elapsed: 9 minutes
+Episode: 886 | Mean Step Score:    -7.497 | Time elapsed: 9 minutes
+Episode: 887 | Mean Step Score:    -2.516 | Time elapsed: 9 minutes
+Episode: 888 | Mean Step Score:   -18.383 | Time elapsed: 9 minutes
+Episode: 889 | Mean Step Score:    -4.012 | Time elapsed: 9 minutes
+Episode: 890 | Mean Step Score:    -6.142 | Time elapsed: 9 minutes
+Episode: 891 | Mean Step Score:    -9.172 | Mean score over 100 evaluation episodes:    -7.110 | Time elapsed: 9 minutes
+Episode: 892 | Mean Step Score:    -1.262 | Time elapsed: 9 minutes
+Episode: 893 | Mean Step Score:    -7.677 | 

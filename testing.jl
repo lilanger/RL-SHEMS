@@ -6,32 +6,29 @@
 
 # Returns average score (per step) over 100 episodes
 function test(env::Shems; render=false, track=false)
-  reward = 0f0
+  reward = zeros(100)
   for e=1:100
-  	reward += episode!(env_eval, train=false, render=render, track=track)
+  	reward[e] = episode!(env_eval, NUM_STEPS=EP_LENGTH[season, "eval"], train=false, render=render, track=track, rng=e)
   end
-  return (reward / 100.)
+  return [mean(reward), std(reward)]
 end
 
 # runs steps through data set without reset, rendering decisions
-function inference(;render=false, track=false)
+function inference(;render=false, track=false, idx=NUM_EP)
   reward = 0f0
-  learn_steps = NUM_STEPS
-  global NUM_STEPS = 383 # whole evaluation set 1 month
-  env_eval = Shems(NUM_STEPS, "data/$(season)_evaluation.csv")
   # tracking flows
   if track == true
-    reward, results = episode!(env_eval, train=false, render=render, track=true)
-    write_to_results_file(results, learn_steps)
+    reward, results = episode!(env_eval, NUM_STEPS=EP_LENGTH[season, "eval"], train=false, render=render, track=true, rng=-1)
+    write_to_results_file(results, idx=idx)
     return nothing
   # rendering flows
   elseif render == true && track == false
-    reward = episode!(env_eval, train=false, render=true, track=false)
+    reward = episode!(env_eval, NUM_STEPS=EP_LENGTH[season, "eval"], train=false, render=true, track=false, rng=-1)
     return nothing
-  # return mean reward over 100 eps
+  # return mean reward over 10 eps
   else
     for e = 1:100
-        reward += episode!(env_eval, train=false, render=render, track=track)
+        reward = episode!(env_eval, NUM_STEPS=EP_LENGTH[season, "eval"], train=false, render=render, track=track, rng=e)
     end
     return (reward / 100.)
   end

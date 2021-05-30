@@ -1,0 +1,12 @@
+ERROR: LoadError: LoadError: ArgumentError: Package Flux not found in current path:
+- Run `import Pkg; Pkg.add("Flux")` to install the Flux package.
+
+Stacktrace:
+ [1] require(into::Module, mod::Symbol)
+   @ Base ./loading.jl:871
+ [2] include(fname::String)
+   @ Base.MainInclude ./client.jl:444
+ [3] top-level scope
+   @ /net/work/llanger/DDPG_reinforce_v12_nf.jl:2
+in expression starting at /net/work/llanger/input.jl:5
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:2

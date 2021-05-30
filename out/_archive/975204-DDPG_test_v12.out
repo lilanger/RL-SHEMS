@@ -1,0 +1,26 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+  Activating environment at `/net/work/llanger/Project.toml`
+ERROR: LoadError: ArgumentError: column name :summer not found in the data frame
+Stacktrace:
+ [1] lookupname
+   @ ~/.julia/packages/DataFrames/JHf5N/src/other/index.jl:288 [inlined]
+ [2] getindex
+   @ ~/.julia/packages/DataFrames/JHf5N/src/other/index.jl:297 [inlined]
+ [3] getindex
+   @ ~/.julia/packages/DataFrames/JHf5N/src/dataframe/dataframe.jl:473 [inlined]
+ [4] reset_state!(env::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}; rng::Int64)
+   @ Reinforce.ShemsEnv ~/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:226
+ [5] #reset!#1
+   @ ~/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:193 [inlined]
+ [6] reset!
+   @ ~/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:193 [inlined]
+ [7] populate_memory(env::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}})
+   @ Main /net/work/llanger/memory.jl:28
+ [8] top-level scope
+   @ /net/work/llanger/DDPG_reinforce_v12_nf.jl:8
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:8

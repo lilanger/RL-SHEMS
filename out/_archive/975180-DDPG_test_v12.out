@@ -1,0 +1,25 @@
+Loading clusterenv
+  Loading requirement: gridengine intel/2019.3 pgi/19.7 ompi/gcc/2.1.1
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+  Activating environment at `/net/work/llanger/Project.toml`
+ERROR: LoadError: LoadError: MethodError: no method matching Reinforce.ShemsEnv.ShemsState(::Float32, ::Float32, ::Float32, ::Float32, ::Float32, ::Float32, ::Float32, ::Float32, ::Float32, ::Float32, ::Int64, ::Int64)
+Closest candidates are:
+  Reinforce.ShemsEnv.ShemsState(::T, ::T, ::T, ::T, ::T, ::T, ::T, ::T, ::T, ::T, !Matched::T, !Matched::T) where T<:AbstractFloat at /homes2/ipdm/llanger/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:73
+Stacktrace:
+ [1] Reinforce.ShemsEnv.ShemsState()
+   @ Reinforce.ShemsEnv ~/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:90
+ [2] Shems(maxsteps::Int64, path::String)
+   @ Reinforce.ShemsEnv ~/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:179
+ [3] top-level scope
+   @ /net/work/llanger/input.jl:51
+ [4] include(fname::String)
+   @ Base.MainInclude ./client.jl:444
+ [5] top-level scope
+   @ /net/work/llanger/DDPG_reinforce_v12_nf.jl:2
+in expression starting at /net/work/llanger/input.jl:51
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:2

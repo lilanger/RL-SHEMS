@@ -1,0 +1,20 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+  Activating environment at `/net/work/llanger/Project.toml`
+ERROR: LoadError: type ShemsState has no field h
+Stacktrace:
+ [1] getproperty(x::Reinforce.ShemsEnv.ShemsState{Float32}, f::Symbol)
+   @ Base ./Base.jl:33
+ [2] step!(env::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}, s::Vector{Float32}, a::Vector{Float32}; track::Bool)
+   @ Reinforce.ShemsEnv ~/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:346
+ [3] step!(env::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}, s::Vector{Float32}, a::Vector{Float32})
+   @ Reinforce.ShemsEnv ~/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:247
+ [4] populate_memory(env::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}})
+   @ Main /net/work/llanger/memory.jl:35
+ [5] top-level scope
+   @ /net/work/llanger/DDPG_reinforce_v12_nf.jl:8
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:8

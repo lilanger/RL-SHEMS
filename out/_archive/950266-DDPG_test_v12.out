@@ -1,0 +1,24 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+  Activating environment at `/net/work/llanger/Project.toml`
+ERROR: LoadError: MethodError: no method matching reset!(::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}; rng=0)
+Closest candidates are:
+  reset!(::Shems; test_initial) at /homes2/ipdm/llanger/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:185 got unsupported keyword argument "rng"
+  reset!(!Matched::AbstractPolicy) at /homes2/ipdm/llanger/.julia/packages/Reinforce/PDz1M/src/policies/policies.jl:3 got unsupported keyword argument "rng"
+  reset!(!Matched::Reinforce.CartPoleEnv.CartPole) at /homes2/ipdm/llanger/.julia/packages/Reinforce/PDz1M/src/envs/cartpole.jl:45 got unsupported keyword argument "rng"
+  ...
+Stacktrace:
+ [1] kwerr(::NamedTuple{(:rng,), Tuple{Int64}}, ::Function, ::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}})
+   @ Base ./error.jl:157
+ [2] episode!(env::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}; NUM_STEPS::Int64, train::Bool, render::Int64, track::Bool, rng::Int64)
+   @ Main /net/work/llanger/run.jl:58
+ [3] run_episodes(env::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}, env_eval::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}, total_reward::Vector{Float32}, score_mean::Matrix{Float64}, noise_scale::Float32; render::Int64, track::Bool)
+   @ Main /net/work/llanger/run.jl:100
+ [4] top-level scope
+   @ /net/work/llanger/DDPG_reinforce_v12_nf.jl:20
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:16
+Max steps: 24, Max episodes: 3000, Layer 1: 300 nodes, Layer 2: 600 nodes, Case: winter_no-L2_buffer-12T, Time to start: 1 minute
