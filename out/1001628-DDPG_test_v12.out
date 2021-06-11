@@ -1,0 +1,63 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+  Activating environment at `/net/work/llanger/Project.toml`
+ERROR: LoadError: GPU compilation of kernel broadcast_kernel(CUDA.CuKernelContext, CuDeviceVector{Float32, 1}, Base.Broadcast.Broadcasted{Nothing, Tuple{Base.OneTo{Int64}}, typeof(*), Tuple{Base.Broadcast.Extruded{CuDeviceVector{Float32, 1}, Tuple{Bool}, Tuple{Int64}}, Base.Broadcast.Extruded{Vector{Float32}, Tuple{Bool}, Tuple{Int64}}}}, Int64) failed
+KernelError: passing and using non-bitstype argument
+
+Argument 4 to your kernel function is of type Base.Broadcast.Broadcasted{Nothing, Tuple{Base.OneTo{Int64}}, typeof(*), Tuple{Base.Broadcast.Extruded{CuDeviceVector{Float32, 1}, Tuple{Bool}, Tuple{Int64}}, Base.Broadcast.Extruded{Vector{Float32}, Tuple{Bool}, Tuple{Int64}}}}, which is not isbits:
+  .args is of type Tuple{Base.Broadcast.Extruded{CuDeviceVector{Float32, 1}, Tuple{Bool}, Tuple{Int64}}, Base.Broadcast.Extruded{Vector{Float32}, Tuple{Bool}, Tuple{Int64}}} which is not isbits.
+    .2 is of type Base.Broadcast.Extruded{Vector{Float32}, Tuple{Bool}, Tuple{Int64}} which is not isbits.
+      .x is of type Vector{Float32} which is not isbits.
+
+
+Stacktrace:
+  [1] check_invocation(job::GPUCompiler.CompilerJob, entry::LLVM.Function)
+    @ GPUCompiler ~/.julia/packages/GPUCompiler/XwWPj/src/validation.jl:68
+  [2] macro expansion
+    @ ~/.julia/packages/GPUCompiler/XwWPj/src/driver.jl:287 [inlined]
+  [3] macro expansion
+    @ ~/.julia/packages/TimerOutputs/4QAIk/src/TimerOutput.jl:206 [inlined]
+  [4] macro expansion
+    @ ~/.julia/packages/GPUCompiler/XwWPj/src/driver.jl:286 [inlined]
+  [5] emit_asm(job::GPUCompiler.CompilerJob, ir::LLVM.Module, kernel::LLVM.Function; strip::Bool, validate::Bool, format::LLVM.API.LLVMCodeGenFileType)
+    @ GPUCompiler ~/.julia/packages/GPUCompiler/XwWPj/src/utils.jl:62
+  [6] cufunction_compile(job::GPUCompiler.CompilerJob)
+    @ CUDA ~/.julia/packages/CUDA/M4jkK/src/compiler/execution.jl:306
+  [7] check_cache
+    @ ~/.julia/packages/GPUCompiler/XwWPj/src/cache.jl:44 [inlined]
+  [8] cached_compilation
+    @ ~/.julia/packages/GPUArrays/gjXOn/src/host/broadcast.jl:57 [inlined]
+  [9] cached_compilation(cache::Dict{UInt64, Any}, job::GPUCompiler.CompilerJob{GPUCompiler.PTXCompilerTarget, CUDA.CUDACompilerParams, GPUCompiler.FunctionSpec{GPUArrays.var"#broadcast_kernel#14", Tuple{CUDA.CuKernelContext, CuDeviceVector{Float32, 1}, Base.Broadcast.Broadcasted{Nothing, Tuple{Base.OneTo{Int64}}, typeof(*), Tuple{Base.Broadcast.Extruded{CuDeviceVector{Float32, 1}, Tuple{Bool}, Tuple{Int64}}, Base.Broadcast.Extruded{Vector{Float32}, Tuple{Bool}, Tuple{Int64}}}}, Int64}}}, compiler::typeof(CUDA.cufunction_compile), linker::typeof(CUDA.cufunction_link))
+    @ GPUCompiler ~/.julia/packages/GPUCompiler/XwWPj/src/cache.jl:0
+ [10] cufunction(f::GPUArrays.var"#broadcast_kernel#14", tt::Type{Tuple{CUDA.CuKernelContext, CuDeviceVector{Float32, 1}, Base.Broadcast.Broadcasted{Nothing, Tuple{Base.OneTo{Int64}}, typeof(*), Tuple{Base.Broadcast.Extruded{CuDeviceVector{Float32, 1}, Tuple{Bool}, Tuple{Int64}}, Base.Broadcast.Extruded{Vector{Float32}, Tuple{Bool}, Tuple{Int64}}}}, Int64}}; name::Nothing, kwargs::Base.Iterators.Pairs{Union{}, Union{}, Tuple{}, NamedTuple{(), Tuple{}}})
+    @ CUDA ~/.julia/packages/CUDA/M4jkK/src/compiler/execution.jl:294
+ [11] cufunction
+    @ ~/.julia/packages/CUDA/M4jkK/src/compiler/execution.jl:288 [inlined]
+ [12] macro expansion
+    @ ~/.julia/packages/CUDA/M4jkK/src/compiler/execution.jl:102 [inlined]
+ [13] #launch_heuristic#280
+    @ ~/.julia/packages/CUDA/M4jkK/src/gpuarrays.jl:17 [inlined]
+ [14] launch_heuristic
+    @ ~/.julia/packages/CUDA/M4jkK/src/gpuarrays.jl:17 [inlined]
+ [15] copyto!
+    @ ~/.julia/packages/GPUArrays/gjXOn/src/host/broadcast.jl:63 [inlined]
+ [16] copyto!
+    @ ./broadcast.jl:936 [inlined]
+ [17] copy
+    @ ~/.julia/packages/GPUArrays/gjXOn/src/host/broadcast.jl:47 [inlined]
+ [18] materialize(bc::Base.Broadcast.Broadcasted{CUDA.CuArrayStyle{1}, Nothing, typeof(*), Tuple{CuArray{Float32, 1}, Vector{Float32}}})
+    @ Base.Broadcast ./broadcast.jl:883
+ [19] action(s_norm::CuArray{Float32, 2}; train::Bool)
+    @ Main /net/work/llanger/run.jl:67
+ [20] episode!(env::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}; NUM_STEPS::Int64, train::Bool, render::Int64, track::Bool, rng::Int64)
+    @ Main /net/work/llanger/run.jl:91
+ [21] run_episodes(env_train::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}, env_test_eval::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}, total_reward::Vector{Float32}, score_mean::Matrix{Float64}, best_run::Int64, noise_mean::Vector{Float32}, noise_scale::Vector{Float32}; render::Int64, track::Bool)
+    @ Main /net/work/llanger/run.jl:132
+ [22] top-level scope
+    @ /net/work/llanger/DDPG_reinforce_v12_nf.jl:22
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:18
+Max steps: 24, Max episodes: 10001, Layer 1: 300 nodes, Layer 2: 600 nodes, Case: summer_no-L2_norm-ns_abort, Time to start: 1 minute

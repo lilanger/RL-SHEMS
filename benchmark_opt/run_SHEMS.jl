@@ -36,10 +36,10 @@ function set_SHEMS_parameters(h_start, h_end, h_predict, h_control, rolling_flag
 end
 
 function write_to_results_file(results, m, season="summer", costfactor=1.0)
-    date=210521;
+    date=210531;
     CSV.write("benchmark_opt/results/$(date)_results_$(m.h_predict)_$(m.h_control)_$(m.h_start)-$(m.h_end)_"*
         "$(season)_$(costfactor).csv", DataFrame(results, :auto), header=["Temp_FH", "Vol_HW",
-            "Soc_B", "V_HW_plus", "V_HW_minus", "T_FH_plus", "T_FH_minus", "profits", "COP_FH",
+            "Soc_B", "V_HW_plus", "V_HW_minus", "T_FH_plus", "T_FH_minus", "profits", "comfort", "COP_FH",
             "COP_HW","PV_DE", "B_DE", "GR_DE", "PV_B", "PV_GR", "PV_HP","GR_HP", "B_HP", "HP_FH", "HP_HW",
             "month", "day", "hour", "horizon"]);
     return nothing
@@ -52,6 +52,6 @@ function COPcalc(ts, t_outside)
 end
 
 # also change path to input file in optimizer
-#yearly_SHEMS(1, 360, "summer", 1.0, 1) #summer
-#yearly_SHEMS(1, 360, "winter", 1.0, 1) #winter
-yearly_SHEMS(1, 1440, "all", 1.0, 1) #all
+#yearly_SHEMS(1, 768, "summer", 1.0, 1) #summer #evaluation: 360
+yearly_SHEMS(1, 720, "winter", 1.0, 1) #winter #evaluation: 360
+#yearly_SHEMS(1, 1440, "all", 1.0, 1) #all

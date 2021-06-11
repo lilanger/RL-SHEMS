@@ -4,7 +4,9 @@
 # https://github.com/FluxML/model-zoo/blob/master/contrib/games/differentiable-programming/pendulum/DDPG.jl
 using Pkg
 Pkg.activate(pwd())
-using Flux, Printf, Zygote, CUDA
+using Flux, Printf, Zygote
+using CUDA
+CUDA.allowscalar(true)
 using Flux.Optimise: update!
 using BSON
 using Statistics: mean, std
@@ -18,17 +20,19 @@ using Plots
 using CSV, DataFrames
 gr()
 
+# -------------------------------- INPUTS --------------------------------------------
 train = 1
-plot_result = 1
-render = 0
-track = 1
-season = "all"
-case = "$(season)_L2_nns_no-abort"
+plot_result = 0
+render = 1
+track = 0  # 0 - off, 1 - DRL, 2 - rule-based
+season = "summer"
+case = "$(season)_no-L2_nns_abort_tsoc"
+run = "eval"
 
 #NUM_STEPS = 24 #36
 NUM_EP = 10_001 #50_000
-L1 = 300 #400 #300
-L2 = 600 #300 #600
+L1 = 400 #300
+L2 = 300 #600
 idx=NUM_EP
 
 rng = StableRNG(123)
@@ -37,9 +41,10 @@ start_time = now()
 
 # --------------------------------- Memory ------------------------------------
 BATCH_SIZE = 120 #64
-MEM_SIZE = 24_000 #1_000_000
-MIN_EXP_SIZE = 24_000 #50_000
+MEM_SIZE = 24_000
+MIN_EXP_SIZE = 24_000
 
+########################################################################################
 memory = CircularBuffer{Any}(MEM_SIZE)
 
 # --------------------------------- Game environment ---------------------------
@@ -48,15 +53,18 @@ EP_LENGTH = Dict("train" => 24,
 					("winter", "eval") => 359, ("winter", "test") => 719,
 					("both", "eval") => 719,   ("both", "test") => 1487,
 					("all", "eval") => 1439,   ("all", "test") => 2999) # length of whole evaluation set (different)
-env = Shems(EP_LENGTH["train"], "data/$(season)_training.csv")
-env_eval = Shems(EP_LENGTH[season, "eval"], "data/$(season)_evaluation.csv")
-env_test = Shems(EP_LENGTH[season, "test"], "data/$(season)_testing.csv")
+env_dict = Dict("train" => Shems(EP_LENGTH["train"], "data/$(season)_train.csv"),
+				"eval" => Shems(EP_LENGTH[season, "eval"], "data/$(season)_eval.csv"),
+				"test" => Shems(EP_LENGTH[season, "test"], "data/$(season)_test.csv"))
+
 
 # ----------------------------- Environment Parameters -------------------------
-STATE_SIZE = length(env.state)
-ACTION_SIZE = length(env.a)
-ACTION_BOUND_HI = Float32[4.6f0, 3.0f0] #Float32(actions(env, env.state).hi[1])
-ACTION_BOUND_LO = Float32[-4.6f0, -3.0f0] #Float32(actions(env, env.state).lo[1])
+STATE_SIZE = length(env_dict["train"].state)
+ACTION_SIZE = length(env_dict["train"].a)
+ACTION_BOUND_HI = Float32[1f0, 1f0] #Float32(actions(env, env.state).hi[1])
+ACTION_BOUND_LO = Float32[-1f0, -1f0] #Float32(actions(env, env.state).lo[1])
+##ACTION_BOUND_HI = Float32[4.6f0, 3.0f0] #Float32(actions(env, env.state).hi[1])
+##ACTION_BOUND_LO = Float32[-4.6f0, -3.0f0] #Float32(actions(env, env.state).lo[1])
 
 # ------------------------------- Action Noise --------------------------------
 struct OUNoise
@@ -77,7 +85,7 @@ dt = 1f-2
 # Noise scale
 τ_ = 25
 ϵ  = exp(-1f0 / τ_)
-noise_scale = 0.1f0
+noise_scale = 1f0 ./ ACTION_BOUND_HI #note needed because scaling happens afterwards then 1:1
 
 # Fill struct with values
 ou = OUNoise(μ, θ, σ, dt, zeros(Float32, ACTION_SIZE))
@@ -90,17 +98,17 @@ ou = OUNoise(μ, θ, σ, dt, zeros(Float32, ACTION_SIZE))
 η_crit = 1f-3  # Learning rate critic
 
 L2_DECAY = 0.01f0
-UPDATE_EVERY = 1
 
 init = Flux.glorot_uniform(rng)
 init_final(dims...) = 6f-3rand(rng, Float32, dims...) .- 3f-3
 
 # Optimizers
-opt_crit = Flux.Optimiser(WeightDecay(L2_DECAY), ADAM(η_crit))
-opt_act = Flux.Optimiser(WeightDecay(L2_DECAY), ADAM(η_act))
-#opt_crit = ADAM(η_crit)
-#opt_act = ADAM(η_act)
-
+# with L2 regularization
+#opt_crit = Flux.Optimiser(WeightDecay(L2_DECAY), ADAM(η_crit))
+#opt_act = Flux.Optimiser(WeightDecay(L2_DECAY), ADAM(η_act))
+# without L2 regularization
+opt_crit = ADAM(η_crit)
+opt_act = ADAM(η_act)
 
 # ----------------------------- Model Architecture -----------------------------
 actor = Chain(
@@ -129,11 +137,8 @@ Base.deepcopy(c::crit) = crit(deepcopy(c.state_crit),
 							  deepcopy(c.act_crit),
 							  deepcopy(c.sa_crit))
 
-critic = crit(
-			Chain(
-				Dense(STATE_SIZE, L1, relu, init=init),
-				Dense(L1, L2, init=init)) |> gpu,
-  			Dense(ACTION_SIZE, L2, init=init) |> gpu,
-  			Dense(L2, 1, init=init_final) |> gpu)
+critic = crit(Chain(Dense(STATE_SIZE, L1, relu, init=init),Dense(L1, L2, init=init)) |> gpu,
+  				Dense(ACTION_SIZE, L2, init=init) |> gpu,
+  				Dense(L2, 1, init=init_final) |> gpu)
 
 critic_target = deepcopy(critic)

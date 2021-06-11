@@ -1,0 +1,69 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+  Activating environment at `/net/work/llanger/Project.toml`
+ERROR: LoadError: Mutating arrays is not supported
+Stacktrace:
+  [1] error(s::String)
+    @ Base ./error.jl:33
+  [2] (::Zygote.var"#411#412")(#unused#::Nothing)
+    @ Zygote ~/.julia/packages/Zygote/6HN9x/src/lib/array.jl:65
+  [3] (::Zygote.var"#2279#back#413"{Zygote.var"#411#412"})(Δ::Nothing)
+    @ Zygote ~/.julia/packages/ZygoteRules/OjfTt/src/adjoint.jl:59
+  [4] Pullback
+    @ ~/.julia/packages/Flux/qp1gc/src/functor.jl:41 [inlined]
+  [5] (::typeof(∂(params!)))(Δ::Nothing)
+    @ Zygote ~/.julia/packages/Zygote/6HN9x/src/compiler/interface2.jl:0
+  [6] Pullback
+    @ ~/.julia/packages/Flux/qp1gc/src/functor.jl:47 [inlined]
+  [7] (::typeof(∂(params!)))(Δ::Nothing)
+    @ Zygote ~/.julia/packages/Zygote/6HN9x/src/compiler/interface2.jl:0
+  [8] Pullback
+    @ ~/.julia/packages/Flux/qp1gc/src/functor.jl:47 [inlined]
+  [9] (::typeof(∂(params!)))(Δ::Nothing)
+    @ Zygote ~/.julia/packages/Zygote/6HN9x/src/compiler/interface2.jl:0
+ [10] Pullback
+    @ ~/.julia/packages/Flux/qp1gc/src/functor.jl:47 [inlined]
+ [11] (::typeof(∂(params!)))(Δ::Nothing)
+    @ Zygote ~/.julia/packages/Zygote/6HN9x/src/compiler/interface2.jl:0
+ [12] Pullback
+    @ ~/.julia/packages/Flux/qp1gc/src/functor.jl:44 [inlined]
+ [13] (::typeof(∂(params!)))(Δ::Nothing)
+    @ Zygote ~/.julia/packages/Zygote/6HN9x/src/compiler/interface2.jl:0
+ [14] Pullback
+    @ ~/.julia/packages/Flux/qp1gc/src/functor.jl:53 [inlined]
+ [15] (::typeof(∂(params)))(Δ::Nothing)
+    @ Zygote ~/.julia/packages/Zygote/6HN9x/src/compiler/interface2.jl:0
+ [16] Pullback
+    @ /net/work/llanger/run.jl:32 [inlined]
+ [17] (::typeof(∂(L2_loss)))(Δ::Float32)
+    @ Zygote ~/.julia/packages/Zygote/6HN9x/src/compiler/interface2.jl:0
+ [18] Pullback
+    @ /net/work/llanger/run.jl:35 [inlined]
+ [19] (::typeof(∂(loss_crit)))(Δ::Float32)
+    @ Zygote ~/.julia/packages/Zygote/6HN9x/src/compiler/interface2.jl:0
+ [20] #180
+    @ ~/.julia/packages/Zygote/6HN9x/src/lib/lib.jl:194 [inlined]
+ [21] #1689#back
+    @ ~/.julia/packages/ZygoteRules/OjfTt/src/adjoint.jl:59 [inlined]
+ [22] Pullback
+    @ /net/work/llanger/run.jl:26 [inlined]
+ [23] (::Zygote.var"#69#70"{Params, typeof(∂(λ)), Zygote.Context})(Δ::Float32)
+    @ Zygote ~/.julia/packages/Zygote/6HN9x/src/compiler/interface.jl:252
+ [24] gradient(f::Function, args::Params)
+    @ Zygote ~/.julia/packages/Zygote/6HN9x/src/compiler/interface.jl:59
+ [25] update_model!(::crit, ::ADAM, ::Function, ::CuArray{Float32, 2}, ::Vararg{CuArray{Float32, 2}, N} where N)
+    @ Main /net/work/llanger/run.jl:26
+ [26] replay()
+    @ Main /net/work/llanger/run.jl:52
+ [27] episode!(env::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}; NUM_STEPS::Int64, train::Bool, render::Int64, track::Bool, rng::Int64)
+    @ Main /net/work/llanger/run.jl:111
+ [28] run_episodes(env_train::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}, env_test_eval::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}, total_reward::Vector{Float32}, score_mean::Matrix{Float64}, best_run::Int64, noise_mean::Vector{Float32}, noise_scale::Vector{Float32}; render::Int64, track::Bool)
+    @ Main /net/work/llanger/run.jl:131
+ [29] top-level scope
+    @ /net/work/llanger/DDPG_reinforce_v12_nf.jl:22
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:18
+Max steps: 24, Max episodes: 10001, Layer 1: 400 nodes, Layer 2: 300 nodes, Case: winter_no-L2_nns_abort_l2-fct, Time to start: 1 minute

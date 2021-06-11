@@ -1,8 +1,8 @@
-function read_data(season; network="Opt", stop="final")
-    date = "2021-05-29"
+function read_data(season; case="$(season)_L2_nns_abort-0", network="Opt", stop="final", NUM_EP = 3001)
+    date = "2021-05-30"
     version = "v12"
     NUM_STEPS = 24
-    NUM_EP = 3001
+    
     
     if stop == "final"
         idx=NUM_EP
@@ -17,12 +17,14 @@ function read_data(season; network="Opt", stop="final")
        L1 = 400
        L2 = 300   
     elseif network == "Opt"
-        if season == "all"
-            Flow_df = CSV.read("benchmark_opt/results/210521_results_1440_1440_1-1440_all_1.0.csv", DataFrame);
-        else
-            Flow_df = CSV.read("benchmark_opt/results/210521_results_360_360_1-360_$(season)_1.0.csv", DataFrame);
+        #if season == "all"
+         #   Flow_df = CSV.read("benchmark_opt/results/210521_results_1440_1440_1-1440_all_1.0.csv", DataFrame);
+        if season == "summer"
+            Flow_df = CSV.read("benchmark_opt/results/210531_results_768_768_1-768_summer_1.0.csv", DataFrame);
+        elseif season == "winter"
+            Flow_df = CSV.read("benchmark_opt/results/210531_results_720_720_1-720_winter_1.0.csv", DataFrame);
         end
-        Input_df = CSV.read("data/$(season)_evaluation.csv", DataFrame);
+        Input_df = CSV.read("data/$(season)_testing.csv", DataFrame);
         Data_df = hcat(Flow_df[1:end-1, 1:end-4], Input_df[1:end-1, :]) # cut index + hour + last input (no action)
         return Data_df
     end
@@ -31,12 +33,12 @@ function read_data(season; network="Opt", stop="final")
     #if case == "24T"
       #  case = "$(season)_L2_no-noise-scale_24T-120"
    # elseif case =="50T"
-    case = "$(season)_L2_no-noise-scale"
+    #case = "$(season)_L2_nns_abort-0"
     #case = "$(season)_L2_nns_term-off+pain=200"
    # end
     
     
-    Input_df = CSV.read("data/$(season)_evaluation.csv", DataFrame);
+    Input_df = CSV.read("data/$(season)_testing.csv", DataFrame);
     Flow_df = CSV.read("out/$(date)_results_$(version)_$(NUM_STEPS)_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(idx).csv", DataFrame);
     Data_df = hcat(Flow_df[1:end, :], Input_df[1:end-1, :]) # cut index + hour + last input (no action)
     return Data_df
@@ -154,11 +156,16 @@ function bar_comfort(Data_df, start, yaxis, title)
     plot!(plt, 0:23, ones(24,1)*180, linestyle=:dot, linewidth= 2, colour = :steelblue)
 end
 
-function bar_row(plotfunction, Data_df, start, yaxis, title, length)
+function bar_row(plotfunction, Data_df, start, yaxis, title, length; legend=true)
+    if legend ==true
         plot(plotfunction(Data_df, start, yaxis, title), [plotfunction(Data_df, start+24*(i-1), "", "")
             for i in 2:length]..., plot_legend(plotfunction),layout=grid(1,length+1,
             widths=vcat([((length-.28)/length/length) for i in 1:length], [.28*length/length/length])),
-            size=(300*(length+1),220), foreground_color_legend = :transparent, background_color_legend= :transparent);
+            foreground_color_legend = :transparent, background_color_legend= :transparent);
+    else
+        plot(plotfunction(Data_df, start, yaxis, title), 
+            foreground_color_legend = :transparent, background_color_legend= :transparent);
+    end
 end
 
 function plot_legend(plotfunction)
@@ -182,8 +189,7 @@ function plot_legend(plotfunction)
     elseif plotfunction == bar_heat
         scatter((1:5)', xlim=(4,8), colour =[:grey :purple :gold :firebrick :steelblue], legend=(-.5,.76),
             label=["  gr→hp" "  b→hp" "  pv→hp" "  d_fh" "  d_hw"], framestyle= :none, marker= (:rect,
-                stroke(0)),
-            legendfontsize=10, alpha=[1 1 1 1 .2 .2])
+                stroke(0)), legendfontsize=10, alpha=[1 1 1 .2 .2])
         plot!((1:1)', xlim=(4,8), linestyle=:dot, colour = :grey, label="  hp_max")
 
     elseif plotfunction == bar_comfort

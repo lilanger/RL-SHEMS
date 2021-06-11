@@ -1,1 +1,1 @@
-﻿time,NUM_EP,L1,L2,BATCH_SIZE,MEM_SIZE,MIN_EXP_SIZE,season,case,idx,T_fh_plus,T_fh_minus,V_hw_plus,V_hw_minus,reward
+time,NUM_EP,L1,L2,BATCH_SIZE,MEM_SIZE,MIN_EXP_SIZE,season,case,idx,T_FH_plus,T_FH_minus,V_HW_plus,V_HW_minus,profits,comfort,abort

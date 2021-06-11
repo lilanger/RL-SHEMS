@@ -6,7 +6,7 @@ function SHEMS_optimizer(sh, hp, fh, hw, b, m, season)
     c_water = 4.184;    #kJ/(kg*°C)
 
     # Input data__________________________________________________________________________________________________________________________________________________________
-    df = CSV.read("data/$(season)_evaluation.csv", DataFrame);
+    df = CSV.read("data/$(season)_testing.csv", DataFrame);
     h_last = sh.h_start + m.h_predict-1;                     # optimization horizon
 
     # read input data
@@ -99,10 +99,11 @@ function SHEMS_optimizer(sh, hp, fh, hw, b, m, season)
 
     # collect returns
     profits = (sh.p_sell .*JuMP.value.(X[1:m.h_control,5])) .-sh.p_buy .*(sum(JuMP.value.(X[1:m.h_control,i]) for i=[3,7]));
+    comfort = (sh.costfactor *(JuMP.value.(T_fh_plus[1:m.h_control] +T_fh_minus[1:m.h_control] +V_hw_plus[1:m.h_control] +V_hw_minus[1:m.h_control])));
     results = hcat(JuMP.value.(T_fh[1:m.h_control]), JuMP.value.(V_hw[1:m.h_control]), JuMP.value.(SOC_b[1:m.h_control]),
                     JuMP.value.(V_hw_plus[1:m.h_control]), JuMP.value.(V_hw_minus[1:m.h_control]),
                     JuMP.value.(T_fh_plus[1:m.h_control]), JuMP.value.(T_fh_minus[1:m.h_control]),
-                    profits, cop_fh[1:m.h_control], cop_hw[1:m.h_control],
+                    profits, comfort, cop_fh[1:m.h_control], cop_hw[1:m.h_control],
                     JuMP.value.(X[1:m.h_control, :]),                                               # flow variables
                     Matrix(df[sh.h_start:(sh.h_start + m.h_control -1), 6:8]));                   # month + day + hour
 
