@@ -19,7 +19,7 @@ function inference(env::Shems; render=false, track=0, idx=NUM_EP)
   local reward = 0f0
   local noise=0f0
   # tracking flows
-  if track > 0
+  if track != 0
     reward, results = episode!(env, NUM_STEPS=EP_LENGTH[season, run], train=false, render=render, track=track, rng=-1)
     write_to_results_file(results, idx=idx)
     return nothing

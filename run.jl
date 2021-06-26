@@ -10,9 +10,11 @@ function sample_noise(ou::OUNoise)
   return ou.X .+= dx
 end
 
+
 function sample_noise() # Normal distribution
-  dx     = randn(rng, Float32, ACTION_SIZE) #|>gpu
-  return dx
+  d = Normal(μ, σ)
+  dx = rand(d, ACTION_SIZE) #|>gpu
+  return Float32.(dx)
 end
 
 # ---------------------- Param Update Functions --------------------------------
@@ -57,7 +59,7 @@ function replay()
 end
 
 # Choose action according to policy
-function action(s_norm; train=true)
+function action_RL(s_norm; train=true)
 	act_pred = actor(s_norm |> gpu) |> cpu
 	noise = zeros(ACTION_SIZE)
 	if train == true
@@ -86,17 +88,18 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
 	# determine action
 	s = copy(env.state)
 	s_norm = normalize(s |> gpu)
-    a, noise = action(s_norm, train=train)
+    a, noise = action_RL(s_norm, train=train)
 	scaled_action = scale_action(a)
 
 	# execute action in RL environment
 	if track == 0
 		r, s′ = step!(env, s, scaled_action)
-	elseif track == 1
+	elseif track == 1 # DRL
 		r, s′, results_new = step!(env, s, scaled_action, track=track)
 		results = vcat(results, results_new)
-	elseif track == 2 #rule-based
-		r, s′, results_new = step_rule!(env, s)
+	elseif track < 0 # rule-based
+		a = action(env, track)
+		r, s′, results_new = step!(env, s, a, track=track)
 		results = vcat(results, results_new)
 	end
 	# render step
@@ -125,7 +128,7 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
   end
 end
 
-function run_episodes(env_train::Shems, env_test_eval::Shems, total_reward, score_mean, best_run, noise_mean, noise_scale;
+function run_episodes(env_train::Shems, env_test_eval::Shems, total_reward, score_mean, best_run, noise_mean;
 						render=false, track=0)
 	reset!(env_train)
 	best_score = -10000000
@@ -150,7 +153,6 @@ function run_episodes(env_train::Shems, env_test_eval::Shems, total_reward, scor
 		end
 		t_elap = round(now()-t_start, Dates.Minute)
 		println("Time elapsed: $(t_elap)")
-		#global noise_scale *= ϵ
 	end
 	return nothing
 end

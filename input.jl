@@ -11,8 +11,8 @@ using Flux.Optimise: update!
 using BSON
 using Statistics: mean, std
 using DataStructures: CircularBuffer
-using Distributions: sample
-using Random, StableRNGs
+using Distributions: sample, Normal
+using Random#, StableRNGs
 using Reinforce
 using Reinforce.ShemsEnv: Shems
 using Dates
@@ -21,26 +21,27 @@ using CSV, DataFrames
 gr()
 
 # -------------------------------- INPUTS --------------------------------------------
-train = 1
+train = 0
 plot_result = 0
-render = 1
-track = 0  # 0 - off, 1 - DRL, 2 - rule-based
-season = "summer"
-case = "$(season)_no-L2_nns_abort_tsoc"
-run = "eval"
+render = 0
+track = -2  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
+season = "both"
+case = "$(season)_no-L2_nns_ou.5_abort_no-period-h"
+run = "test"
 
 #NUM_STEPS = 24 #36
-NUM_EP = 10_001 #50_000
-L1 = 400 #300
-L2 = 300 #600
+NUM_EP = 4_001 #50_000
+# L1 = 400 #300
+# L2 = 300 #600
+L1 = 300
+L2 = 600
 idx=NUM_EP
 
-rng = StableRNG(123)
-Random.seed!(123)
+rng = MersenneTwister(123)
 start_time = now()
 
 # --------------------------------- Memory ------------------------------------
-BATCH_SIZE = 120 #64
+BATCH_SIZE = 64 #120 #64
 MEM_SIZE = 24_000
 MIN_EXP_SIZE = 24_000
 
@@ -53,6 +54,7 @@ EP_LENGTH = Dict("train" => 24,
 					("winter", "eval") => 359, ("winter", "test") => 719,
 					("both", "eval") => 719,   ("both", "test") => 1487,
 					("all", "eval") => 1439,   ("all", "test") => 2999) # length of whole evaluation set (different)
+
 env_dict = Dict("train" => Shems(EP_LENGTH["train"], "data/$(season)_train.csv"),
 				"eval" => Shems(EP_LENGTH[season, "eval"], "data/$(season)_eval.csv"),
 				"test" => Shems(EP_LENGTH[season, "test"], "data/$(season)_test.csv"))
@@ -61,10 +63,10 @@ env_dict = Dict("train" => Shems(EP_LENGTH["train"], "data/$(season)_train.csv")
 # ----------------------------- Environment Parameters -------------------------
 STATE_SIZE = length(env_dict["train"].state)
 ACTION_SIZE = length(env_dict["train"].a)
-ACTION_BOUND_HI = Float32[1f0, 1f0] #Float32(actions(env, env.state).hi[1])
-ACTION_BOUND_LO = Float32[-1f0, -1f0] #Float32(actions(env, env.state).lo[1])
-##ACTION_BOUND_HI = Float32[4.6f0, 3.0f0] #Float32(actions(env, env.state).hi[1])
-##ACTION_BOUND_LO = Float32[-4.6f0, -3.0f0] #Float32(actions(env, env.state).lo[1])
+#ACTION_BOUND_HI = Float32[1f0, 1f0] #Float32(actions(env, env.state).hi[1])
+#ACTION_BOUND_LO = Float32[-1f0, -1f0] #Float32(actions(env, env.state).lo[1])
+ACTION_BOUND_HI = Float32[4.6f0, 3.0f0] #Float32(actions(env, env.state).hi[1])
+ACTION_BOUND_LO = Float32[-4.6f0, -3.0f0] #Float32(actions(env, env.state).lo[1])
 
 # ------------------------------- Action Noise --------------------------------
 struct OUNoise
@@ -78,14 +80,14 @@ end
 # Ornstein-Uhlenbeck Noise params
 # based on: https://github.com/openai/baselines/blob/master/baselines/ddpg/noise.py
 μ = 0f0 #mu
-σ = 0.3f0 #sigma
+σ = 0.5f0 #0.3f0 #sigma
 θ = 0.15f0 #theta
 dt = 1f-2
 
 # Noise scale
 τ_ = 25
 ϵ  = exp(-1f0 / τ_)
-noise_scale = 1f0 ./ ACTION_BOUND_HI #note needed because scaling happens afterwards then 1:1
+noise_scale = 1f0 #./ ACTION_BOUND_HI #note needed because scaling happens afterwards then 1:1
 
 # Fill struct with values
 ou = OUNoise(μ, θ, σ, dt, zeros(Float32, ACTION_SIZE))

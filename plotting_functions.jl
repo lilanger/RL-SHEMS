@@ -1,45 +1,37 @@
-function read_data(season; case="$(season)_L2_nns_abort-0", network="Opt", stop="final", NUM_EP = 3001)
-    date = "2021-05-30"
+function read_data(season; case="$(season)_L2_nns_abort-0", network="Opt", stop="final", NUM_EP = 10001, run="eval")
+    date = "2021-06-25"
     version = "v12"
     NUM_STEPS = 24
-    
-    
+
     if stop == "final"
         idx=NUM_EP
     elseif stop == "best"
         idx="best"
     end
     
-   if network == "Yu"
+    Input_df = CSV.read("data/$(season)_$(run).csv", DataFrame);
+    
+    if network == "Yu"
         L1 = 300
         L2 = 600
-   elseif network == "Pendulum"
+        
+    elseif network == "Pendulum"
        L1 = 400
-       L2 = 300   
+       L2 = 300  
+        
     elseif network == "Opt"
-        #if season == "all"
-         #   Flow_df = CSV.read("benchmark_opt/results/210521_results_1440_1440_1-1440_all_1.0.csv", DataFrame);
-        if season == "summer"
-            Flow_df = CSV.read("benchmark_opt/results/210531_results_768_768_1-768_summer_1.0.csv", DataFrame);
-        elseif season == "winter"
-            Flow_df = CSV.read("benchmark_opt/results/210531_results_720_720_1-720_winter_1.0.csv", DataFrame);
-        end
-        Input_df = CSV.read("data/$(season)_testing.csv", DataFrame);
-        Data_df = hcat(Flow_df[1:end-1, 1:end-4], Input_df[1:end-1, :]) # cut index + hour + last input (no action)
-        return Data_df
+       Flow_df = CSV.read("benchmark_opt/results/210625_results_$(run)_$(season)_1.0.csv", DataFrame);
+       Data_df = hcat(Flow_df[1:end-1, 1:end-4], Input_df[1:end-1, :]) # cut index + hour + last input (no action)
+       return Data_df
+            
+     elseif network == "Rule"
+       Flow_df = CSV.read("out/2021-06-25_$(run)_results_$(season)_no-L2_nns_ou.5_abort_rule.csv", DataFrame);
+       Data_df = hcat(Flow_df[1:end, :], Input_df[1:end-1, :]) # cut index + hour + last input (no action)
+     return Data_df
     end
-    
-    #case = "$(season)_no-L2_buffer-12T"
-    #if case == "24T"
-      #  case = "$(season)_L2_no-noise-scale_24T-120"
-   # elseif case =="50T"
-    #case = "$(season)_L2_nns_abort-0"
-    #case = "$(season)_L2_nns_term-off+pain=200"
-   # end
-    
-    
-    Input_df = CSV.read("data/$(season)_testing.csv", DataFrame);
-    Flow_df = CSV.read("out/$(date)_results_$(version)_$(NUM_STEPS)_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(idx).csv", DataFrame);
+
+    Flow_df=CSV.read("out/$(date)_$(run)_results_$(version)_$(NUM_STEPS)_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(idx).csv",DataFrame);
+    #println(size(Flow_df),  size(Input_df))
     Data_df = hcat(Flow_df[1:end, :], Input_df[1:end-1, :]) # cut index + hour + last input (no action)
     return Data_df
 end

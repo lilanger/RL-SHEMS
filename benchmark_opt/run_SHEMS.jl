@@ -1,17 +1,17 @@
 include("main.jl");
 include("SHEMS_optimizer.jl");
 
-function yearly_SHEMS(h_start=1, h_end=8760, season="summer", costfactor=1.0, outputflag=0)
+function yearly_SHEMS(h_start=1, h_end=8760, season="summer", costfactor=1.0, outputflag=0, case="eval")
 
     # Initialize technical setup according to case______________________
     # set_SHEMS_parameters(h_start, h_end, h_predict, h_control, rolling_flag, costfactor)
     sh, hp, fh, hw, b, m = set_SHEMS_parameters(h_start, h_end, (h_end-h_start)+1, (h_end-h_start)+1,
         false, costfactor, outputflag);
 
-    results  = SHEMS_optimizer(sh, hp, fh, hw, b, m, season);
+    results  = SHEMS_optimizer(sh, hp, fh, hw, b, m, season, case);
 
     # write to results folder___________________________________________________
-    write_to_results_file(hcat(results, ones(size(results,1))*m.h_predict), m, season, costfactor)
+    write_to_results_file(hcat(results, ones(size(results,1))*m.h_predict), m, season, costfactor, case)
     return nothing
 end
 
@@ -35,9 +35,9 @@ function set_SHEMS_parameters(h_start, h_end, h_predict, h_control, rolling_flag
     return sh, hp, fh, hw, b, m
 end
 
-function write_to_results_file(results, m, season="summer", costfactor=1.0)
-    date=210531;
-    CSV.write("benchmark_opt/results/$(date)_results_$(m.h_predict)_$(m.h_control)_$(m.h_start)-$(m.h_end)_"*
+function write_to_results_file(results, m, season="summer", costfactor=1.0, case="eval")
+    date=210625;
+    CSV.write("benchmark_opt/results/$(date)_results_$(case)_"*
         "$(season)_$(costfactor).csv", DataFrame(results, :auto), header=["Temp_FH", "Vol_HW",
             "Soc_B", "V_HW_plus", "V_HW_minus", "T_FH_plus", "T_FH_minus", "profits", "comfort", "COP_FH",
             "COP_HW","PV_DE", "B_DE", "GR_DE", "PV_B", "PV_GR", "PV_HP","GR_HP", "B_HP", "HP_FH", "HP_HW",
@@ -52,6 +52,14 @@ function COPcalc(ts, t_outside)
 end
 
 # also change path to input file in optimizer
-#yearly_SHEMS(1, 768, "summer", 1.0, 1) #summer #evaluation: 360
-yearly_SHEMS(1, 720, "winter", 1.0, 1) #winter #evaluation: 360
-#yearly_SHEMS(1, 1440, "all", 1.0, 1) #all
+########### EVALUATIOM #######################################
+# yearly_SHEMS(1, 360, "summer", 1.0, 0, "eval") #solution time 3 s
+# yearly_SHEMS(1, 360, "winter", 1.0, 0, "eval") #solution time 3902 s
+yearly_SHEMS(1, 1440, "all", 1.0, 0, "eval") #solution time 6775 s
+# yearly_SHEMS(1, 720, "both", 1.0, 0, "eval") #solution time
+
+########### TESTING #######################################
+# yearly_SHEMS(1, 768, "summer", 1.0, 0, "test") #solution time 696 s
+# yearly_SHEMS(1, 720, "winter", 1.0, 0, "test") #solution time 88 s
+# yearly_SHEMS(1, 3000, "all", 1.0, 0, "test") #solution time
+# yearly_SHEMS(1, 1488, "both", 1.0, 0, "test") #solution time

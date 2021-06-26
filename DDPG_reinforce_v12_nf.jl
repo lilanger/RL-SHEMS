@@ -19,7 +19,7 @@ if train == true
 	t_start = now()
 	print("Max steps: $(EP_LENGTH["train"]), Max episodes: $(NUM_EP), Layer 1: $(L1) nodes, Layer 2: $(L2) nodes, ")
 	println("Case: $(case), Time to start: $(round(t_start - start_time, Dates.Minute))")
-	run_episodes(env_dict["train"], env_dict[run], total_reward, score_mean, best_run, noise_mean, noise_scale, render=render)
+	run_episodes(env_dict["train"], env_dict[run], total_reward, score_mean, best_run, noise_mean, render=render)
 	# ------------------------- Save results ---------------------------------------
 	saveBSON(actor, actor_target, critic, critic_target, total_reward, score_mean, best_run, noise_mean)
 end
@@ -45,9 +45,10 @@ if track == 1 # track last and best training run
 			loadBSON(idx=best_eval, path="temp")
 	inference(env_dict[run]; render=false, track=track, idx=best_eval)
 	write_to_tracker_file(idx=best_eval)
-elseif track == 2 #rule-based
-	inference(env_dict[run]; render=false, track=track, idx=-1)
-	write_to_tracker_file(idx=-1)
+
+elseif track < 0 #rule-based
+	inference(env_dict[run]; render=false, track=track, idx=track)
+	write_to_tracker_file(idx=track)
 
 end
 

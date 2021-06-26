@@ -1,4 +1,4 @@
-function SHEMS_optimizer(sh, hp, fh, hw, b, m, season)
+function SHEMS_optimizer(sh, hp, fh, hw, b, m, season, case)
     flows = [:PV_DE, :B_DE, :GR_DE, :PV_B, :PV_GR, :PV_HP, :GR_HP, :B_HP, :HP_FH, :HP_HW];
     p_concr = 2400.0;   #kg/m^3
     c_concr = 1.0;      #kJ/(kg*°C)
@@ -6,7 +6,7 @@ function SHEMS_optimizer(sh, hp, fh, hw, b, m, season)
     c_water = 4.184;    #kJ/(kg*°C)
 
     # Input data__________________________________________________________________________________________________________________________________________________________
-    df = CSV.read("data/$(season)_testing.csv", DataFrame);
+    df = CSV.read("data/$(season)_$(case).csv", DataFrame);
     h_last = sh.h_start + m.h_predict-1;                     # optimization horizon
 
     # read input data
