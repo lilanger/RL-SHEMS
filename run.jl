@@ -41,8 +41,8 @@ Flux.Zygote.@nograd Flux.params
 
 loss_crit(model, y, s, a) = Flux.mse(critic(s, a), y); #+ L2_loss(model)
 
-function loss_act(model, s_norm)
-  actions = actor(s_norm)
+function loss_act(model, s_norm, rng_act)
+  actions = act(model, s_norm, rng_act=rng_act)
   return -mean(critic(s_norm, actions))  # sum better than mean?
 end
 
@@ -56,7 +56,7 @@ function replay(;rng_rpl=0)
 
   # update critic, actor
   update_model!(critic, opt_crit, loss_crit, y, normalize(s |> gpu), a)
-  update_model!(actor, opt_act, loss_act, normalize(s |> gpu))
+  update_model!(actor, opt_act, loss_act, normalize(s |> gpu), rng_rpl)
 
   # update target networks
   update_target!(actor_target, actor; τ = τ)
