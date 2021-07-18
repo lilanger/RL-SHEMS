@@ -1,15 +1,15 @@
 #!/bin/bash --login
 #$ -cwd
 #$ -N DDPG_reinforce_shems_v12_5.5
-#$ -o out/$JOB_ID-DDPG_test_v12.out
+#$ -o out/$JOB_ID-$TASK_ID-DDPG_test_v12.out
 #$ -j y
-#$ -l h_rt=15000
+#$ -l h_rt=30000
 #$ -m bae
-#$ -M lissy.langer@gmail.com
+#$ -M lissy.langer@tu-berlin.de
 #$ -l gpus=1
 #$ -l ccc=5.5
 
-cat input.jl > out/$JOB_ID-input.jl
+cat input.jl > out/$JOB_ID-$TASK_ID-input.jl
 module load cuda/11.1
 module load julia/1.6.1
 julia  DDPG_reinforce_v12_nf.jl

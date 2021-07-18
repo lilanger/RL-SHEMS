@@ -1,5 +1,5 @@
-function read_data(season; case="$(season)_L2_nns_abort-0", network="Opt", stop="final", NUM_EP = 10001, run="eval")
-    date = "2021-06-25"
+function read_data(season; job_id = "1063970", case="$(season)_L2_nns_abort-0", network="Opt", stop="final", NUM_EP = 3001, run="eval")
+    
     version = "v12"
     NUM_STEPS = 24
 
@@ -20,17 +20,22 @@ function read_data(season; case="$(season)_L2_nns_abort-0", network="Opt", stop=
        L2 = 300  
         
     elseif network == "Opt"
-       Flow_df = CSV.read("benchmark_opt/results/210625_results_$(run)_$(season)_1.0.csv", DataFrame);
+       Flow_df = CSV.read("benchmarks/MPC/results/210625_results_$(run)_$(season)_1.0.csv", DataFrame);
        Data_df = hcat(Flow_df[1:end-1, 1:end-4], Input_df[1:end-1, :]) # cut index + hour + last input (no action)
        return Data_df
             
-     elseif network == "Rule"
-       Flow_df = CSV.read("out/2021-06-25_$(run)_results_$(season)_no-L2_nns_ou.5_abort_rule.csv", DataFrame);
+     elseif network == "Rule-1"
+       Flow_df = CSV.read("benchmarks/Rule-based/1_$(run)_results_$(season)_no-L2_nns_ou.5_abort_rule_-1.csv", DataFrame);
+       Data_df = hcat(Flow_df[1:end, :], Input_df[1:end-1, :]) # cut index + hour + last input (no action)
+     return Data_df
+        
+     elseif network == "Rule-2"
+       Flow_df = CSV.read("out/2021-06-26_$(run)_results_$(season)_no-L2_nns_ou.5_abort_no-period-h_rule_-2.csv", DataFrame);
        Data_df = hcat(Flow_df[1:end, :], Input_df[1:end-1, :]) # cut index + hour + last input (no action)
      return Data_df
     end
 
-    Flow_df=CSV.read("out/$(date)_$(run)_results_$(version)_$(NUM_STEPS)_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(idx).csv",DataFrame);
+    Flow_df=CSV.read("out/$(job_id)_$(run)_results_$(version)_$(NUM_STEPS)_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(idx).csv",DataFrame);
     #println(size(Flow_df),  size(Input_df))
     Data_df = hcat(Flow_df[1:end, :], Input_df[1:end-1, :]) # cut index + hour + last input (no action)
     return Data_df

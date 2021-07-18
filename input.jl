@@ -20,35 +20,52 @@ using Plots
 using CSV, DataFrames
 gr()
 
-# -------------------------------- INPUTS --------------------------------------------
-train = 0
-plot_result = 0
+#-------------------------------- INPUTS --------------------------------------------
+train = 1
+plot_result = 1
+plot_all = 1
 render = 0
-track = -2  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
-season = "both"
-case = "$(season)_no-L2_nns_ou.5_abort_no-period-h"
-run = "test"
+track = 1  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
 
-#NUM_STEPS = 24 #36
-NUM_EP = 4_001 #50_000
+season = "all"
+case = "$(season)_no-L2_ns.1-nn_abort"
+run = "eval"
+NUM_EP = 3_001 #3_001 #50_000
 # L1 = 400 #300
 # L2 = 300 #600
 L1 = 300
 L2 = 600
 idx=NUM_EP
+test_every = 100
+test_runs = 100
+num_seeds = 10
 
-rng = MersenneTwister(123)
+#------------ local machine ----------
+# Job_ID=1
+# seed_run=1
+# Task_ID=1
+#--------cluster jobs------------
+Job_ID = ENV["JOB_ID"]
+Task_ID = ENV["SGE_TASK_ID"]
+seed_run = parse(Int, Task_ID)
+#-------------------------------------
+seed_ini = 123
+# individual random seed for each run
+rng_run = parse(Int, string(seed_ini)*string(seed_run))
+
+
 start_time = now()
+current_episode = 0
 
-# --------------------------------- Memory ------------------------------------
-BATCH_SIZE = 64 #120 #64
+#--------------------------------- Memory ------------------------------------
+BATCH_SIZE = 64
 MEM_SIZE = 24_000
 MIN_EXP_SIZE = 24_000
 
 ########################################################################################
 memory = CircularBuffer{Any}(MEM_SIZE)
 
-# --------------------------------- Game environment ---------------------------
+#--------------------------------- Game environment ---------------------------
 EP_LENGTH = Dict("train" => 24,
 					("summer", "eval") => 359, ("summer", "test") => 767,
 					("winter", "eval") => 359, ("winter", "test") => 719,
@@ -68,7 +85,7 @@ ACTION_SIZE = length(env_dict["train"].a)
 ACTION_BOUND_HI = Float32[4.6f0, 3.0f0] #Float32(actions(env, env.state).hi[1])
 ACTION_BOUND_LO = Float32[-4.6f0, -3.0f0] #Float32(actions(env, env.state).lo[1])
 
-# ------------------------------- Action Noise --------------------------------
+#------------------------------- Action Noise --------------------------------
 struct OUNoise
   μ
   σ
@@ -77,32 +94,47 @@ struct OUNoise
   X
 end
 
-# Ornstein-Uhlenbeck Noise params
+struct GNoise
+  μ
+  σ
+end
+
+mutable struct EpsNoise
+  ζ
+  ξ
+  ξ_min
+end
+
+# Ornstein-Uhlenbeck / Gaussian Noise params
 # based on: https://github.com/openai/baselines/blob/master/baselines/ddpg/noise.py
 μ = 0f0 #mu
-σ = 0.5f0 #0.3f0 #sigma
 θ = 0.15f0 #theta
+σ = 0.3f0 #sigma
 dt = 1f-2
+# Epsilon Noise parameters based on Yu et al. 2019
+ζ = 0.0005f0
+ξ_0 = 0.5f0
+ξ_min = 0.1f0
 
 # Noise scale
-τ_ = 25
-ϵ  = exp(-1f0 / τ_)
-noise_scale = 1f0 #./ ACTION_BOUND_HI #note needed because scaling happens afterwards then 1:1
+noise_scale = 1f-1 #./ ACTION_BOUND_HI
 
 # Fill struct with values
-ou = OUNoise(μ, θ, σ, dt, zeros(Float32, ACTION_SIZE))
+ou = OUNoise(μ, σ, θ, dt, zeros(Float32, ACTION_SIZE))
+gn = GNoise(μ, σ)
+en = EpsNoise(ζ, ξ_0, ξ_min)
 
-# ----------------------------- Model Architecture -----------------------------
+#----------------------------- Model Architecture -----------------------------
 γ = 0.995f0     # discount rate for future rewards #Yu
 
 τ = 1f-3       # Parameter for soft target network updates
 η_act = 1f-4   # Learning rate actor 10^(-4)
 η_crit = 1f-3  # Learning rate critic
 
-L2_DECAY = 0.01f0
+#L2_DECAY = 0.01f0
 
-init = Flux.glorot_uniform(rng)
-init_final(dims...) = 6f-3rand(rng, Float32, dims...) .- 3f-3
+init = Flux.glorot_uniform(MersenneTwister(rng_run))
+init_final(dims...) = 6f-3rand(MersenneTwister(rng_run), Float32, dims...) .- 3f-3
 
 # Optimizers
 # with L2 regularization
@@ -112,7 +144,7 @@ init_final(dims...) = 6f-3rand(rng, Float32, dims...) .- 3f-3
 opt_crit = ADAM(η_crit)
 opt_act = ADAM(η_act)
 
-# ----------------------------- Model Architecture -----------------------------
+#----------------------------- Model Architecture -----------------------------
 actor = Chain(
 			Dense(STATE_SIZE, L1, relu, init=init),
 	      	Dense(L1, L2, relu; init=init),

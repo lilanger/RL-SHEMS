@@ -1,0 +1,222 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+  Activating environment at `/net/work/llanger/Project.toml`
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 3. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 4. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 5. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 6. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 7. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 8. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 9. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 10. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 11. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 12. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 13. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 14. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 15. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 16. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 17. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 18. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 19. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 20. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 21. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 22. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 23. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 24. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 25. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 26. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 27. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 28. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 29. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 30. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 31. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 32. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 33. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 34. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 35. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 36. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 37. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 38. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 39. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 40. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 41. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 42. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 43. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 44. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 45. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 46. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 47. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 48. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 49. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 50. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 51. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 52. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 53. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 54. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 55. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 56. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 57. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 58. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 59. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 60. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 61. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 62. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 63. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 64. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 65. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 66. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 67. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 68. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 69. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 70. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 71. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 72. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 73. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 74. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 75. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 76. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 77. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 78. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 79. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 80. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 81. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 82. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 83. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 84. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 85. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 86. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 87. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 88. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 89. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 90. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 91. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 92. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 93. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 94. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 95. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 96. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 97. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 98. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 99. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 100. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 101. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 102. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+┌ Warning: thread = 1 warning: parsed expected 2 columns, but didn't reach end of line around data row: 103. Ignoring any extra columns on this row
+└ @ CSV ~/.julia/packages/CSV/CJfFO/src/file.jl:606
+ERROR: LoadError: ArgumentError: number of rows of each array must match (got (1440, 1439))
+Stacktrace:
+ [1] _typed_hcat(#unused#::Type{Any}, A::Tuple{Matrix{Union{Missing, String}}, Vector{Float64}})
+   @ Base ./abstractarray.jl:1518
+ [2] typed_hcat
+   @ ./abstractarray.jl:1505 [inlined]
+ [3] hcat(::Matrix{Union{Missing, String}}, ::Vector{Float64})
+   @ SparseArrays /buildworker/worker/package_linux64/build/usr/share/julia/stdlib/v1.6/SparseArrays/src/sparsevector.jl:1116
+ [4] write_to_tracker_file(; idx::Int64, rng_run::Int64)
+   @ Main /net/work/llanger/memory_plotting_saving.jl:160
+ [5] top-level scope
+   @ /net/work/llanger/DDPG_reinforce_v12_nf.jl:91
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:69

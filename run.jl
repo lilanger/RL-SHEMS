@@ -1,20 +1,26 @@
 # Parameters and architecture based on:
-# https://github.com/msinto93/DDPG/blob/master/train.py
-# https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/experiments/rl_envs/JuliaRL_DDPG_Pendulum.jl
-# https://github.com/FluxML/model-zoo/blob/master/contrib/games/differentiable-programming/pendulum/DDPG.jl
+# 1 https://github.com/msinto93/DDPG/blob/master/train.py
+# 2 https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/experiments/rl_envs/JuliaRL_DDPG_Pendulum.jl
+# 3 https://github.com/FluxML/model-zoo/blob/master/contrib/games/differentiable-programming/pendulum/DDPG.jl
+# 4 https://github.com/fabio-4/JuliaRL/blob/master/algorithms/ddpg.jl
 
 # ------------------------------- Action Noise --------------------------------
-function sample_noise(ou::OUNoise)
+function sample_noise(ou::OUNoise; rng_noi=0) #from 1
   dx     = ou.θ .* (ou.μ .- ou.X) .* ou.dt
-  dx   .+= ou.σ .* sqrt(ou.dt) .* randn(rng, Float32, length(ou.X)) #|> gpu
-  return ou.X .+= dx
+  dx   .+= ou.σ .* sqrt(ou.dt) .* randn(MersenneTwister(rng_noi), length(ou.X)) #|> gpu
+  ou.X .+= dx
+  return Float32.(ou.X)
 end
 
-
-function sample_noise() # Normal distribution
-  d = Normal(μ, σ)
-  dx = rand(d, ACTION_SIZE) #|>gpu
+function sample_noise(gn::GNoise; rng_noi=0) # Normal distribution
+  d = Normal(gn.μ, gn.σ)
+  dx = rand(MersenneTwister(rng_noi), d, ACTION_SIZE) #|>gpu
   return Float32.(dx)
+end
+
+function sample_noise(en::EpsNoise; rng_noi=0) #from 1
+  en.ξ = Float32(max(0.5 - en.ζ * (current_episode - MEM_SIZE/EP_LENGTH["train"]), en.ξ_min))
+  return en.ξ
 end
 
 # ---------------------- Param Update Functions --------------------------------
@@ -31,27 +37,27 @@ end
 
 # ---------------------------------- Training ----------------------------------
 Flux.Zygote.@nograd Flux.params
-L2_loss(model) = L2_DECAY * sum(x->sum(x.^2), params(model))
+#L2_loss(model) = L2_DECAY * sum(x->sum(x.^2), params(model));
 
-loss_crit(model, y, s, a) = Flux.mse(critic(s, a), y) #+ L2_loss(model)
+loss_crit(model, y, s, a) = Flux.mse(critic(s, a), y); #+ L2_loss(model)
 
 function loss_act(model, s_norm)
   actions = actor(s_norm)
-  crit_out = critic(s_norm, actions)
-  return -sum(crit_out)  # sum better than mean
+  return -mean(critic(s_norm, actions))  # sum better than mean?
 end
 
-function replay()
+function replay(;rng_rpl=0)
   # retrieve minibatch from replay buffer
-  s, a, r, s′ = getData(BATCH_SIZE) # s_mask when with terminal state
+  s, a, r, s′ = getData(BATCH_SIZE, rng_dt=rng_rpl) # s_mask when with terminal state
 
-  a′ = actor_target(s′)
-  v′ = critic_target(s′, a′)
+  a′ = actor_target(normalize(s′ |> gpu))
+  v′ = critic_target(normalize(s′ |> gpu), a′)
   y = r .+ (γ * v′) #no terminal reward switch off
 
-  # update actor, critic
-  update_model!(critic, opt_crit, loss_crit, y, s, a)
-  update_model!(actor, opt_act, loss_act, s)
+  # update critic, actor
+  update_model!(critic, opt_crit, loss_crit, y, normalize(s |> gpu), a)
+  update_model!(actor, opt_act, loss_act, normalize(s |> gpu))
+
   # update target networks
   update_target!(actor_target, actor; τ = τ)
   update_target!(critic_target, critic; τ = τ)
@@ -59,36 +65,48 @@ function replay()
 end
 
 # Choose action according to policy
-function action_RL(s_norm; train=true)
-	act_pred = actor(s_norm |> gpu) |> cpu
+function action_RL(s; train=true, rng_act=0)
+	act_pred = actor(normalize(s |> gpu) |> gpu) |> cpu
 	noise = zeros(ACTION_SIZE)
 	if train == true
-		##act_pred = act_pred + noise_scale .* sample_noise(ou) #.* noise_scale  # add noise only in training
-		noise = sample_noise(ou) .* noise_scale  # add noise only in training #sample_noise(ou)
+		# noise = noise_scale .* sample_noise(ou, rng_noi=rng_act)   # add noise only in training / choose noise
+		# noise = noise_scale .* sample_noise(gn, rng_noi=rng_act)   # add noise only in training / choose noise
+		# #----------------- Epsilon noise ------------------------------
+		# eps = sample_noise(en, rng_noi=rng_act) # add noise only in training / choose noise
+		# rng=rand(MersenneTwister(rng_act))
+		# if rng > eps
+		# 	return act_pred, 0f0
+		# elseif rng <= eps
+		# 	noise = noise_scale .* sample_noise(ou, rng_noi=rng_act)
+		noise = noise_scale .* randn(MersenneTwister(rng_act), Float32, ACTION_SIZE)
+		# 	# return action, eps
+		# end
+		#-------------------------------------------------------------
 	end
-	return act_pred + noise, mean(noise)
+	return clamp.(act_pred + noise, -1f0, 1f0), mean(noise)
 end
 
 function scale_action(action)
 	#scale action [-1, 1] to action bounds
-	scaled_action = Float32.(ACTION_BOUND_LO +
-						(action + ones(ACTION_SIZE)) .*
-							0.5 .* (ACTION_BOUND_HI - ACTION_BOUND_LO))
+	scaled_action = Float32.(ACTION_BOUND_LO .+
+						(action .+ ones(ACTION_SIZE)) .*
+							0.5 .* (ACTION_BOUND_HI .- ACTION_BOUND_LO))
 	return scaled_action
 end
 
 function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=false,
-					track=0, rng=0)
-  reset!(env, rng=rng)
+					track=0, rng_ep=0)
+  reset!(env, rng=rng_ep)
   local reward_eps=0f0
   local noise_eps=0f0
   local last_step = 1
   local results = Array{Float64}(undef, 0, 25)
   for step=1:NUM_STEPS
+	# create individual random seed
+	rng_step = parse(Int, string(rng_ep)*string(step))
 	# determine action
 	s = copy(env.state)
-	s_norm = normalize(s |> gpu)
-    a, noise = action_RL(s_norm, train=train)
+    a, noise = action_RL(s, train=train, rng_act=rng_step)
 	scaled_action = scale_action(a)
 
 	# execute action in RL environment
@@ -102,23 +120,26 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
 		r, s′, results_new = step!(env, s, a, track=track)
 		results = vcat(results, results_new)
 	end
+
 	# render step
 	if render == true
-		sleep(1f-10)
+		#sleep(1f-10)
 		gui(plot(env))
 		#plot(env) # for gif creation
 		#frame(anim) # for gif creation
 	end
-	# save step in replay buffer
-	if train == true
-      remember(s_norm, a, r, normalize(s′ |> gpu))  #, finished(env, s′)) # for final state
-	  # update network weights
-	  replay()
-    end
 	reward_eps += r
 	noise_eps += noise
 	last_step = step
-	finished(env, s′) && break
+
+	# save step in replay buffer
+	if train == true
+      remember(s, a, r, s′)  #, finished(env, s′)) # for final state
+	  # update network weights
+	  replay(rng_rpl=rng_step)
+	  # break episode in training
+	  finished(env, s′) && break
+    end
   end
 
   if track == 0
@@ -128,25 +149,41 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
   end
 end
 
-function run_episodes(env_train::Shems, env_test_eval::Shems, total_reward, score_mean, best_run, noise_mean;
-						render=false, track=0)
-	reset!(env_train)
-	best_score = -10000000
+function run_episodes(env_train::Shems, env_eval::Shems, total_reward, score_mean, best_run,
+						noise_mean, test_every, render, rng; track=0)
+	best_score = -1000
 	for i=1:NUM_EP
-		total_reward[i], noise_mean[i] = episode!(env_train, train=true, render=render, track=track)
-		print("Episode: $i | Mean Step Score: $(@sprintf "%9.3f" total_reward[i]) | ")
-		if i % 100 == 1
-			idx = ceil(Int32, i/100)
-			score_mean[idx,:] = test(env_test_eval)
-			print("Mean score $(@sprintf "%9.3f" score_mean[idx,1]) and "*
-					"std. deviation $(@sprintf "%9.3f" score_mean[idx,2])  over 100 evaluation episodes | ")
-			# save weights for early stopping
-			if score_mean[idx,1] > best_score
+		score=0f0
+		score_all=0f0
+		global current_episode = i
+		# set individual seed per episode
+		rng_ep = parse(Int, string(rng)*string(i))
+
+		# Train set
+		total_reward[i], noise_mean[i] = episode!(env_train, train=true, render=render,
+													track=track, rng_ep=rng_ep)
+		print("Episode: $i | Mean Step Score: $(@sprintf "%9.3f" total_reward[i]) |  $(en.ξ)  |  ")
+
+		# test on eval data set
+		if i % test_every == 1
+			idx = ceil(Int32, i/test_every)
+			# Evaluation set
+			for test_ep in 1:test_runs
+				rng_test= parse(Int, string(seed_ini)*string(test_ep))
+				score, noise = episode!(env_eval, train=false, render=false,
+										NUM_STEPS=EP_LENGTH["train"], track=track, rng_ep=rng_test)
+				score_all += score
+			end
+			score_mean[idx] = score_all/test_runs
+			print("Eval score $(@sprintf "%9.3f" score_mean[idx]) | ")
+			#save weights for early stopping
+			if score_mean[idx] > best_score
 				# save network weights
 				saveBSON(actor, actor_target, critic, critic_target,
-									total_reward, score_mean, best_run, noise_mean; idx=i, path="temp")
+									total_reward, score_mean, best_run, noise_mean,
+									idx=i, path="temp", rng=rng_run)
 				# set new best score
-				best_score = score_mean[idx,1]
+				best_score = score_mean[idx]
 				# save best run
 				global best_run = i
 			end

@@ -1,0 +1,17 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+  Activating environment at `/net/work/llanger/Project.toml`
+ERROR: LoadError: LoadError: UndefVarError: seed not defined
+Stacktrace:
+ [1] top-level scope
+   @ /net/work/llanger/input.jl:117
+ [2] include(fname::String)
+   @ Base.MainInclude ./client.jl:444
+ [3] top-level scope
+   @ /net/work/llanger/DDPG_reinforce_v12_nf.jl:2
+in expression starting at /net/work/llanger/input.jl:117
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:2

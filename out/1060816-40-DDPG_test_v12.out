@@ -1,0 +1,20 @@
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+  Activating environment at `/net/work/llanger/Project.toml`
+ERROR: LoadError: MethodError: no method matching saveBSON(::Chain{Tuple{Dense{typeof(relu), CuArray{Float32, 2}, CuArray{Float32, 1}}, Dense{typeof(relu), CuArray{Float32, 2}, CuArray{Float32, 1}}, Dense{typeof(tanh), CuArray{Float32, 2}, CuArray{Float32, 1}}}}, ::Chain{Tuple{Dense{typeof(relu), CuArray{Float32, 2}, CuArray{Float32, 1}}, Dense{typeof(relu), CuArray{Float32, 2}, CuArray{Float32, 1}}, Dense{typeof(tanh), CuArray{Float32, 2}, CuArray{Float32, 1}}}}, ::crit, ::crit, ::Vector{Float32}, ::Vector{Float64}, ::Int64, ::Vector{Float32}; idx=1, path="temp", seed=40)
+Closest candidates are:
+  saveBSON(::Any, ::Any, ::Any, ::Any, ::Any, ::Any, ::Any, ::Any; idx, path, s) at /net/work/llanger/memory.jl:58 got unsupported keyword argument "seed"
+Stacktrace:
+ [1] kwerr(::NamedTuple{(:idx, :path, :seed), Tuple{Int64, String, Int64}}, ::Function, ::Chain{Tuple{Dense{typeof(relu), CuArray{Float32, 2}, CuArray{Float32, 1}}, Dense{typeof(relu), CuArray{Float32, 2}, CuArray{Float32, 1}}, Dense{typeof(tanh), CuArray{Float32, 2}, CuArray{Float32, 1}}}}, ::Chain{Tuple{Dense{typeof(relu), CuArray{Float32, 2}, CuArray{Float32, 1}}, Dense{typeof(relu), CuArray{Float32, 2}, CuArray{Float32, 1}}, Dense{typeof(tanh), CuArray{Float32, 2}, CuArray{Float32, 1}}}}, ::crit, ::crit, ::Vector{Float32}, ::Vector{Float64}, ::Int64, ::Vector{Float32})
+   @ Base ./error.jl:157
+ [2] run_episodes(env_train::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}, env_eval::Shems{Reinforce.ShemsEnv.ShemsState{Float32}, Reinforce.ShemsEnv.ShemsAction{Float32}}, total_reward::Vector{Float32}, score_mean::Vector{Float64}, best_run::Int64, noise_mean::Vector{Float32}, test_every::Int64; render::Int64, track::Int64, seed::Int64)
+   @ Main /net/work/llanger/run.jl:147
+ [3] top-level scope
+   @ /net/work/llanger/DDPG_reinforce_v12_nf.jl:22
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:18
+Max steps: 24, Max episodes: 3001, Layer 1: 300 nodes, Layer 2: 600 nodes, Case: all_no-L2_nns_ou.5_abort, Time to start: 2 minutes
+Episode: 1 | Mean Step Score:   -39.625 | Eval score    -1.706 | 

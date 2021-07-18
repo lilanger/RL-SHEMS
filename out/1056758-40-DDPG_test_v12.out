@@ -1,0 +1,21 @@
+Loading clusterenv
+  Loading requirement: gridengine intel/2019.3 pgi/19.7 ompi/gcc/2.1.1
+┌ Warning: Package Reinforce does not have DataFrames in its dependencies:
+│ - If you have Reinforce checked out for development and have
+│   added DataFrames as a dependency but haven't updated your primary
+│   environment's manifest file, try `Pkg.resolve()`.
+│ - Otherwise you may need to report an issue with Reinforce
+└ Loading DataFrames into Reinforce from project dependency, future warnings for Reinforce are suppressed.
+  Activating environment at `/net/work/llanger/Project.toml`
+ERROR: LoadError: LoadError: cannot define function plot_all_scores; it already has a value
+Stacktrace:
+ [1] top-level scope
+   @ none:0
+ [2] top-level scope
+   @ /net/work/llanger/plotting_saving.jl:22
+ [3] include(fname::String)
+   @ Base.MainInclude ./client.jl:444
+ [4] top-level scope
+   @ /net/work/llanger/DDPG_reinforce_v12_nf.jl:6
+in expression starting at /net/work/llanger/plotting_saving.jl:22
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:6
