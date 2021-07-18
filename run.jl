@@ -50,7 +50,7 @@ function replay(;rng_rpl=0)
   # retrieve minibatch from replay buffer
   s, a, r, s′ = getData(BATCH_SIZE, rng_dt=rng_rpl) # s_mask when with terminal state
 
-  a′ = actor_target(normalize(s′ |> gpu))
+  a′ = act(actor_target, normalize(s′ |> gpu), noisescale= noisescale_trg, noiseclamp=true, rng_act=rng_rpl)
   v′ = critic_target(normalize(s′ |> gpu), a′)
   y = r .+ (γ * v′) #no terminal reward switch off
 
@@ -65,20 +65,21 @@ function replay(;rng_rpl=0)
 end
 
 # Choose action according to policy
-function action_RL(s; train=true, rng_act=0)
+function act(actor, s; noisescale=noisescale, train=true, noiseclamp=false, rng_act=0)
 	act_pred = actor(normalize(s |> gpu) |> gpu) |> cpu
 	noise = zeros(ACTION_SIZE)
 	if train == true
-		# noise = noise_scale .* sample_noise(ou, rng_noi=rng_act)   # add noise only in training / choose noise
-		# noise = noise_scale .* sample_noise(gn, rng_noi=rng_act)   # add noise only in training / choose noise
+		# noise = noisescale .* sample_noise(ou, rng_noi=rng_act)   # add noise only in training / choose noise
+		# noise = noisescale .* sample_noise(gn, rng_noi=rng_act)   # add noise only in training / choose noise
 		# #----------------- Epsilon noise ------------------------------
 		# eps = sample_noise(en, rng_noi=rng_act) # add noise only in training / choose noise
 		# rng=rand(MersenneTwister(rng_act))
 		# if rng > eps
 		# 	return act_pred, 0f0
 		# elseif rng <= eps
-		# 	noise = noise_scale .* sample_noise(ou, rng_noi=rng_act)
-		noise = noise_scale .* randn(MersenneTwister(rng_act), Float32, ACTION_SIZE)
+		# 	noise = noisescale .* sample_noise(ou, rng_noi=rng_act)
+		noise = noisescale .* randn(MersenneTwister(rng_act), Float32, ACTION_SIZE)
+		noise = noiseclamp ? clamp.(noise, -5f-1, 5f-1) : noise #add noise clamp?
 		# 	# return action, eps
 		# end
 		#-------------------------------------------------------------
@@ -106,7 +107,7 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
 	rng_step = parse(Int, string(rng_ep)*string(step))
 	# determine action
 	s = copy(env.state)
-    a, noise = action_RL(s, train=train, rng_act=rng_step)
+    a, noise = act(actor, s, noisescale=noisescale, train=train, rng_act=rng_step)
 	scaled_action = scale_action(a)
 
 	# execute action in RL environment
