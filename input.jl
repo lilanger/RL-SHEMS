@@ -12,7 +12,7 @@ using BSON
 using Statistics: mean, std
 using DataStructures: CircularBuffer
 using Distributions: sample, Normal
-using Random#, StableRNGs
+using Random
 using Reinforce
 using Reinforce.ShemsEnv: Shems
 using Dates
@@ -39,6 +39,7 @@ idx=NUM_EP
 test_every = 100
 test_runs = 100
 num_seeds = 10
+algo="TD3"
 
 #------------ local machine ----------
 # Job_ID=1
@@ -118,6 +119,7 @@ dt = 1f-2
 
 # Noise scale
 noise_scale = 1f-1 #./ ACTION_BOUND_HI
+noisescale_trg = 2f-1 #./ ACTION_BOUND_HI
 
 # Fill struct with values
 ou = OUNoise(μ, σ, θ, dt, zeros(Float32, ACTION_SIZE))
