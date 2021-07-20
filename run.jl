@@ -9,18 +9,18 @@ function sample_noise(ou::OUNoise; rng_noi=0) #from 1
   dx     = ou.θ .* (ou.μ .- ou.X) .* ou.dt
   dx   .+= ou.σ .* sqrt(ou.dt) .* randn(MersenneTwister(rng_noi), length(ou.X)) #|> gpu
   ou.X .+= dx
-  return Float32.(ou.X)
+  return Float32.(ou.X)  |> gpu
 end
 
 function sample_noise(gn::GNoise; rng_noi=0) # Normal distribution
   d = Normal(gn.μ, gn.σ)
   dx = rand(MersenneTwister(rng_noi), d, ACTION_SIZE) #|>gpu
-  return Float32.(dx)
+  return Float32.(dx) |> gpu
 end
 
 function sample_noise(en::EpsNoise; rng_noi=0) #from 1
   en.ξ = Float32(max(0.5 - en.ζ * (current_episode - MEM_SIZE/EP_LENGTH["train"]), en.ξ_min))
-  return en.ξ
+  return en.ξ  |> gpu
 end
 
 # ---------------------- Param Update Functions --------------------------------
@@ -39,24 +39,25 @@ end
 Flux.Zygote.@nograd Flux.params
 #L2_loss(model) = L2_DECAY * sum(x->sum(x.^2), params(model));
 
-loss_crit(model, y, s, a) = Flux.mse(critic(s, a), y); #+ L2_loss(model)
+loss_crit(model, y, s, a) = Flux.mse(critic(s, a), y);  |> gpu #+ L2_loss(model)
 
-function loss_act(model, s_norm, rng_act)
-  actions = act(model, s_norm, rng_act=rng_act)
-  return -mean(critic(s_norm, actions))  # sum better than mean?
+function loss_act(model, s_norm)
+  actions, n = act(model, s_norm, train=false)  |> gpu
+  return -mean(critic(s_norm, actions))   |> gpu # sum better than mean?
 end
 
 function replay(;rng_rpl=0)
   # retrieve minibatch from replay buffer
-  s, a, r, s′ = getData(BATCH_SIZE, rng_dt=rng_rpl) # s_mask when with terminal state
+  s, a, r, s′ = getData(BATCH_SIZE, rng_dt=rng_rpl)  |> gpu # s_mask when with terminal state
 
-  a′ = act(actor_target, normalize(s′ |> gpu), noisescale= noisescale_trg, noiseclamp=true, rng_act=rng_rpl)
-  v′ = critic_target(normalize(s′ |> gpu), a′)
-  y = r .+ (γ * v′) #no terminal reward switch off
+  a′,n  = act(actor_target, normalize(s′ |> gpu), noisescale=noisescale_trg, train=true,
+  				noiseclamp=true, rng_act=rng_rpl) |> gpu
+  v′ = critic_target(normalize(s′ |> gpu), a′) |> gpu
+  y = r .+ (γ * v′) |> gpu #no terminal reward switch off
 
   # update critic, actor
   update_model!(critic, opt_crit, loss_crit, y, normalize(s |> gpu), a)
-  update_model!(actor, opt_act, loss_act, normalize(s |> gpu), rng_rpl)
+  update_model!(actor, opt_act, loss_act, normalize(s |> gpu))
 
   # update target networks
   update_target!(actor_target, actor; τ = τ)
@@ -66,10 +67,10 @@ end
 
 # Choose action according to policy
 function act(actor, s; noisescale=noisescale, train=true, noiseclamp=false, rng_act=0)
-	act_pred = actor(normalize(s |> gpu) |> gpu) |> cpu
-	noise = zeros(ACTION_SIZE)
+	act_pred = actor(s_norm |> gpu)
+	noise = zeros(Float32, size(act_pred)) |> gpu
 	if train == true
-		# noise = noisescale .* sample_noise(ou, rng_noi=rng_act)   # add noise only in training / choose noise
+		noise = reduce(hcat, [noisescale .* sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]])  # add noise only in training / choose noise
 		# noise = noisescale .* sample_noise(gn, rng_noi=rng_act)   # add noise only in training / choose noise
 		# #----------------- Epsilon noise ------------------------------
 		# eps = sample_noise(en, rng_noi=rng_act) # add noise only in training / choose noise
@@ -78,7 +79,7 @@ function act(actor, s; noisescale=noisescale, train=true, noiseclamp=false, rng_
 		# 	return act_pred, 0f0
 		# elseif rng <= eps
 		# 	noise = noisescale .* sample_noise(ou, rng_noi=rng_act)
-		noise = noisescale .* randn(MersenneTwister(rng_act), Float32, ACTION_SIZE)
+		#noise = noisescale .* randn(MersenneTwister(rng_act), Float32, size(act_pred))
 		noise = noiseclamp ? clamp.(noise, -5f-1, 5f-1) : noise #add noise clamp?
 		# 	# return action, eps
 		# end
@@ -107,7 +108,8 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
 	rng_step = parse(Int, string(rng_ep)*string(step))
 	# determine action
 	s = copy(env.state)
-    a, noise = act(actor, s, noisescale=noisescale, train=train, rng_act=rng_step)
+	a, noise = act(actor, normalize(s |> gpu), noisescale=noisescale, noiseclamp=false,
+									train=train, rng_act=rng_step) |> cpu
 	scaled_action = scale_action(a)
 
 	# execute action in RL environment
