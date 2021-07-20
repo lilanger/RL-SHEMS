@@ -28,7 +28,7 @@ render = 0
 track = 1  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
 
 season = "all"
-case = "$(season)_no-L2_ns.1-nn_abort"
+case = "$(season)_no-L2_ns-ou.2_abort"
 run = "eval"
 NUM_EP = 3_001 #3_001 #50_000
 # L1 = 400 #300
@@ -110,7 +110,7 @@ end
 # based on: https://github.com/openai/baselines/blob/master/baselines/ddpg/noise.py
 μ = 0f0 #mu
 θ = 0.15f0 #theta
-σ = 0.3f0 #sigma
+σ = 0.2f0 #sigma
 dt = 1f-2
 # Epsilon Noise parameters based on Yu et al. 2019
 ζ = 0.0005f0

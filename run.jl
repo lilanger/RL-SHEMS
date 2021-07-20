@@ -39,7 +39,7 @@ end
 Flux.Zygote.@nograd Flux.params
 #L2_loss(model) = L2_DECAY * sum(x->sum(x.^2), params(model));
 
-loss_crit(model, y, s, a) = Flux.mse(critic(s, a), y);  |> gpu #+ L2_loss(model)
+loss_crit(model, y, s, a) = Flux.mse(critic(s, a), y);  #+ L2_loss(model)
 
 function loss_act(model, s_norm)
   actions = actor(s_norm)  |> gpu
@@ -65,11 +65,11 @@ function replay(;rng_rpl=0)
 end
 
 # Choose action according to policy
-function act(actor, s; noisescale=noisescale, train=true, noiseclamp=false, rng_act=0)
+function act(actor, s_norm; noisescale=noisescale, train=true, noiseclamp=false, rng_act=0)
 	act_pred = actor(s_norm |> gpu)
 	noise = zeros(Float32, size(act_pred)) |> gpu
 	if train == true
-		# noise = reduce(hcat, [noisescale .* sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]])  # add noise only in training / choose noise
+		noise = reduce(hcat, [noisescale .* sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) |> gpu # add noise only in training / choose noise
 		# noise = noisescale .* sample_noise(gn, rng_noi=rng_act)   # add noise only in training / choose noise
 		# #----------------- Epsilon noise ------------------------------
 		# eps = sample_noise(en, rng_noi=rng_act) # add noise only in training / choose noise
@@ -78,7 +78,7 @@ function act(actor, s; noisescale=noisescale, train=true, noiseclamp=false, rng_
 		# 	return act_pred, 0f0
 		# elseif rng <= eps
 		# 	noise = noisescale .* sample_noise(ou, rng_noi=rng_act)
-		noise = noisescale .* randn(MersenneTwister(rng_act), Float32, size(act_pred))
+		#noise = noisescale .* randn(MersenneTwister(rng_act), Float32, size(act_pred))
 		noise = noiseclamp ? clamp.(noise, -5f-1, 5f-1) : noise #add noise clamp?
 		# 	# return action, eps
 		# end
