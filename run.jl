@@ -42,7 +42,7 @@ Flux.Zygote.@nograd Flux.params
 loss_crit(model, y, s, a) = Flux.mse(critic(s, a), y);  |> gpu #+ L2_loss(model)
 
 function loss_act(model, s_norm)
-  actions, n = act(model, s_norm, train=false)  |> gpu
+  actions = actor(s_norm)  |> gpu
   return -mean(critic(s_norm, actions))   |> gpu # sum better than mean?
 end
 
@@ -50,8 +50,7 @@ function replay(;rng_rpl=0)
   # retrieve minibatch from replay buffer
   s, a, r, s′ = getData(BATCH_SIZE, rng_dt=rng_rpl)  |> gpu # s_mask when with terminal state
 
-  a′,n  = act(actor_target, normalize(s′ |> gpu), noisescale=noisescale_trg, train=true,
-  				noiseclamp=true, rng_act=rng_rpl) |> gpu
+  a′  = actor_target(normalize(s′ |> gpu)) |> gpu
   v′ = critic_target(normalize(s′ |> gpu), a′) |> gpu
   y = r .+ (γ * v′) |> gpu #no terminal reward switch off
 
@@ -70,7 +69,7 @@ function act(actor, s; noisescale=noisescale, train=true, noiseclamp=false, rng_
 	act_pred = actor(s_norm |> gpu)
 	noise = zeros(Float32, size(act_pred)) |> gpu
 	if train == true
-		noise = reduce(hcat, [noisescale .* sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]])  # add noise only in training / choose noise
+		# noise = reduce(hcat, [noisescale .* sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]])  # add noise only in training / choose noise
 		# noise = noisescale .* sample_noise(gn, rng_noi=rng_act)   # add noise only in training / choose noise
 		# #----------------- Epsilon noise ------------------------------
 		# eps = sample_noise(en, rng_noi=rng_act) # add noise only in training / choose noise
@@ -79,7 +78,7 @@ function act(actor, s; noisescale=noisescale, train=true, noiseclamp=false, rng_
 		# 	return act_pred, 0f0
 		# elseif rng <= eps
 		# 	noise = noisescale .* sample_noise(ou, rng_noi=rng_act)
-		#noise = noisescale .* randn(MersenneTwister(rng_act), Float32, size(act_pred))
+		noise = noisescale .* randn(MersenneTwister(rng_act), Float32, size(act_pred))
 		noise = noiseclamp ? clamp.(noise, -5f-1, 5f-1) : noise #add noise clamp?
 		# 	# return action, eps
 		# end

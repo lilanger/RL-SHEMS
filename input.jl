@@ -39,7 +39,7 @@ idx=NUM_EP
 test_every = 100
 test_runs = 100
 num_seeds = 10
-algo="TD3"
+algo="DDPG"
 
 #------------ local machine ----------
 # Job_ID=1
