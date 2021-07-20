@@ -118,8 +118,7 @@ dt = 1f-2
 ξ_min = 0.1f0
 
 # Noise scale
-noise_scale = 1f-1 #./ ACTION_BOUND_HI
-noisescale_trg = 2f-1 #./ ACTION_BOUND_HI
+noisescale = 1f0 ./ ACTION_BOUND_HI
 
 # Fill struct with values
 ou = OUNoise(μ, σ, θ, dt, zeros(Float32, ACTION_SIZE))
