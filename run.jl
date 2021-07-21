@@ -51,8 +51,7 @@ end
 function replay(;rng_rpl=0)
   # retrieve minibatch from replay buffer
   s, a, r, s′ = getData(BATCH_SIZE, rng_dt=rng_rpl) |> gpu # s_mask when with terminal state
-  a′, n = act(actor_target, normalize(s′ |> gpu), noisescale=noisescale_trg, train=true,
-  				noiseclamp=true, rng_act=rng_rpl) |> gpu
+  a′ = actor_target(normalize(s′ |> gpu))
   v′ = critic_target(normalize(s′), a′) |> gpu
   y = r .+ (γ .* v′) |> gpu #no terminal reward switch off
 

@@ -151,7 +151,7 @@ actor = Chain(
 	      	Dense(L1, L2, relu; init=init),
           	Dense(L2, ACTION_SIZE, tanh; init=init_final)) |> gpu
 
-actor_target = deepcopy(actor)
+actor_target = deepcopy(actor) |> gpu
 
 # Critic model
 struct crit
@@ -176,4 +176,4 @@ critic = crit(Chain(Dense(STATE_SIZE, L1, relu, init=init),Dense(L1, L2, init=in
   				Dense(ACTION_SIZE, L2, init=init) |> gpu,
   				Dense(L2, 1, init=init_final) |> gpu)
 
-critic_target = deepcopy(critic)
+critic_target = deepcopy(critic) |> gpu
