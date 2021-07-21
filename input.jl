@@ -38,7 +38,7 @@ L2 = 600
 idx=NUM_EP
 test_every = 100
 test_runs = 100
-num_seeds = 10
+num_seeds = 40
 algo="DDPG"
 
 #------------ local machine ----------

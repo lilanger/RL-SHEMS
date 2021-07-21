@@ -9,18 +9,18 @@ function sample_noise(ou::OUNoise; rng_noi=0) #from 1
   dx     = ou.θ .* (ou.μ .- ou.X) .* ou.dt
   dx   .+= ou.σ .* sqrt(ou.dt) .* randn(MersenneTwister(rng_noi), length(ou.X)) #|> gpu
   ou.X .+= dx
-  return Float32.(ou.X)  |> gpu
+  return Float32.(ou.X)
 end
 
 function sample_noise(gn::GNoise; rng_noi=0) # Normal distribution
   d = Normal(gn.μ, gn.σ)
   dx = rand(MersenneTwister(rng_noi), d, ACTION_SIZE) #|>gpu
-  return Float32.(dx) |> gpu
+  return Float32.(dx)
 end
 
 function sample_noise(en::EpsNoise; rng_noi=0) #from 1
   en.ξ = Float32(max(0.5 - en.ζ * (current_episode - MEM_SIZE/EP_LENGTH["train"]), en.ξ_min))
-  return en.ξ  |> gpu
+  return en.ξ 
 end
 
 # ---------------------- Param Update Functions --------------------------------
@@ -66,10 +66,10 @@ end
 
 # Choose action according to policy
 function act(actor, s_norm; noisescale=noisescale, train=true, noiseclamp=false, rng_act=0)
-	act_pred = actor(s_norm |> gpu)
-	noise = zeros(Float32, size(act_pred)) |> gpu
+	act_pred = actor(s_norm |> gpu) |> cpu
+	noise = zeros(Float32, size(act_pred))
 	if train == true
-		noise = reduce(hcat, [noisescale .* sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) |> gpu # add noise only in training / choose noise
+		noise = reduce(hcat, [noisescale .* sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
 		# noise = noisescale .* sample_noise(gn, rng_noi=rng_act)   # add noise only in training / choose noise
 		# #----------------- Epsilon noise ------------------------------
 		# eps = sample_noise(en, rng_noi=rng_act) # add noise only in training / choose noise

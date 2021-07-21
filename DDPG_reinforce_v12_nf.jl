@@ -6,7 +6,7 @@ include("memory_plotting_saving.jl") # contains all ploting and rendering functi
 
 populate_memory(env_dict["train"], rng=rng_run)
 # initialization for normalization
-s_min, s_max = min_max_buffer(MIN_EXP_SIZE, rng_mm=rng_run)
+s_min, s_max = min_max_buffer(MIN_EXP_SIZE, rng_mm=rng_run) |> gpu
 # ------------------------------ Training --------------------------------------
 total_reward = zeros(Float32, NUM_EP)
 noise_mean = zeros(Float32, NUM_EP)
