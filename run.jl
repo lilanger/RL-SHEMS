@@ -20,7 +20,7 @@ end
 
 function sample_noise(en::EpsNoise; rng_noi=0) #from 1
   en.ξ = Float32(max(0.5 - en.ζ * (current_episode - MEM_SIZE/EP_LENGTH["train"]), en.ξ_min))
-  return en.ξ 
+  return en.ξ
 end
 
 # ---------------------- Param Update Functions --------------------------------
@@ -39,25 +39,27 @@ end
 Flux.Zygote.@nograd Flux.params
 #L2_loss(model) = L2_DECAY * sum(x->sum(x.^2), params(model));
 
-loss_crit(model, y, s, a) = Flux.mse(critic(s, a), y);  #+ L2_loss(model)
+function loss_crit(model, y, s_norm, a)
+  return Flux.mse(critic(s_norm, a), y) |> gpu
+end
 
 function loss_act(model, s_norm)
   actions = actor(s_norm)  |> gpu
-  return -mean(critic(s_norm, actions))   |> gpu # sum better than mean?
+  return -mean(critic(s_norm, actions)) |> gpu # sum better than mean?
 end
 
 function replay(;rng_rpl=0)
   # retrieve minibatch from replay buffer
-  s, a, r, s′ = getData(BATCH_SIZE, rng_dt=rng_rpl)  |> gpu # s_mask when with terminal state
+  s, a, r, s′ = getData(BATCH_SIZE, rng_dt=rng_rpl) |> gpu # s_mask when with terminal state
+  a′, n = act(actor_target, normalize(s′ |> gpu), noisescale=noisescale_trg, train=true,
+  				noiseclamp=true, rng_act=rng_rpl) |> gpu
+  v′ = critic_target(normalize(s′), a′) |> gpu
+  y = r .+ (γ .* v′) |> gpu #no terminal reward switch off
 
-  a′  = actor_target(normalize(s′ |> gpu)) |> gpu
-  v′ = critic_target(normalize(s′ |> gpu), a′) |> gpu
-  y = r .+ (γ * v′) |> gpu #no terminal reward switch off
-
-  # update critic, actor
+  # update critic
   update_model!(critic, opt_crit, loss_crit, y, normalize(s |> gpu), a)
+  # update actor
   update_model!(actor, opt_act, loss_act, normalize(s |> gpu))
-
   # update target networks
   update_target!(actor_target, actor; τ = τ)
   update_target!(critic_target, critic; τ = τ)
