@@ -21,14 +21,14 @@ using CSV, DataFrames
 gr()
 
 #-------------------------------- INPUTS --------------------------------------------
-train = 1
-plot_result = 1
-plot_all = 1
+train = 0
+plot_result = 0
+plot_all = 0
 render = 0
-track = 1  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
+track = -1  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
 
 season = "all"
-case = "$(season)_no-L2_ns-gn.8_abort"
+case = "$(season)_no-L2_ns-gn.2_abort"
 run = "eval"
 NUM_EP = 3_001 #3_001 #50_000
 # L1 = 400 #300
@@ -42,13 +42,13 @@ num_seeds = 40
 algo="DDPG"
 
 #------------ local machine ----------
-# Job_ID=1
-# seed_run=1
-# Task_ID=1
+Job_ID=2
+seed_run=1
+Task_ID=1
 #--------cluster jobs------------
-Job_ID = ENV["JOB_ID"]
-Task_ID = ENV["SGE_TASK_ID"]
-seed_run = parse(Int, Task_ID)
+# Job_ID = ENV["JOB_ID"]
+# Task_ID = ENV["SGE_TASK_ID"]
+# seed_run = parse(Int, Task_ID)
 #-------------------------------------
 seed_ini = 123
 # individual random seed for each run
@@ -110,7 +110,7 @@ end
 # based on: https://github.com/openai/baselines/blob/master/baselines/ddpg/noise.py
 μ = 0f0 #mu
 θ = 0.15f0 #theta
-σ = 0.8f0 #sigma
+σ = 0.2f0 #sigma
 dt = 1f-2
 # Epsilon Noise parameters based on Yu et al. 2019
 ζ = 0.0005f0
