@@ -21,14 +21,14 @@ using CSV, DataFrames
 gr()
 
 #-------------------------------- INPUTS --------------------------------------------
-train = 0
-plot_result = 0
-plot_all = 0
+train = 1
+plot_result = 1
+plot_all = 1
 render = 0
-track = -1  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
+track = 1  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
 
 season = "all"
-case = "$(season)_no-L2_ns-gn.2_abort"
+case = "$(season)_no-L2_nns-gn.1_abort"
 run = "eval"
 NUM_EP = 3_001 #3_001 #50_000
 # L1 = 400 #300
@@ -117,12 +117,12 @@ dt = 1f-2
 ξ_0 = 0.5f0
 ξ_min = 0.1f0
 
-# Noise scale
-noisescale = 1f0 ./ ACTION_BOUND_HI
+# Noise actor
+noise_act = 1f-1
 
 # Fill struct with values
 ou = OUNoise(μ, σ, θ, dt, zeros(Float32, ACTION_SIZE))
-gn = GNoise(μ, σ)
+gn = GNoise(μ, noise_act)
 en = EpsNoise(ζ, ξ_0, ξ_min)
 
 #----------------------------- Model Architecture -----------------------------

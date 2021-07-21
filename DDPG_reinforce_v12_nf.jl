@@ -48,7 +48,7 @@ end
 if plot_all == true
 	if seed_run == num_seeds
 		# deplay to be sure all are done
-		sleep(600)
+		sleep(800)
 		# total_reward_all = zeros(Float32, (NUM_EP, test_rng, 2))
 		# noise_mean_all = zeros(Float32, (NUM_EP, test_rng, 2))
 		best_run_all = zeros(Int, num_seeds)

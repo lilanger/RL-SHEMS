@@ -66,12 +66,12 @@ function replay(;rng_rpl=0)
 end
 
 # Choose action according to policy
-function act(actor, s_norm; noisescale=noisescale, train=true, noiseclamp=false, rng_act=0)
+function act(actor, s_norm; train=true, noiseclamp=false, rng_act=0)
 	act_pred = actor(s_norm |> gpu) |> cpu
 	noise = zeros(Float32, size(act_pred))
 	if train == true
 		# noise = reduce(hcat, [noisescale .* sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
-		noise = reduce(hcat, [noisescale .* sample_noise(gn, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
+		noise = reduce(hcat, [sample_noise(gn, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
 		# #----------------- Epsilon noise ------------------------------
 		# eps = sample_noise(en, rng_noi=rng_act) # add noise only in training / choose noise
 		# rng=rand(MersenneTwister(rng_act))
@@ -108,7 +108,7 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
 	rng_step = parse(Int, string(rng_ep)*string(step))
 	# determine action
 	s = copy(env.state)
-	a, noise = act(actor, normalize(s |> gpu), noisescale=noisescale, noiseclamp=false,
+	a, noise = act(actor, normalize(s |> gpu), noiseclamp=false,
 									train=train, rng_act=rng_step) |> cpu
 	scaled_action = scale_action(a)
 

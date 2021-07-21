@@ -163,15 +163,15 @@ function write_to_tracker_file(;idx=NUM_EP, rng=rng_run)
     # CSV.write("out/Costs_$(run).csv", DataFrame(Costs,:auto), header=vcat(["time", "NUM_EP", "L1", "L2", "BATCH_SIZE", "MEM_SIZE",
 	# 							"MIN_EXP_SIZE","season", "run", "Job_ID", "seed", "case", "idx"], string.([i  for i=1:EP_LENGTH[season, run]])));
 
-	# Cost tracker
-	Cost = CSV.read("out/Costs_$(run)_v2.csv", DataFrame, header=true)
-	Costs = hcat(Matrix(Cost), results[!, :profits] .- results[!, :comfort])
-    CSV.write("out/Costs_$(run)_v2.csv", DataFrame(Costs,:auto), header=[names(Cost); "$(Job_ID)_$(rng)_$(idx)"]);
-
-	# Comfort tracker
-	Comfort = CSV.read("out/Comfort_$(run)_v2.csv", DataFrame, header=1)
-	Comforts = hcat(Matrix(Comfort), results[!, :comfort])
-	CSV.write("out/Comfort_$(run)_v2.csv", DataFrame(Comforts,:auto), header=[names(Comfort); "$(Job_ID)-$(rng)-$(idx)"]);
+	# # Cost tracker
+	# Cost = CSV.read("out/Costs_$(run)_v2.csv", DataFrame, header=true)
+	# Costs = hcat(Matrix(Cost), results[!, :profits] .- results[!, :comfort])
+    # CSV.write("out/Costs_$(run)_v2.csv", DataFrame(Costs,:auto), header=[names(Cost); "$(Job_ID)_$(rng)_$(idx)"]);
+	#
+	# # Comfort tracker
+	# Comfort = CSV.read("out/Comfort_$(run)_v2.csv", DataFrame, header=1)
+	# Comforts = hcat(Matrix(Comfort), results[!, :comfort])
+	# CSV.write("out/Comfort_$(run)_v2.csv", DataFrame(Comforts,:auto), header=[names(Comfort); "$(Job_ID)-$(rng)-$(idx)"]);
 
 	# # Comfort tracker
 	# Comfort = Matrix(CSV.read("out/Comfort_$(run).csv", DataFrame, header=true))
