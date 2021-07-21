@@ -70,8 +70,8 @@ function act(actor, s_norm; noisescale=noisescale, train=true, noiseclamp=false,
 	act_pred = actor(s_norm |> gpu) |> cpu
 	noise = zeros(Float32, size(act_pred))
 	if train == true
-		noise = reduce(hcat, [noisescale .* sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
-		# noise = noisescale .* sample_noise(gn, rng_noi=rng_act)   # add noise only in training / choose noise
+		# noise = reduce(hcat, [noisescale .* sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
+		noise = reduce(hcat, [noisescale .* sample_noise(gn, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
 		# #----------------- Epsilon noise ------------------------------
 		# eps = sample_noise(en, rng_noi=rng_act) # add noise only in training / choose noise
 		# rng=rand(MersenneTwister(rng_act))
