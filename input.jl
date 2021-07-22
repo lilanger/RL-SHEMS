@@ -20,6 +20,14 @@ using Plots
 using CSV, DataFrames
 gr()
 
+#------------ local machine ----------
+Job_ID=2
+seed_run=1
+Task_ID=1
+#--------cluster jobs------------
+# Job_ID = ENV["JOB_ID"]
+# Task_ID = ENV["SGE_TASK_ID"]
+# seed_run = parse(Int, Task_ID)
 #-------------------------------- INPUTS --------------------------------------------
 train = 1
 plot_result = 1
@@ -28,7 +36,7 @@ render = 0
 track = 1  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
 
 season = "all"
-case = "$(season)_no-L2_nns-gn.1_abort"
+case = "$(season)_no-L2_nns-gn.2_abort"
 run = "eval"
 NUM_EP = 3_001 #3_001 #50_000
 # L1 = 400 #300
@@ -41,14 +49,6 @@ test_runs = 100
 num_seeds = 40
 algo="DDPG"
 
-#------------ local machine ----------
-Job_ID=2
-seed_run=1
-Task_ID=1
-#--------cluster jobs------------
-# Job_ID = ENV["JOB_ID"]
-# Task_ID = ENV["SGE_TASK_ID"]
-# seed_run = parse(Int, Task_ID)
 #-------------------------------------
 seed_ini = 123
 # individual random seed for each run
@@ -118,7 +118,7 @@ dt = 1f-2
 ξ_min = 0.1f0
 
 # Noise actor
-noise_act = 1f-1
+noise_act = 2f-1
 
 # Fill struct with values
 ou = OUNoise(μ, σ, θ, dt, zeros(Float32, ACTION_SIZE))
