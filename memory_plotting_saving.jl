@@ -75,19 +75,19 @@ function plot_scores(;ymin=Inf, total_reward=total_reward, score_mean=score_mean
 	plot!(1:test_every:NUM_EP, score_mean[:], label="test (mean)",
 			markershape=:circle, colour =:indigo, markersize=3, markerstrokewidth=0.2);
 
-	yaxis!("Average score per time step [€] / noise", font(10, "serif"))
-	xaxis!("Training episodes", font(10, "serif"))
+	yaxis!("Average score per time step [€] / noise", font(10, "serif"));
+	xaxis!("Training episodes", font(10, "serif"));
 
 	savefig("out/fig/$(Job_ID)-$(Task_ID)_DDPG_Shems_v12_$(run)_$(EP_LENGTH["train"])"*
-				"_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_$(ymin).png")
+				"_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_$(ymin).png");
 end
 
 function plot_all_scores(;ymin=Inf, score_mean=score_mean)
 	all_score_mean = mean(score_mean, dims=2);
 	all_score_std = std(score_mean, dims=2);
 	println()
-	println("Average score over 40 random seeds: $(all_score_mean[end])");
-	println("Average standard deviation over 40 random seeds: $(all_score_std[end])");
+	println("Final score over 40 random seeds: $(all_score_mean[end])");
+	println("Final standard deviation over 40 random seeds: $(all_score_std[end])");
 
 	# plot test/evaluation results mean -last
 	plot(1:test_every:NUM_EP, [all_score_mean], label="eval (mean)",
@@ -101,8 +101,8 @@ function plot_all_scores(;ymin=Inf, score_mean=score_mean)
 			label="eval (95% confidence interval)", colour =:darkmagenta, alpha=0.4);
 
 
-	yaxis!("Average score per time step [€]", font(10, "serif"))
-	xaxis!("Training episodes", font(10, "serif"))
+	yaxis!("Average score per time step [€]", font(10, "serif"));
+	xaxis!("Training episodes", font(10, "serif"));
 
 	savefig("out/fig/$(Job_ID)_DDPG_Shems_v12_$(run)_$(EP_LENGTH["train"])_"*
 				"$(NUM_EP)_$(L1)_$(L2)_$(case)_all_$(ymin).png");

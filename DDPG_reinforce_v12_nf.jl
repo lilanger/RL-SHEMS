@@ -53,13 +53,11 @@ if plot_all == true
 		# noise_mean_all = zeros(Float32, (NUM_EP, test_rng, 2))
 		best_run_all = zeros(Int, num_seeds)
 		score_mean_all = zeros(Float32, (ceil(Int32, NUM_EP/test_every), num_seeds))
-
 		for i in 1:num_seeds
 			test_rng_run = parse(Int, string(seed_ini)*string(i))
-			tr_a, score_mean_all[:,i], best_run_all[i], nm_a =
-				loadBSON(scores_only=true, rng=test_rng_run);
-		    plot_all_scores(ymin = -5, score_mean=score_mean_all)
+			tr_a, score_mean_all[:,i], br, nm_a = loadBSON(scores_only=true, rng=test_rng_run);
 		end
+		plot_all_scores(ymin = -5, score_mean=score_mean_all)
 	end
 end
 
