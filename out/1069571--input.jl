@@ -21,13 +21,13 @@ using CSV, DataFrames
 gr()
 
 #------------ local machine ----------
-# Job_ID=2
-# seed_run=1
-# Task_ID=1
+Job_ID=2
+seed_run=1
+Task_ID=1
 #--------cluster jobs------------
-Job_ID = ENV["JOB_ID"]
-Task_ID = ENV["SGE_TASK_ID"]
-seed_run = parse(Int, Task_ID)
+# Job_ID = ENV["JOB_ID"]
+# Task_ID = ENV["SGE_TASK_ID"]
+# seed_run = parse(Int, Task_ID)
 #-------------------------------- INPUTS --------------------------------------------
 train = 1
 plot_result = 1
