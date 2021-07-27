@@ -18,15 +18,27 @@ function sample_noise(gn::GNoise; rng_noi=0) # Normal distribution
   return Float32.(dx)
 end
 
+function sample_noise(pn::ParamNoise; rng_noi=0) # Normal distribution
+  d = Normal(pn.μ, pn.σ_current)
+  dx = rand(MersenneTwister(rng_noi), d) #|>gpu
+  return Float32(dx)
+end
+
 function sample_noise(en::EpsNoise; rng_noi=0) #from 1
   en.ξ = Float32(max(0.5 - en.ζ * (current_episode - MEM_SIZE/EP_LENGTH["train"]), en.ξ_min))
   return en.ξ
 end
 
 # ---------------------- Param Update Functions --------------------------------
-function update_target!(target, model; τ = 1f0)
+function soft_update!(target, model; τ = 1f0)
   for (p_t, p_m) in zip(params(target), params(model))
     p_t .= (1f0 - τ) * p_t .+ τ * p_m
+  end
+end
+
+function add_perturb!(actor_perturb, rng_rpl)
+  for p_t in params(actor_perturb)
+    p_t .= p_t .+ sample_noise(pn, rng_noi=rng_rpl)
   end
 end
 
@@ -51,8 +63,13 @@ end
 function replay(;rng_rpl=0)
   # retrieve minibatch from replay buffer
   s, a, r, s′ = getData(BATCH_SIZE, rng_dt=rng_rpl) |> gpu # s_mask when with terminal state
+
+  # update pertubable actor
+  adapt_param_noise(actor, s, rng_rpl)
+
+  # update networks
   a′ = actor_target(normalize(s′ |> gpu))
-  v′ = critic_target(normalize(s′), a′) |> gpu
+  v′ = critic_target(normalize(s′ |> gpu), a′) |> gpu
   y = r .+ (γ .* v′) |> gpu #no terminal reward switch off
 
   # update critic
@@ -60,18 +77,45 @@ function replay(;rng_rpl=0)
   # update actor
   update_model!(actor, opt_act, loss_act, normalize(s |> gpu))
   # update target networks
-  update_target!(actor_target, actor; τ = τ)
-  update_target!(critic_target, critic; τ = τ)
+  soft_update!(actor_target, actor; τ = τ)
+  soft_update!(critic_target, critic; τ = τ)
   return nothing
 end
 
+function adapt_param_noise(actor, s, rng_rpl)
+	a = actor(normalize(s |> gpu))
+
+	soft_update!(actor_perturb, actor, τ = 1f0)
+	add_perturb!(actor_perturb, rng_rpl)
+	a_perturb = actor_perturb(normalize(s |> gpu))
+	distance = Flux.mse(a, a_perturb)
+
+	if distance > pn.σ_target
+		pn.σ_current /= pn.adoption
+	else
+		pn.σ_current *= pn.adoption
+	end
+
+	soft_update!(actor_perturb, actor, τ = 1f0)
+	add_perturb!(actor_perturb, rng_rpl)
+	return nothing
+end
+
+
 # Choose action according to policy
-function act(actor, s_norm; train=true, noiseclamp=false, rng_act=0)
+function act(s_norm; train=true, noiseclamp=false, rng_act=0)
 	act_pred = actor(s_norm |> gpu) |> cpu
 	noise = zeros(Float32, size(act_pred))
 	if train == true
-		# noise = reduce(hcat, [noisescale .* sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
-		noise = reduce(hcat, [sample_noise(gn, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
+		##-------------Adaptive parameter noise -----------------------------
+		act_pred = actor_perturb(s_norm |> gpu) |> cpu
+
+		##-------------OU noise ---------------------------------------------
+		# noise = reduce(hcat, [sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
+
+		##-------------Gaussian noise ---------------------------------------
+		# noise = reduce(hcat, [sample_noise(gn, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
+
 		# #----------------- Epsilon noise ------------------------------
 		# eps = sample_noise(en, rng_noi=rng_act) # add noise only in training / choose noise
 		# rng=rand(MersenneTwister(rng_act))
@@ -80,7 +124,7 @@ function act(actor, s_norm; train=true, noiseclamp=false, rng_act=0)
 		# elseif rng <= eps
 		# 	noise = noisescale .* sample_noise(ou, rng_noi=rng_act)
 		#noise = noisescale .* randn(MersenneTwister(rng_act), Float32, size(act_pred))
-		noise = noiseclamp ? clamp.(noise, -5f-1, 5f-1) : noise #add noise clamp?
+		# noise = noiseclamp ? clamp.(noise, -5f-1, 5f-1) : noise #add noise clamp?
 		# 	# return action, eps
 		# end
 		#-------------------------------------------------------------
@@ -108,7 +152,7 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
 	rng_step = parse(Int, string(rng_ep)*string(step))
 	# determine action
 	s = copy(env.state)
-	a, noise = act(actor, normalize(s |> gpu), noiseclamp=false,
+	a, noise = act(normalize(s |> gpu), noiseclamp=false,
 									train=train, rng_act=rng_step) |> cpu
 	scaled_action = scale_action(a)
 
@@ -165,7 +209,7 @@ function run_episodes(env_train::Shems, env_eval::Shems, total_reward, score_mea
 		# Train set
 		total_reward[i], noise_mean[i] = episode!(env_train, train=true, render=render,
 													track=track, rng_ep=rng_ep)
-		print("Episode: $i | Mean Step Score: $(@sprintf "%9.3f" total_reward[i]) |  $(en.ξ)  |  ")
+		print("Episode: $i | Mean Step Score: $(@sprintf "%9.3f" total_reward[i]) |  $(pn.σ_current)  |  ")
 
 		# test on eval data set
 		if i % test_every == 1

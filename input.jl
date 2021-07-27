@@ -36,7 +36,7 @@ render = 0
 track = 1  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
 
 season = "all"
-case = "$(season)_no-L2_nns-gn.2_abort"
+case = "$(season)_layernorm_nns-pn.1_abort-TOU"
 run = "eval"
 NUM_EP = 3_001 #3_001 #50_000
 # L1 = 400 #300
@@ -46,7 +46,7 @@ L2 = 600
 idx=NUM_EP
 test_every = 100
 test_runs = 100
-num_seeds = 40
+num_seeds = 15
 algo="DDPG"
 
 #-------------------------------------
@@ -106,11 +106,18 @@ mutable struct EpsNoise
   ξ_min
 end
 
+mutable struct ParamNoise
+	μ
+    σ_current
+	σ_target
+	adoption
+end
+
 # Ornstein-Uhlenbeck / Gaussian Noise params
 # based on: https://github.com/openai/baselines/blob/master/baselines/ddpg/noise.py
 μ = 0f0 #mu
+σ = 0.1f0 #sigma
 θ = 0.15f0 #theta
-σ = 0.2f0 #sigma
 dt = 1f-2
 # Epsilon Noise parameters based on Yu et al. 2019
 ζ = 0.0005f0
@@ -118,12 +125,13 @@ dt = 1f-2
 ξ_min = 0.1f0
 
 # Noise actor
-noise_act = 2f-1
+noise_act = 1f-1
 
 # Fill struct with values
 ou = OUNoise(μ, σ, θ, dt, zeros(Float32, ACTION_SIZE))
 gn = GNoise(μ, noise_act)
 en = EpsNoise(ζ, ξ_0, ξ_min)
+pn = ParamNoise(μ, σ, noise_act, 1.01)
 
 #----------------------------- Model Architecture -----------------------------
 γ = 0.995f0     # discount rate for future rewards #Yu
@@ -148,10 +156,13 @@ opt_act = ADAM(η_act)
 #----------------------------- Model Architecture -----------------------------
 actor = Chain(
 			Dense(STATE_SIZE, L1, relu, init=init),
+			LayerNorm(L1),
 	      	Dense(L1, L2, relu; init=init),
+			LayerNorm(L2),
           	Dense(L2, ACTION_SIZE, tanh; init=init_final)) |> gpu
 
 actor_target = deepcopy(actor) |> gpu
+actor_perturb = deepcopy(actor) |> gpu
 
 # Critic model
 struct crit

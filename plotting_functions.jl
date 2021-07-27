@@ -25,7 +25,7 @@ function read_data(season; job_id = "1063970", case="$(season)_L2_nns_abort-0", 
        return Data_df
             
      elseif network == "Rule-1"
-       Flow_df = CSV.read("benchmarks/Rule-based/1_$(run)_results_$(season)_no-L2_nns_ou.5_abort_rule_-1.csv", DataFrame);
+       Flow_df = CSV.read("benchmarks/Rule-based/$(case).csv", DataFrame);
        Data_df = hcat(Flow_df[1:end, :], Input_df[1:end-1, :]) # cut index + hour + last input (no action)
      return Data_df
         
@@ -35,7 +35,7 @@ function read_data(season; job_id = "1063970", case="$(season)_L2_nns_abort-0", 
      return Data_df
     end
 
-    Flow_df=CSV.read("out/$(job_id)_$(run)_results_$(version)_$(NUM_STEPS)_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(idx).csv",DataFrame);
+    Flow_df=CSV.read("out/tracker/$(job_id)_$(run)_results_$(version)_$(NUM_STEPS)_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(idx).csv",DataFrame);
     #println(size(Flow_df),  size(Input_df))
     Data_df = hcat(Flow_df[1:end, :], Input_df[1:end-1, :]) # cut index + hour + last input (no action)
     return Data_df
@@ -199,10 +199,10 @@ function plot_legend(plotfunction)
 end
 
 #KPI functions-----------------------------------------------------------------------------------------
-function calc_profit(Data_df; p_sell=0.1)
+function calc_profit(Data_df; ratio=0.3)
     return convert.(Float64, 
-               round.(sum(p_sell * Data_df[!,"PV_GR"] - 
-                    0.3 * sum(Data_df[!,j] for j in ["GR_DE", "GR_HP"])), digits=2))
+               round.(sum(ratio .* Data_df[!,"p_buy"] .* Data_df[!,"PV_GR"] - 
+                    Data_df[!,"p_buy"] .* sum(Data_df[!,j] for j in ["GR_DE", "GR_HP"])), digits=2))
 end
 
 function calc_energy_use(Data_df)
