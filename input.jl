@@ -97,7 +97,8 @@ end
 
 struct GNoise
   μ
-  σ
+  σ_act
+  σ_trg
 end
 
 mutable struct EpsNoise
@@ -126,9 +127,10 @@ dt = 1f-2
 
 # Noise actor
 noise_act = 2f-1
+noise_trg = 3f-1
 
 # Fill struct with values
 ou = OUNoise(μ, σ, θ, dt, zeros(Float32, ACTION_SIZE))
-gn = GNoise(μ, noise_act)
+gn = GNoise(μ, noise_act, noise_trg)
 en = EpsNoise(ζ, ξ_0, ξ_min)
 pn = ParamNoise(μ, σ, noise_act, 1.01)
