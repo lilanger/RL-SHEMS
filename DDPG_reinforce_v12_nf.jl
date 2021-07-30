@@ -1,6 +1,6 @@
 #include("out/$(ENV["JOB_ID"])-input.jl") # contains the input data
 include("input.jl") # contains the input data
-include("run.jl") # contains all training functions
+include("$(algo).jl") # contains all training functions
 include("testing.jl") # contains testing functions
 include("memory_plotting_saving.jl") # contains all ploting and rendering functions
 
@@ -21,13 +21,13 @@ if train == true
 	run_episodes(env_dict["train"], env_dict["eval"], total_reward, score_mean, best_run, noise_mean,
 					test_every, render,  rng_run, track=0)
 	# ------------------------- Save results ---------------------------------------
-	saveBSON(actor, actor_target, critic, critic_target, total_reward, score_mean, best_run, noise_mean,
+	saveBSON(actor,total_reward, score_mean, best_run, noise_mean,
 				rng=rng_run)
 end
 
 # ------------------------- render evaluation ---------------------------------------
 if render == true && train != true
-	actor, actor_target, critic, critic_target, total_reward, score_mean, best_run, noise_mean =
+	actor,total_reward, score_mean, best_run, noise_mean =
 			loadBSON(idx=idx, rng=rng_run)
 	#gr()
 	#global anim = Animation() # gif
@@ -49,13 +49,10 @@ if plot_all == true
 	if seed_run == num_seeds
 		# deplay to be sure all are done
 		sleep(150)
-		# total_reward_all = zeros(Float32, (NUM_EP, test_rng, 2))
-		# noise_mean_all = zeros(Float32, (NUM_EP, test_rng, 2))
-		best_run_all = zeros(Int, num_seeds)
-		score_mean_all = zeros(Float32, (ceil(Int32, NUM_EP/test_every), num_seeds))
+  		score_mean_all = zeros(Float32, (ceil(Int32, NUM_EP/test_every), num_seeds))
 		for i in 1:num_seeds
 			test_rng_run = parse(Int, string(seed_ini)*string(i))
-			tr_a, score_mean_all[:,i], br, nm_a = loadBSON(scores_only=true, rng=test_rng_run);
+			score_mean_all[:,i] = loadBSON(scores_only=true, rng=test_rng_run)[2];
 		end
 		plot_all_scores(ymin = -5, score_mean=score_mean_all)
 	end
@@ -68,14 +65,14 @@ if track == 1 # track last and best training run
 		for i in 1:num_seeds
 			test_rng_run = parse(Int, string(seed_ini)*string(i))
 			# track last episode weights
-			ac, ac_t, cr, cr_t, tr, sm, br, nm = loadBSON(rng=test_rng_run)
+			ac,  br = loadBSON(rng=test_rng_run)[1,4]
 			global actor = ac
 			inference(env_dict[run], render=false, track=track, rng_inf=test_rng_run)
 			write_to_tracker_file(rng=test_rng_run)
 			best_eval = br
 
 			# track best episode weights
-		    ac, ac_t, cr, cr_t, tr, sm, br, nm = loadBSON(idx=best_eval, path="temp", rng=test_rng_run)
+		    ac = loadBSON(idx=best_eval, path="temp", rng=test_rng_run)[1]
 			global actor = ac
 			inference(env_dict[run]; render=false, track=track, idx=best_eval, rng_inf=test_rng_run)
 			write_to_tracker_file(idx=best_eval, rng=test_rng_run)

@@ -181,18 +181,11 @@ function write_to_tracker_file(;idx=NUM_EP, rng=rng_run)
     return nothing
 end
 
-function saveBSON(actor, actor_target, critic, critic_target,
-					total_reward, score_mean, best_run, noise_mean;
+function saveBSON(actor, total_reward, score_mean, best_run, noise_mean;
 					idx=NUM_EP, path="", rng=rng_run)
 	actor = actor |> cpu
-	actor_target = actor_target |> cpu
-	critic = critic |> cpu
-	critic_target = critic_target |> cpu
 
 	BSON.@save "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_actor_$(idx).bson" actor
-	BSON.@save "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_actor_target_$(idx).bson" actor_target
-	BSON.@save "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_critic_$(idx).bson" critic
-	BSON.@save "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_critic_target_$(idx).bson" critic_target
 	BSON.@save "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_scores_$(idx).bson" total_reward score_mean best_run noise_mean
 	return nothing
 end
@@ -203,9 +196,6 @@ function loadBSON(;idx=NUM_EP, scores_only=false, path="", rng=seed_run)
 		return total_reward |> gpu, score_mean |> gpu, best_run |> gpu, noise_mean |> gpu
 	end
 	BSON.@load "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_actor_$(idx).bson" actor
-	BSON.@load "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_actor_target_$(idx).bson" actor_target
-	BSON.@load "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_critic_$(idx).bson" critic
-	BSON.@load "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_critic_target_$(idx).bson" critic_target
 	BSON.@load "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_scores_$(idx).bson" total_reward score_mean best_run noise_mean
-	return actor |> gpu, actor_target |> gpu, critic |> gpu, critic_target |> gpu, total_reward |> gpu, score_mean |> gpu, best_run |> gpu, noise_mean |> gpu
+	return actor |> gpu, total_reward |> gpu, score_mean |> gpu, best_run |> gpu, noise_mean |> gpu
 end
