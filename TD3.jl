@@ -1,6 +1,62 @@
 # Parameters and architecture based on:
 # https://github.com/fabio-4/JuliaRL/blob/master/algorithms/td3.jl
 # https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/algorithms/policy_gradient/td3.jl
+
+#----------------------------- Model Architecture -----------------------------
+γ = 0.995f0     # discount rate for future rewards #Yu
+
+τ = 1f-3       # Parameter for soft target network updates
+η_act = 1f-4   # Learning rate actor 10^(-4)
+η_crit = 1f-3  # Learning rate critic
+
+#L2_DECAY = 0.01f0
+
+init = Flux.glorot_uniform(MersenneTwister(rng_run))
+init_final(dims...) = 6f-3rand(MersenneTwister(rng_run), Float32, dims...) .- 3f-3
+
+# Optimizers
+# with L2 regularization
+#opt_crit = Flux.Optimiser(WeightDecay(L2_DECAY), ADAM(η_crit))
+#opt_act = Flux.Optimiser(WeightDecay(L2_DECAY), ADAM(η_act))
+# without L2 regularization
+opt_crit = ADAM(η_crit)
+opt_act = ADAM(η_act)
+
+#----------------------------- Model Architecture -----------------------------
+actor = Chain(
+			Dense(STATE_SIZE, L1, relu, init=init),
+	      	Dense(L1, L2, relu; init=init),
+          	Dense(L2, ACTION_SIZE, tanh; init=init_final)) |> gpu
+
+actor_target = deepcopy(actor)
+
+# Critic model
+struct crit
+  state_crit
+  act_crit
+  sa_crit
+end
+
+Flux.@functor crit
+
+function (c::crit)(state, action)
+  s = c.state_crit(state)
+  a = c.act_crit(action)
+  c.sa_crit(relu.(s .+ a))
+end
+
+Base.deepcopy(c::crit) = crit(deepcopy(c.state_crit),
+							  deepcopy(c.act_crit),
+							  deepcopy(c.sa_crit))
+
+critic1 = crit(Chain(Dense(STATE_SIZE, L1, relu, init=init),Dense(L1, L2, init=init)) |> gpu,
+  				Dense(ACTION_SIZE, L2, init=init) |> gpu,
+  				Dense(L2, 1, init=init_final) |> gpu)
+
+critic2 = deepcopy(critic1) |> gpu
+critic_target1 = deepcopy(critic1) |> gpu
+critic_target2 = deepcopy(critic1) |> gpu
+
 # ------------------------------- Action Noise --------------------------------
 function sample_noise(ou::OUNoise; rng_noi=0) #from 1
   dx     = ou.θ .* (ou.μ .- ou.X) .* ou.dt
