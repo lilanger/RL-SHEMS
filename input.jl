@@ -11,7 +11,7 @@ using Flux.Optimise: update!
 using BSON
 using Statistics: mean, std
 using DataStructures: CircularBuffer
-using Distributions: sample, Normal
+using Distributions: sample, Normal, logpdf
 using Random
 using Reinforce
 using Reinforce.ShemsEnv: Shems
@@ -21,39 +21,39 @@ using CSV, DataFrames
 gr()
 
 #------------ local machine ----------
-# Job_ID=2
-# seed_run=1
-# Task_ID=1
+# Job_ID=1082459
+# seed_run=15
+# Task_ID=40
 #--------cluster jobs------------
 Job_ID = ENV["JOB_ID"]
 Task_ID = ENV["SGE_TASK_ID"]
 seed_run = parse(Int, Task_ID)
 #-------------------------------- INPUTS --------------------------------------------
 train = 1
-plot_result = 1
+plot_result = 0
 plot_all = 1
 render = 0
 track = 1  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
 
 season = "all"
-case = "$(season)_layernorm_nns-pn.1_abort-TOU"
+algo="TD3"
+price="TOU"  # "fix"
+case = "$(season)_$(algo)_$(price)_gn.2_abort"
 run = "eval"
-NUM_EP = 3_001 #3_001 #50_000
-# L1 = 400 #300
-# L2 = 300 #600
-L1 = 300
-L2 = 600
+NUM_EP = 2_001 #3_001 #50_000
+L1 = 400
+L2 = 300
+# L1 = 300
+# L2 = 600
 idx=NUM_EP
 test_every = 100
 test_runs = 100
-num_seeds = 15
-algo="DDPG"
+num_seeds = 20
 
 #-------------------------------------
 seed_ini = 123
 # individual random seed for each run
 rng_run = parse(Int, string(seed_ini)*string(seed_run))
-
 
 start_time = now()
 current_episode = 0
@@ -73,9 +73,9 @@ EP_LENGTH = Dict("train" => 24,
 					("both", "eval") => 719,   ("both", "test") => 1487,
 					("all", "eval") => 1439,   ("all", "test") => 2999) # length of whole evaluation set (different)
 
-env_dict = Dict("train" => Shems(EP_LENGTH["train"], "data/$(season)_train.csv"),
-				"eval" => Shems(EP_LENGTH[season, "eval"], "data/$(season)_eval.csv"),
-				"test" => Shems(EP_LENGTH[season, "test"], "data/$(season)_test.csv"))
+env_dict = Dict("train" => Shems(EP_LENGTH["train"], "data/$(season)_train_$(price).csv"),
+				"eval" => Shems(EP_LENGTH[season, "eval"], "data/$(season)_eval_$(price).csv"),
+				"test" => Shems(EP_LENGTH[season, "test"], "data/$(season)_test_$(price).csv"))
 
 
 # ----------------------------- Environment Parameters -------------------------
@@ -125,7 +125,7 @@ dt = 1f-2
 ξ_min = 0.1f0
 
 # Noise actor
-noise_act = 1f-1
+noise_act = 2f-1
 
 # Fill struct with values
 ou = OUNoise(μ, σ, θ, dt, zeros(Float32, ACTION_SIZE))

@@ -3,7 +3,27 @@
 # https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/algorithms/policy_gradient/sac.jl
 
 #----------------------------- Model Architecture -----------------------------
-α = 0.2f0
+γ = 0.995f0     # discount rate for future rewards #Yu
+
+τ = 1f-3       # Parameter for soft target network updates
+η_act = 1f-4   # Learning rate actor 10^(-4)
+η_crit = 1f-3  # Learning rate critic
+
+α = 0.2f0		# temperature trade-off entropy/rewards
+
+#L2_DECAY = 0.01f0
+
+init = Flux.glorot_uniform(MersenneTwister(rng_run))
+init_final(dims...) = 6f-3rand(MersenneTwister(rng_run), Float32, dims...) .- 3f-3
+
+# Optimizers
+# with L2 regularization
+#opt_crit = Flux.Optimiser(WeightDecay(L2_DECAY), ADAM(η_crit))
+#opt_act = Flux.Optimiser(WeightDecay(L2_DECAY), ADAM(η_act))
+# without L2 regularization
+opt_crit = ADAM(η_crit)
+opt_act = ADAM(η_act)
+
 
 struct Actor{S, A1, A2}
     model::S
@@ -138,14 +158,14 @@ end
 
 function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=false,
 					track=0, rng_ep=0)
-  reset!(env, rng=rng_ep)
+  reset!(env, rng=rng_ep) # rng = -1 sets evaluation/test initials
   local reward_eps=0f0
   local noise_eps=0f0
   local last_step = 1
   local results = Array{Float64}(undef, 0, 25)
   for step=1:NUM_STEPS
 	# create individual random seed
-	rng_step = parse(Int, string(rng_ep)*string(step))
+	rng_step = parse(Int, string(abs(rng_ep))*string(step))
 	# determine action
 	s = copy(env.state)
 	a = act(normalize(s |> gpu), rng_act=rng_step)[1] |> cpu

@@ -10,6 +10,5 @@
 #$ -l ccc=5.5
 
 cat input.jl > out/$JOB_ID-$TASK_ID-input.jl
-module load cuda/11.1
 module load julia/1.6.1
 julia  DDPG_reinforce_v12_nf.jl

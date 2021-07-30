@@ -48,7 +48,7 @@ end
 if plot_all == true
 	if seed_run == num_seeds
 		# deplay to be sure all are done
-		sleep(150)
+		sleep(400)
   		score_mean_all = zeros(Float32, (ceil(Int32, NUM_EP/test_every), num_seeds))
 		for i in 1:num_seeds
 			test_rng_run = parse(Int, string(seed_ini)*string(i))
