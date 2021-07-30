@@ -4,7 +4,6 @@
 # 3 https://github.com/FluxML/model-zoo/blob/master/contrib/games/differentiable-programming/pendulum/DDPG.jl
 # 4 https://github.com/fabio-4/JuliaRL/blob/master/algorithms/ddpg.jl
 
-
 #----------------------------- Model Architecture -----------------------------
 γ = 0.995f0     # discount rate for future rewards #Yu
 

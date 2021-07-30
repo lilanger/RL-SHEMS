@@ -65,7 +65,7 @@ if track == 1 # track last and best training run
 		for i in 1:num_seeds
 			test_rng_run = parse(Int, string(seed_ini)*string(i))
 			# track last episode weights
-			ac,  br = loadBSON(rng=test_rng_run)[1,4]
+			ac, _, _, br, _ = loadBSON(rng=test_rng_run)
 			global actor = ac
 			inference(env_dict[run], render=false, track=track, rng_inf=test_rng_run)
 			write_to_tracker_file(rng=test_rng_run)

@@ -1,6 +1,7 @@
 # Parameters and architecture based on:
-# https://github.com/fabio-4/JuliaRL/blob/master/algorithms/td3.jl
-# https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/algorithms/policy_gradient/td3.jl
+# https://github.com/fabio-4/JuliaRL/blob/master/algorithms/sac.jl
+# https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/algorithms/policy_gradient/sac.jl
+
 # ------------------------------- Action Noise --------------------------------
 function sample_noise(ou::OUNoise; rng_noi=0) #from 1
   dx     = ou.θ .* (ou.μ .- ou.X) .* ou.dt
@@ -9,14 +10,16 @@ function sample_noise(ou::OUNoise; rng_noi=0) #from 1
   return Float32.(ou.X)
 end
 
-function sample_noise(gn::GNoise; target=false, rng_noi=0) # Normal distribution
-  if target == false # actor
-  	d = Normal(gn.μ, gn.σ_act)
-  elseif target == true
-	d = Normal(gn.μ, gn.σ_trg)
-  end
+function sample_noise(gn::GNoise; rng_noi=0) # Normal distribution
+  d = Normal(gn.μ, gn.σ)
   dx = rand(MersenneTwister(rng_noi), d, ACTION_SIZE) #|>gpu
   return Float32.(dx)
+end
+
+function sample_noise(pn::ParamNoise; rng_noi=0) # Normal distribution
+  d = Normal(pn.μ, pn.σ_current)
+  dx = rand(MersenneTwister(rng_noi), d) #|>gpu
+  return Float32(dx)
 end
 
 function sample_noise(en::EpsNoise; rng_noi=0) #from 1
@@ -25,7 +28,7 @@ function sample_noise(en::EpsNoise; rng_noi=0) #from 1
 end
 
 # ---------------------- Param Update Functions --------------------------------
-function update_target!(target, model; τ = 1f0)
+function soft_update!(target, model; τ = 1f0)
   for (p_t, p_m) in zip(params(target), params(model))
     p_t .= (1f0 - τ) * p_t .+ τ * p_m
   end
@@ -40,59 +43,44 @@ end
 Flux.Zygote.@nograd Flux.params
 
 function loss_crit(model, y, s_norm, a)
-  Q1= critic1(s_norm, a)
-  Q2= critic2(s_norm, a)
-  return Flux.mse(Q1, y) + Flux.mse(Q2, y) |> gpu
+  q = model(s_norm, a)
+  return Flux.mse(q, y) |> gpu
 end
 
 function loss_act(model, s_norm)
-  actions = actor(s_norm)  |> gpu
-  return -mean(critic1(s_norm, actions)) |> gpu # take only critic 1
-end
-
-# Choose action according to policy
-function act(actor, s_norm; train=true, noiseclamp=false, rng_act=0)
-	act_pred = actor(s_norm |> gpu) |> cpu
-	noise = zeros(Float32, size(act_pred))
-	if train == true
-		# noise = reduce(hcat, [sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
-		noise = reduce(hcat, [sample_noise(gn, target=noiseclamp, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
-		# #----------------- Epsilon noise ------------------------------
-		# eps = sample_noise(en, rng_noi=rng_act) # add noise only in training / choose noise
-		# rng=rand(MersenneTwister(rng_act))
-		# if rng > eps
-		# 	return act_pred, 0f0
-		# elseif rng <= eps
-		# 	noise = noisescale .* sample_noise(ou, rng_noi=rng_act)
-		#noise = noisescale .* randn(MersenneTwister(rng_act), Float32, size(act_pred))
-		noise = noiseclamp ? clamp.(noise, -5f-1, 5f-1) : noise #add noise clamp?
-		# 	# return action, eps
-		# end
-		#-------------------------------------------------------------
-	end
-	return clamp.(act_pred + noise, -1f0, 1f0), mean(noise)
+  actions, log_π = act(s_norm) |> gpu
+  Q_min = min.(critic1(s_norm, actions), critic2(s_norm, actions))
+  return -mean(Q_min .- α .* log_π) |> gpu
 end
 
 function replay(;rng_rpl=0)
   # retrieve minibatch from replay buffer
-  s, a, r, s′ = getData(BATCH_SIZE, rng_dt=rng_rpl) |> gpu # s_mask when with terminal state
-  a′, n = act(actor_target, normalize(s′ |> gpu), train=true,
-  				noiseclamp=true, rng_act=rng_rpl) |> gpu
-  v′_min = min.(critic_target1(normalize(s′), a′), critic_target2(normalize(s′), a′)) |> gpu
-  y = r .+ (γ .* v′_min) |> gpu #no terminal reward switch off
+  s, a, r, s′ = getData(BATCH_SIZE, rng_dt=rng_rpl) |> gpu
+  a′, log_π  = act(normalize(s′), rng_act=rng_rpl) |> gpu
+
+  # update networks
+  v′_min = min.(critic_target1(normalize(s′), a′), critic_target2(normalize(s′), a′)) .- α .* log_π
+  y = r .+ (γ .* v′_min)
 
   # update critic
   update_model!(critic1, opt_crit, loss_crit, y, normalize(s), a)
   update_model!(critic2, opt_crit, loss_crit, y, normalize(s), a)
-  if rng_rpl % 2 == 0
-	  # update actor
-	  update_model!(actor, opt_act, loss_act, normalize(s))
-	  # update target networks
-	  update_target!(actor_target, actor; τ = τ)
-	  update_target!(critic_target1, critic1; τ = τ)
-	  update_target!(critic_target2, critic2; τ = τ)
-  end
+  # update actor
+  update_model!(actor, opt_act, loss_act, normalize(s))
+  # update target networks
+  soft_update!(critic_target1, critic1; τ = τ)
+  soft_update!(critic_target2, critic2; τ = τ)
   return nothing
+end
+
+# Choose action according to policy
+function act(s_norm; rng_act=0)
+    μ, logσ = actor(s_norm)
+	π_dist = Normal.(μ, exp.(logσ))
+	z = rand.(MersenneTwister(rng_act), π_dist)
+    logp_π  = sum(logpdf.(π_dist, z), dims = 1)
+    logp_π  -= sum((2.0f0 .* (log(2.0f0) .- z - softplus.(-2.0f0 * z))), dims = 1)
+    return tanh.(z), logp_π
 end
 
 function scale_action(action)
@@ -115,8 +103,7 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
 	rng_step = parse(Int, string(rng_ep)*string(step))
 	# determine action
 	s = copy(env.state)
-	a, noise = act(actor, normalize(s |> gpu),  noiseclamp=false,
-									train=train, rng_act=rng_step) |> cpu
+	a = act(normalize(s |> gpu), rng_act=rng_step)[1] |> cpu
 	scaled_action = scale_action(a)
 
 	# execute action in RL environment
@@ -139,7 +126,7 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
 		#frame(anim) # for gif creation
 	end
 	reward_eps += r
-	noise_eps += noise
+	#noise_eps += noise
 	last_step = step
 
 	# save step in replay buffer
@@ -172,7 +159,7 @@ function run_episodes(env_train::Shems, env_eval::Shems, total_reward, score_mea
 		# Train set
 		total_reward[i], noise_mean[i] = episode!(env_train, train=true, render=render,
 													track=track, rng_ep=rng_ep)
-		print("Episode: $i | Mean Step Score: $(@sprintf "%9.3f" total_reward[i]) |  $(en.ξ)  |  ")
+		print("Episode: $i | Mean Step Score: $(@sprintf "%9.3f" total_reward[i]) |  $(pn.σ_current)  |  ")
 
 		# test on eval data set
 		if i % test_every == 1
