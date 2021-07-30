@@ -2,6 +2,51 @@
 # https://github.com/fabio-4/JuliaRL/blob/master/algorithms/sac.jl
 # https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/algorithms/policy_gradient/sac.jl
 
+#----------------------------- Model Architecture -----------------------------
+α = 0.2f0
+
+struct Actor{S, A1, A2}
+    model::S
+    μ::A1
+    logσ::A2
+end
+
+(m::Actor)(s) = (l = m.model(s); (m.μ(l), m.logσ(l))) |> gpu
+Flux.@functor Actor
+
+actor = Actor(
+    Chain(Dense(STATE_SIZE, L1, relu), Dense(L1, L2, relu)) |> gpu,
+    Chain(Dense(L2, ACTION_SIZE)) |> gpu,
+    Chain(Dense(L2, ACTION_SIZE, x -> min(max(x, typeof(x)(-20f0)), typeof(x)(2f0)))) |> gpu
+)
+
+# Critic model
+struct crit
+  state_crit
+  act_crit
+  sa_crit
+end
+
+Flux.@functor crit
+
+function (c::crit)(state, action)
+  s = c.state_crit(state)
+  a = c.act_crit(action)
+  c.sa_crit(relu.(s .+ a))
+end
+
+Base.deepcopy(c::crit) = crit(deepcopy(c.state_crit),
+							  deepcopy(c.act_crit),
+							  deepcopy(c.sa_crit))
+
+critic1 = crit(Chain(Dense(STATE_SIZE, L1, relu, init=init),Dense(L1, L2, init=init)) |> gpu,
+  				Dense(ACTION_SIZE, L2, init=init) |> gpu,
+  				Dense(L2, 1, init=init_final) |> gpu)
+
+critic2 = deepcopy(critic1) |> gpu
+critic_target1 = deepcopy(critic1) |> gpu
+critic_target2 = deepcopy(critic1) |> gpu
+
 # ------------------------------- Action Noise --------------------------------
 function sample_noise(ou::OUNoise; rng_noi=0) #from 1
   dx     = ou.θ .* (ou.μ .- ou.X) .* ou.dt
