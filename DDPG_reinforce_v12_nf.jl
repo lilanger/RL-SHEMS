@@ -3,7 +3,7 @@ include("input.jl") # contains the input data
 include("$(algo).jl") # contains all training functions
 include("testing.jl") # contains testing functions
 include("memory_plotting_saving.jl") # contains all ploting and rendering functions
-
+#-------
 populate_memory(env_dict["train"], rng=rng_run)
 # initialization for normalization
 s_min, s_max = min_max_buffer(MIN_EXP_SIZE, rng_mm=rng_run) |> gpu

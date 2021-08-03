@@ -3,7 +3,8 @@
 # 2 https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/experiments/rl_envs/JuliaRL_DDPG_Pendulum.jl
 # 3 https://github.com/FluxML/model-zoo/blob/master/contrib/games/differentiable-programming/pendulum/DDPG.jl
 # 4 https://github.com/fabio-4/JuliaRL/blob/master/algorithms/ddpg.jl
-
+using CUDA
+CUDA.allowscalar(true)
 #----------------------------- Model Architecture -----------------------------
 γ = 0.995f0     # discount rate for future rewards #Yu
 
@@ -28,35 +29,42 @@ opt_act = ADAM(η_act)
 actor = Chain(
 			Dense(STATE_SIZE, L1, relu, init=init),
 			LayerNorm(L1),
-	      	Dense(L1, L2, relu; init=init),
+	      	Dense(L1, L2, relu, init=init),
 			LayerNorm(L2),
-          	Dense(L2, ACTION_SIZE, tanh; init=init_final)) |> gpu
+          	Dense(L2, ACTION_SIZE, tanh; init=init_final)
+			) |> gpu
 
 actor_target = deepcopy(actor) |> gpu
 actor_perturb = deepcopy(actor) |> gpu
 
-# Critic model
-struct crit
-  state_crit
-  act_crit
-  sa_crit
-end
+# # Critic model
+# struct crit
+#   state_crit
+#   act_crit
+#   sa_crit
+# end
+#
+# Flux.@functor crit
+#
+# function (c::crit)(state, action)
+#   s = c.state_crit(state)
+#   a = c.act_crit(action)
+#   c.sa_crit(relu.(s .+ a))
+# end
 
-Flux.@functor crit
+# Base.deepcopy(c::crit) = crit(deepcopy(c.state_crit),
+# 							  deepcopy(c.act_crit),
+# 							  deepcopy(c.sa_crit))
 
-function (c::crit)(state, action)
-  s = c.state_crit(state)
-  a = c.act_crit(action)
-  c.sa_crit(relu.(s .+ a))
-end
+# critic = crit(
+# 			Chain(Dense(STATE_SIZE, L1, relu, init=init), Dense(L1, L2, init=init)) |> gpu,
+#   			Dense(ACTION_SIZE, L2, init=init) |> gpu,
+#   			Dense(L2, 1, init=init_final) |> gpu)
 
-Base.deepcopy(c::crit) = crit(deepcopy(c.state_crit),
-							  deepcopy(c.act_crit),
-							  deepcopy(c.sa_crit))
-
-critic = crit(Chain(Dense(STATE_SIZE, L1, relu, init=init),Dense(L1, L2, init=init)) |> gpu,
-  				Dense(ACTION_SIZE, L2, init=init) |> gpu,
-  				Dense(L2, 1, init=init_final) |> gpu)
+critic = Chain(
+			Dense(STATE_SIZE + ACTION_SIZE, L1, relu, init=init) |> gpu,
+			Dense(L1, L2, relu, init=init) |> gpu,
+  			Dense(L2, 1, init=init_final) |> gpu)
 
 critic_target = deepcopy(critic) |> gpu
 
@@ -69,7 +77,7 @@ function sample_noise(ou::OUNoise; rng_noi=0) #from 1
 end
 
 function sample_noise(gn::GNoise; rng_noi=0) # Normal distribution
-  d = Normal(gn.μ, gn.σ)
+  d = Normal(gn.μ, gn.σ_act)
   dx = rand(MersenneTwister(rng_noi), d, ACTION_SIZE) #|>gpu
   return Float32.(dx)
 end
@@ -99,7 +107,7 @@ function add_perturb!(actor_perturb, rng_rpl)
 end
 
 function update_model!(model, opt, loss, inp...)
-  grads = gradient(() -> loss(model, inp...), params(model))
+  grads = gradient(() -> loss(inp...), params(model))
   update!(opt, params(model), grads)
 end
 
@@ -107,13 +115,11 @@ end
 Flux.Zygote.@nograd Flux.params
 #L2_loss(model) = L2_DECAY * sum(x->sum(x.^2), params(model));
 
-function loss_crit(model, y, s_norm, a)
-  return Flux.mse(critic(s_norm, a), y) |> gpu
-end
+loss_crit(y, s_norm, a) = Flux.mse(critic(vcat(s_norm, a)), y) |> gpu
 
-function loss_act(model, s_norm)
+function loss_act(s_norm)
   actions = actor(s_norm)  |> gpu
-  return -mean(critic(s_norm, actions)) |> gpu # sum better than mean?
+  return -mean(critic(vcat(s_norm, actions))) |> gpu # sum better than mean?
 end
 
 function replay(;rng_rpl=0)
@@ -121,11 +127,11 @@ function replay(;rng_rpl=0)
   s, a, r, s′ = getData(BATCH_SIZE, rng_dt=rng_rpl) |> gpu # s_mask when with terminal state
 
   # update pertubable actor
-  adapt_param_noise(actor, s, rng_rpl)
+  #adapt_param_noise(actor, s, rng_rpl)
 
   # update networks
   a′ = actor_target(normalize(s′ |> gpu))
-  v′ = critic_target(normalize(s′ |> gpu), a′) |> gpu
+  v′ = critic_target(vcat(normalize(s′ |> gpu), a′)) |> gpu
   y = r .+ (γ .* v′) |> gpu #no terminal reward switch off
 
   # update critic
@@ -164,13 +170,13 @@ function act(s_norm; train=true, noiseclamp=false, rng_act=0)
 	noise = zeros(Float32, size(act_pred))
 	if train == true
 		##-------------Adaptive parameter noise -----------------------------
-		act_pred = actor_perturb(s_norm |> gpu) |> cpu
+		# act_pred = actor_perturb(s_norm |> gpu) |> cpu
 
 		##-------------OU noise ---------------------------------------------
 		# noise = reduce(hcat, [sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
 
 		##-------------Gaussian noise ---------------------------------------
-		# noise = reduce(hcat, [sample_noise(gn, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
+		noise = reduce(hcat, [sample_noise(gn, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
 
 		# #----------------- Epsilon noise ------------------------------
 		# eps = sample_noise(en, rng_noi=rng_act) # add noise only in training / choose noise

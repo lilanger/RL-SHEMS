@@ -112,20 +112,20 @@ end
 function write_to_results_file(results; idx=NUM_EP, rng=seed_run)
     date=Date(now());
 	if idx == NUM_EP
-    CSV.write("out/$(Job_ID)_$(run)_results_v12_$(EP_LENGTH["train"])_"*
+    CSV.write("out/tracker/$(Job_ID)_$(run)_results_v12_$(EP_LENGTH["train"])_"*
 				"$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_$(idx).csv",
 					DataFrame(results, :auto), header=["Temp_FH", "Vol_HW", "Soc_B",
 					"T_FH_plus", "T_FH_minus", "V_HW_plus", "V_HW_minus",
 					"profits", "comfort", "abort", "COP_FH","COP_HW","PV_DE", "B_DE", "GR_DE", "PV_B", "PV_GR",
 					"PV_HP","GR_HP", "B_HP", "HP_FH", "HP_HW","index", "B", "HP"]);
 	elseif idx < 0
-	CSV.write("out/$(Job_ID)_$(run)_results_$(case)_rule_$(idx).csv",
+	CSV.write("out/tracker/$(Job_ID)_$(run)_results_$(case)_rule_$(idx).csv",
 				DataFrame(results, :auto), header=["Temp_FH", "Vol_HW", "Soc_B",
 				"T_FH_plus", "T_FH_minus", "V_HW_plus", "V_HW_minus",
 				"profits", "comfort", "abort", "COP_FH","COP_HW","PV_DE", "B_DE", "GR_DE", "PV_B", "PV_GR",
 				"PV_HP","GR_HP", "B_HP", "HP_FH", "HP_HW","index", "B", "HP"]);
 	else
-	CSV.write("out/$(Job_ID)_$(run)_results_v12_$(EP_LENGTH["train"])_"*
+	CSV.write("out/tracker/$(Job_ID)_$(run)_results_v12_$(EP_LENGTH["train"])_"*
 				"$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_best.csv",
 					DataFrame(results, :auto), header=["Temp_FH", "Vol_HW", "Soc_B",
 					"T_FH_plus", "T_FH_minus", "V_HW_plus", "V_HW_minus",
@@ -139,12 +139,12 @@ function write_to_tracker_file(;idx=NUM_EP, rng=rng_run)
 	time=now();
 	date=Date(now());
 	if idx == NUM_EP
-		results = CSV.read("out/$(Job_ID)_$(run)_results_v12_$(EP_LENGTH["train"])_$(NUM_EP)_"*
+		results = CSV.read("out/tracker/$(Job_ID)_$(run)_results_v12_$(EP_LENGTH["train"])_$(NUM_EP)_"*
 								"$(L1)_$(L2)_$(case)_$(rng)_$(idx).csv", DataFrame)
 	elseif idx < 0
-		results = CSV.read("out/$(Job_ID)_$(run)_results_$(case)_rule_$(idx).csv", DataFrame)
+		results = CSV.read("out/tracker/$(Job_ID)_$(run)_results_$(case)_rule_$(idx).csv", DataFrame)
 	else
-		results = CSV.read("out/$(Job_ID)_$(run)_results_v12_$(EP_LENGTH["train"])_$(NUM_EP)_"*
+		results = CSV.read("out/tracker/$(Job_ID)_$(run)_results_v12_$(EP_LENGTH["train"])_$(NUM_EP)_"*
 								"$(L1)_$(L2)_$(case)_$(rng)_best.csv", DataFrame)
 	end
 	# Overall tracker
@@ -183,7 +183,7 @@ end
 
 function saveBSON(actor, total_reward, score_mean, best_run, noise_mean;
 					idx=NUM_EP, path="", rng=rng_run)
-	actor = actor |> cpu
+	actor = cpu(actor)
 
 	BSON.@save "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_actor_$(idx).bson" actor
 	BSON.@save "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_scores_$(idx).bson" total_reward score_mean best_run noise_mean

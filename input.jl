@@ -5,8 +5,6 @@
 using Pkg
 Pkg.activate(pwd())
 using Flux, Printf, Zygote
-using CUDA
-CUDA.allowscalar(true)
 using Flux.Optimise: update!
 using BSON
 using Statistics: mean, std
@@ -21,13 +19,13 @@ using CSV, DataFrames
 gr()
 
 #------------ local machine ----------
-# Job_ID=1082459
-# seed_run=15
-# Task_ID=40
+Job_ID=111
+seed_run=15
+Task_ID=40
 #--------cluster jobs------------
-Job_ID = ENV["JOB_ID"]
-Task_ID = ENV["SGE_TASK_ID"]
-seed_run = parse(Int, Task_ID)
+# Job_ID = ENV["JOB_ID"]
+# Task_ID = ENV["SGE_TASK_ID"]
+# seed_run = parse(Int, Task_ID)
 #-------------------------------- INPUTS --------------------------------------------
 train = 1
 plot_result = 0
@@ -36,15 +34,15 @@ render = 0
 track = 1  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
 
 season = "all"
-algo="TD3"
+algo="PPO"
 price="TOU"  # "fix"
-case = "$(season)_$(algo)_$(price)_gn.2_abort"
+case = "$(season)_$(algo)_$(price)_simple-critic_.2_abort"
 run = "eval"
 NUM_EP = 2_001 #3_001 #50_000
-L1 = 400
-L2 = 300
-# L1 = 300
-# L2 = 600
+# L1 = 400
+# L2 = 300
+L1 = 300
+L2 = 600
 idx=NUM_EP
 test_every = 100
 test_runs = 100
@@ -59,7 +57,7 @@ start_time = now()
 current_episode = 0
 
 #--------------------------------- Memory ------------------------------------
-BATCH_SIZE = 64
+BATCH_SIZE = 100
 MEM_SIZE = 24_000
 MIN_EXP_SIZE = 24_000
 
@@ -126,8 +124,8 @@ dt = 1f-2
 ξ_min = 0.1f0
 
 # Noise actor
-noise_act = 2f-1
-noise_trg = 3f-1
+noise_act = 1f-1 #2f-1
+noise_trg = 2f-1 #3f-1
 
 # Fill struct with values
 ou = OUNoise(μ, σ, θ, dt, zeros(Float32, ACTION_SIZE))

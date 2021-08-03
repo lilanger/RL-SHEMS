@@ -1,4 +1,4 @@
-function read_data(season; job_id = "1063970", case="$(season)_L2_nns_abort-0", network="Opt", stop="final", NUM_EP = 3001, run="eval")
+function read_data(season; job_id = "1063970", case="$(season)_L2_nns_abort-0", network="Opt", stop="final", NUM_EP = 3001, run="eval", price="fix")
     
     version = "v12"
     NUM_STEPS = 24
@@ -9,7 +9,7 @@ function read_data(season; job_id = "1063970", case="$(season)_L2_nns_abort-0", 
         idx="best"
     end
     
-    Input_df = CSV.read("data/$(season)_$(run).csv", DataFrame);
+    Input_df = CSV.read("data/$(season)_$(run)_$(price).csv", DataFrame);
     
     if network == "Yu"
         L1 = 300

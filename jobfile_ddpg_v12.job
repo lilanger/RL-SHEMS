@@ -4,7 +4,7 @@
 #$ -o out/$JOB_ID-$TASK_ID-DDPG_test_v12.out
 #$ -j y
 #$ -l h_rt=30000
-#$ -m bae
+#$ -m e
 #$ -M lissy.langer@tu-berlin.de
 #$ -l gpus=1
 #$ -l ccc=5.5

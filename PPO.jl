@@ -1,6 +1,34 @@
 # Parameters and architecture based on:
-# https://github.com/fabio-4/JuliaRL/blob/master/algorithms/sac.jl
-# https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/algorithms/policy_gradient/sac.jl
+# https://github.com/fabio-4/JuliaRL/blob/master/algorithms/ppocont.jl
+# https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/algorithms/policy_gradient/ppo.jl
+using CUDA
+CUDA.allowscalar(true)
+#----
+nsteps = EP_LENGTH["train"]
+nenv = 10
+nbatch = nenv * nsteps
+memoryPPO = CircularBuffer{Any}(nbatch)
+atrainiters = 50
+ctrainiters = 80
+targetkl=15f-3
+ϵ=2f-1
+
+function getDataPPO(batch_size; rng_dt=0)
+  # Getting data in shape
+  minibatch = sample(MersenneTwister(rng_dt), memoryPPO, batch_size)
+
+  s       =   reduce(hcat,getindex.(minibatch,1))  |> gpu
+  a       =   reduce(hcat,getindex.(minibatch,2))  |> gpu
+  oldlogp =   reduce(hcat,getindex.(minibatch,3))  |> gpu
+  r 	  =   reduce(hcat,getindex.(minibatch,4))  |> gpu
+  v       =   reduce(hcat,getindex.(minibatch,5))  |> gpu
+ # s_mask  = .!hcat(x[5, :]...) |> gpu #only used for final state
+
+  return s, a, oldlogp, r, v
+end
+
+#---------------------------- Helper MEMORY --------------------------------
+remember(state, action, loga, r, value) = 	push!(memoryPPO, [state, action, loga, r, value])
 
 #----------------------------- Model Architecture -----------------------------
 γ = 0.995f0     # discount rate for future rewards #Yu
@@ -16,14 +44,8 @@
 init = Flux.glorot_uniform(MersenneTwister(rng_run))
 init_final(dims...) = 6f-3rand(MersenneTwister(rng_run), Float32, dims...) .- 3f-3
 
-# Optimizers
-# with L2 regularization
-#opt_crit = Flux.Optimiser(WeightDecay(L2_DECAY), ADAM(η_crit))
-#opt_act = Flux.Optimiser(WeightDecay(L2_DECAY), ADAM(η_act))
-# without L2 regularization
 opt_crit = ADAM(η_crit)
 opt_act = ADAM(η_act)
-
 
 struct Actor{S, A1, A2}
     model::S
@@ -31,66 +53,19 @@ struct Actor{S, A1, A2}
     logσ::A2
 end
 
-(m::Actor)(s) = (l = m.model(s); (m.μ(l), m.logσ(l))) |> gpu
 Flux.@functor Actor
 
 actor = Actor(
-    Chain(Dense(STATE_SIZE, L1, relu), Dense(L1, L2, relu)) |> gpu,
-    Chain(Dense(L2, ACTION_SIZE)) |> gpu,
-    Chain(Dense(L2, ACTION_SIZE, x -> min(max(x, typeof(x)(-20f0)), typeof(x)(2f0)))) |> gpu
-)
+    		Chain(Dense(STATE_SIZE, L1, relu, init=init), Dense(L1, L2, relu, init=init)) |> gpu,
+    		Chain(Dense(L2, ACTION_SIZE, tanh, init=init_final)) |> gpu,
+    		Chain(Dense(L2, ACTION_SIZE, init=init_final)) |> gpu
+			)
 
-# Critic model
-struct crit
-  state_crit
-  act_crit
-  sa_crit
-end
-
-Flux.@functor crit
-
-function (c::crit)(state, action)
-  s = c.state_crit(state)
-  a = c.act_crit(action)
-  c.sa_crit(relu.(s .+ a))
-end
-
-Base.deepcopy(c::crit) = crit(deepcopy(c.state_crit),
-							  deepcopy(c.act_crit),
-							  deepcopy(c.sa_crit))
-
-critic1 = crit(Chain(Dense(STATE_SIZE, L1, relu, init=init),Dense(L1, L2, init=init)) |> gpu,
-  				Dense(ACTION_SIZE, L2, init=init) |> gpu,
-  				Dense(L2, 1, init=init_final) |> gpu)
-
-critic2 = deepcopy(critic1) |> gpu
-critic_target1 = deepcopy(critic1) |> gpu
-critic_target2 = deepcopy(critic1) |> gpu
-
-# ------------------------------- Action Noise --------------------------------
-function sample_noise(ou::OUNoise; rng_noi=0) #from 1
-  dx     = ou.θ .* (ou.μ .- ou.X) .* ou.dt
-  dx   .+= ou.σ .* sqrt(ou.dt) .* randn(MersenneTwister(rng_noi), length(ou.X)) #|> gpu
-  ou.X .+= dx
-  return Float32.(ou.X)
-end
-
-function sample_noise(gn::GNoise; rng_noi=0) # Normal distribution
-  d = Normal(gn.μ, gn.σ)
-  dx = rand(MersenneTwister(rng_noi), d, ACTION_SIZE) #|>gpu
-  return Float32.(dx)
-end
-
-function sample_noise(pn::ParamNoise; rng_noi=0) # Normal distribution
-  d = Normal(pn.μ, pn.σ_current)
-  dx = rand(MersenneTwister(rng_noi), d) #|>gpu
-  return Float32(dx)
-end
-
-function sample_noise(en::EpsNoise; rng_noi=0) #from 1
-  en.ξ = Float32(max(0.5 - en.ζ * (current_episode - MEM_SIZE/EP_LENGTH["train"]), en.ξ_min))
-  return en.ξ
-end
+critic = Chain(
+			Dense(STATE_SIZE, L1, relu, init=init) |> gpu,
+			Dense(L1, L2, relu, init=init) |> gpu,
+  			Dense(L2, 1, init=init_final) |> gpu
+			)
 
 # ---------------------- Param Update Functions --------------------------------
 function soft_update!(target, model; τ = 1f0)
@@ -99,53 +74,49 @@ function soft_update!(target, model; τ = 1f0)
   end
 end
 
-function update_model!(model, opt, loss, inp...)
-  grads = gradient(() -> loss(model, inp...), params(model))
-  update!(opt, params(model), grads)
-end
-
 # ---------------------------------- Training ----------------------------------
 Flux.Zygote.@nograd Flux.params
 
-function loss_crit(model, y, s_norm, a)
-  q = model(s_norm, a)
-  return Flux.mse(q, y) |> gpu
-end
-
-function loss_act(model, s_norm)
-  actions, log_π = act(s_norm) |> gpu
-  Q_min = min.(critic1(s_norm, actions), critic2(s_norm, actions))
-  return -mean(Q_min .- α .* log_π) |> gpu
+function normlogpdf(μ, σ, x; ϵ = 1.0f-8)
+    z = (x .- μ) ./ (σ .+ ϵ)
+    return -(z .^ 2 .+ log(2.0f0π)) / 2.0f0 .- log.(σ .+ ϵ)
 end
 
 function replay(;rng_rpl=0)
   # retrieve minibatch from replay buffer
-  s, a, r, s′ = getData(BATCH_SIZE, rng_dt=rng_rpl) |> gpu
-  a′, log_π  = act(normalize(s′), rng_act=rng_rpl) |> gpu
+  s, a, oldlogp, r, adv = getDataPPO(BATCH_SIZE, rng_dt=rng_rpl) |> gpu
+  for _ in 1:atrainiters
+	  loga, back = pullback(params(actor)) do
+		  x = actor.model(normalize(s))
+		  μ, logσ = actor.μ(x), actor.logσ(x)
+		  return sum(normlogpdf(μ, exp.(logσ), a), dims = 1)
+	  end
+	  approxkl(loga, oldlogp) > targetkl && break
+	  gs = gradient(logp -> ploss(logp, oldlogp, adv, ϵ), loga)[1]
+	  update!(opt_act, params(actor), back(gs))
+  end
 
-  # update networks
-  v′_min = min.(critic_target1(normalize(s′), a′), critic_target2(normalize(s′), a′)) .- α .* log_π
-  y = r .+ (γ .* v′_min)
-
-  # update critic
-  update_model!(critic1, opt_crit, loss_crit, y, normalize(s), a)
-  update_model!(critic2, opt_crit, loss_crit, y, normalize(s), a)
-  # update actor
-  update_model!(actor, opt_act, loss_act, normalize(s))
-  # update target networks
-  soft_update!(critic_target1, critic1; τ = τ)
-  soft_update!(critic_target2, critic2; τ = τ)
+  Flux.train!(params(critic), Iterators.repeated((s, r), ctrainiters), opt_crit) do s, r
+	return Flux.mse(critic(normalize(s)), r)
+  end
   return nothing
 end
 
 # Choose action according to policy
 function act(s_norm; rng_act=0)
-    μ, logσ = actor(s_norm)
+	x = actor.model(s_norm)
+	μ, logσ = actor.μ(x), actor.logσ(x)
 	π_dist = Normal.(μ, exp.(logσ))
 	z = rand.(MersenneTwister(rng_act), π_dist)
-    logp_π  = sum(logpdf.(π_dist, z), dims = 1)
-    logp_π  -= sum((2.0f0 .* (log(2.0f0) .- z - softplus.(-2.0f0 * z))), dims = 1)
-    return tanh.(z), logp_π
+    logp_π = sum(logpdf.(π_dist, z), dims = 1)
+    return z, logp_π
+end
+
+approxkl(logp, oldlogp) = mean(oldlogp .- logp)
+
+function ploss(logp, oldlogp, adv, ϵ)
+    rat = exp.(logp .- oldlogp)
+    return -mean(min.(rat .* adv, min.(max.(rat, one(ϵ)-ϵ), one(ϵ)+ϵ) .* adv))
 end
 
 function scale_action(action)
@@ -168,7 +139,8 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
 	rng_step = parse(Int, string(abs(rng_ep))*string(step))
 	# determine action
 	s = copy(env.state)
-	a = act(normalize(s |> gpu), rng_act=rng_step)[1] |> cpu
+	a, loga = act(normalize(s |> gpu), rng_act=rng_step) |> cpu
+	v = critic(normalize(s |> gpu))
 	scaled_action = scale_action(a)
 
 	# execute action in RL environment
@@ -196,7 +168,7 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
 
 	# save step in replay buffer
 	if train == true
-      remember(s, a, r, s′)  #, finished(env, s′)) # for final state
+      remember(s, a, loga, r, v)  #, finished(env, s′)) # for final state
 	  # update network weights
 	  replay(rng_rpl=rng_step)
 	  # break episode in training

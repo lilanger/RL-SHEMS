@@ -2,6 +2,8 @@
 # https://github.com/fabio-4/JuliaRL/blob/master/algorithms/td3.jl
 # https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/algorithms/policy_gradient/td3.jl
 
+using CUDA
+CUDA.allowscalar(true)
 #----------------------------- Model Architecture -----------------------------
 γ = 0.995f0     # discount rate for future rewards #Yu
 
@@ -15,47 +17,39 @@ init = Flux.glorot_uniform(MersenneTwister(rng_run))
 init_final(dims...) = 6f-3rand(MersenneTwister(rng_run), Float32, dims...) .- 3f-3
 
 # Optimizers
-# with L2 regularization
-#opt_crit = Flux.Optimiser(WeightDecay(L2_DECAY), ADAM(η_crit))
-#opt_act = Flux.Optimiser(WeightDecay(L2_DECAY), ADAM(η_act))
-# without L2 regularization
 opt_crit = ADAM(η_crit)
 opt_act = ADAM(η_act)
 
 #----------------------------- Model Architecture -----------------------------
 actor = Chain(
 			Dense(STATE_SIZE, L1, relu, init=init),
+			LayerNorm(L1),
 	      	Dense(L1, L2, relu; init=init),
+			LayerNorm(L2),
           	Dense(L2, ACTION_SIZE, tanh; init=init_final)) |> gpu
 
 actor_target = deepcopy(actor)
 
-# Critic model
-struct crit
-  state_crit
-  act_crit
-  sa_crit
+struct Critic{C}
+    c1::C
+    c2::C
 end
 
-Flux.@functor crit
+(m::Critic)(s, a) = (inp = vcat(s, a); (m.c1(inp), m.c2(inp)))
+Flux.@functor Critic
 
-function (c::crit)(state, action)
-  s = c.state_crit(state)
-  a = c.act_crit(action)
-  c.sa_crit(relu.(s .+ a))
-end
+critic = Critic(
+    		Chain(
+				Dense(STATE_SIZE+ACTION_SIZE, L1, relu, init=init),
+				Dense(L1, L2, relu, init=init),
+				Dense(L2, 1, init=init_final)) |> gpu,
+    		Chain(
+				Dense(STATE_SIZE+ACTION_SIZE, L1, relu, init=init),
+				Dense(L1, L2, relu, init=init),
+				Dense(L2, 1, init=init_final)) |> gpu
+)
 
-Base.deepcopy(c::crit) = crit(deepcopy(c.state_crit),
-							  deepcopy(c.act_crit),
-							  deepcopy(c.sa_crit))
-
-critic1 = crit(Chain(Dense(STATE_SIZE, L1, relu, init=init),Dense(L1, L2, init=init)) |> gpu,
-  				Dense(ACTION_SIZE, L2, init=init) |> gpu,
-  				Dense(L2, 1, init=init_final) |> gpu)
-
-critic2 = deepcopy(critic1) |> gpu
-critic_target1 = deepcopy(critic1) |> gpu
-critic_target2 = deepcopy(critic1) |> gpu
+critic_target = deepcopy(critic) |> gpu
 
 # ------------------------------- Action Noise --------------------------------
 function sample_noise(ou::OUNoise; rng_noi=0) #from 1
@@ -88,27 +82,26 @@ function update_target!(target, model; τ = 1f0)
 end
 
 function update_model!(model, opt, loss, inp...)
-  grads = gradient(() -> loss(model, inp...), params(model))
+  grads = gradient(() -> loss(inp...), params(model))
   update!(opt, params(model), grads)
 end
 
 # ---------------------------------- Training ----------------------------------
 Flux.Zygote.@nograd Flux.params
 
-function loss_crit(model, y, s_norm, a)
-  Q1= critic1(s_norm, a)
-  Q2= critic2(s_norm, a)
-  return Flux.mse(Q1, y) + Flux.mse(Q2, y) |> gpu
+function loss_crit(y, s_norm, a)
+  q1, q2 = critic(s_norm, a)
+  return Flux.mse(q1, y) + Flux.mse(q2, y) |> gpu
 end
 
-function loss_act(model, s_norm)
+function loss_act(s_norm)
   actions = actor(s_norm)  |> gpu
-  return -mean(critic1(s_norm, actions)) |> gpu # take only critic 1
+  return -mean(critic(s_norm, actions)[1]) |> gpu # take only critic 1
 end
 
 # Choose action according to policy
-function act(actor, s_norm; train=true, noiseclamp=false, rng_act=0)
-	act_pred = actor(s_norm |> gpu) |> cpu
+function act(model, s_norm; train=true, noiseclamp=false, rng_act=0)
+	act_pred = model(s_norm |> gpu) |> cpu
 	noise = zeros(Float32, size(act_pred))
 	if train == true
 		# noise = reduce(hcat, [sample_noise(ou, rng_noi=rng_act) for i in 1:size(act_pred)[2]]) # add noise only in training / choose noise
@@ -134,19 +127,17 @@ function replay(;rng_rpl=0)
   s, a, r, s′ = getData(BATCH_SIZE, rng_dt=rng_rpl) |> gpu # s_mask when with terminal state
   a′, n = act(actor_target, normalize(s′ |> gpu), train=true,
   				noiseclamp=true, rng_act=rng_rpl) |> gpu
-  v′_min = min.(critic_target1(normalize(s′), a′), critic_target2(normalize(s′), a′)) |> gpu
+  v′_min = min.(critic_target(normalize(s′), a′)...) |> gpu
   y = r .+ (γ .* v′_min) |> gpu #no terminal reward switch off
 
   # update critic
-  update_model!(critic1, opt_crit, loss_crit, y, normalize(s), a)
-  update_model!(critic2, opt_crit, loss_crit, y, normalize(s), a)
+  update_model!(critic, opt_crit, loss_crit, y, normalize(s), a)
   if rng_rpl % 2 == 0
 	  # update actor
 	  update_model!(actor, opt_act, loss_act, normalize(s))
 	  # update target networks
 	  update_target!(actor_target, actor; τ = τ)
-	  update_target!(critic_target1, critic1; τ = τ)
-	  update_target!(critic_target2, critic2; τ = τ)
+	  update_target!(critic_target, critic; τ = τ)
   end
   return nothing
 end

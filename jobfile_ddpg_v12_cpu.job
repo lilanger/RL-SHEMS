@@ -1,0 +1,12 @@
+#!/bin/bash --login
+#$ -cwd
+#$ -N DDPG_reinforce_shems_v12_5.5
+#$ -o out/$JOB_ID-$TASK_ID-DDPG_test_v12.out
+#$ -j y
+#$ -l h_rt=30000
+#$ -m e
+#$ -M lissy.langer@tu-berlin.de
+
+cat input.jl > out/$JOB_ID-$TASK_ID-input.jl
+module load julia/1.6.1
+julia  DDPG_reinforce_v12_nf.jl
