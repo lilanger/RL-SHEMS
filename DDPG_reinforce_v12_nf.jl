@@ -1,8 +1,11 @@
-#include("out/$(ENV["JOB_ID"])-input.jl") # contains the input data
+# run batch on cluster
+#include("out/$(ENV["JOB_ID"])--input.jl") # contains the input data
+# run single file
 include("input.jl") # contains the input data
-include("$(algo).jl") # contains all training functions
-include("testing.jl") # contains testing functions
-include("memory_plotting_saving.jl") # contains all ploting and rendering functions
+
+include("algorithms/$(algo).jl") # contains all training functions
+include("src/testing.jl") # contains testing functions
+include("src/memory_plotting_saving.jl") # contains all ploting and rendering functions
 #-------
 populate_memory(env_dict["train"], rng=rng_run)
 # initialization for normalization
@@ -21,7 +24,7 @@ if train == true
 	run_episodes(env_dict["train"], env_dict["eval"], total_reward, score_mean, best_run, noise_mean,
 					test_every, render,  rng_run, track=0)
 	# ------------------------- Save results ---------------------------------------
-	saveBSON(actor,total_reward, score_mean, best_run, noise_mean,
+	saveBSON(actor, total_reward, score_mean, best_run, noise_mean,
 				rng=rng_run)
 end
 
@@ -37,7 +40,7 @@ end
 
 # ------------------------- plot scores ---------------------------------------
 if plot_result == true
-	total_reward, score_mean, best_run, noise_mean = loadBSON(scores_only=true, rng=rng_run)
+	total_reward, score_mean, best_run, noise_mean = loadBSON(scores_only=true, rng=rng_run) |> cpu
 	println("train (last $(round(Int, length(total_reward)/20)+1))=
 			$(mean(total_reward[end-round(Int, length(total_reward)/20):end]))")
 	println("eval (last $(round(Int, size(score_mean)[1]/10)+1))=
@@ -47,14 +50,20 @@ end
 
 if plot_all == true
 	if seed_run == num_seeds
-		# deplay to be sure all are done
-		sleep(400)
-  		score_mean_all = zeros(Float32, (ceil(Int32, NUM_EP/test_every), num_seeds))
+		# delay to be sure all runs are done
+		if algo == "DDPG"
+			sleep(5_000)
+		elseif algo == "TD3"
+			sleep(5_000)
+		else
+			sleep(20_000)
+		end
+  		score_mean_all = zeros(Float32, (ceil(Int32, NUM_EP/test_every), num_seeds)) |> cpu
 		for i in 1:num_seeds
 			test_rng_run = parse(Int, string(seed_ini)*string(i))
-			score_mean_all[:,i] = loadBSON(scores_only=true, rng=test_rng_run)[2];
+			score_mean_all[:,i] = loadBSON(scores_only=true, rng=test_rng_run)[2] |> cpu
 		end
-		plot_all_scores(ymin = -5, score_mean=score_mean_all)
+		plot_all_scores(ymin = -10, score_mean=score_mean_all)
 	end
 end
 
@@ -72,15 +81,14 @@ if track == 1 # track last and best training run
 			best_eval = br
 
 			# track best episode weights
-		    ac = loadBSON(idx=best_eval, path="temp", rng=test_rng_run)[1]
-			global actor = ac
-			inference(env_dict[run]; render=false, track=track, idx=best_eval, rng_inf=test_rng_run)
-			write_to_tracker_file(idx=best_eval, rng=test_rng_run)
+		    # ac = loadBSON(idx=best_eval, path="temp", rng=test_rng_run)[1]
+			# global actor = ac
+			# inference(env_dict[run]; render=false, track=track, idx=best_eval, rng_inf=test_rng_run)
+			# write_to_tracker_file(idx=best_eval, rng=test_rng_run)
 		end
 	end
 
 elseif track < 0 #rule-based
 	inference(env_dict[run]; render=false, track=track, idx=track)
 	write_to_tracker_file(idx=track, rng=track)
-
 end
