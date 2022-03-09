@@ -4,13 +4,14 @@
 # 2b https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/experiments/rl_envs/JuliaRL_DDPG_Pendulum.jl
 # 3 https://github.com/FluxML/model-zoo/blob/master/contrib/games/differentiable-programming/pendulum/DDPG.jl
 # 4 https://github.com/fabio-4/JuliaRL/blob/master/algorithms/ddpg.jl
+
 using CUDA
 CUDA.allowscalar(false)
 #----------------------------- Model Architecture -----------------------------
-γ = 0.99f0     	# discount rate for future rewards #Yu
+γ = 0.99f0     	# discount rate for future rewards 
 
-τ = 5f-3 		# Parameter for soft target network updates
-η_act = 1f-3   	# Learning rate actor 10^(-4)
+τ = 1f-3 		# Parameter for soft target network updates Fudji: 5f-3 
+η_act = 1f-4   	# Learning rate actor YFudjiu: 1f-3
 η_crit = 1f-3  	# Learning rate critic
 
 #L2_DECAY = 0.01f0
@@ -56,15 +57,16 @@ function sample_noise(gn::GNoise, rng_rpl) # Normal distribution
   return Float32.(rand(d, ACTION_SIZE))
 end
 
-function sample_noise(pn::ParamNoise) # Normal distribution
+function sample_noise(pn::ParamNoise, rng_rpl) # Normal distribution
+  Random.seed!(rng_rpl)
   d = Normal(pn.μ, pn.σ_current)
   return Float32(rand(d))
 end
 
-# function sample_noise(en::EpsNoise) #from 1
-#   en.ξ = Float32(max(0.5 - en.ζ * (current_episode - MEM_SIZE/EP_LENGTH["train"]), en.ξ_min))
-#   return en.ξ
-# end
+function sample_noise(en::EpsNoise) #from 1
+  en.ξ = Float32(max(0.5 - en.ζ * (current_episode - MEM_SIZE/EP_LENGTH["train"]), en.ξ_min))
+  return en.ξ
+end
 
 function adapt_param_noise!(s_norm, rng_rpl)
 	a = actor(s_norm)
@@ -125,8 +127,8 @@ function replay(;rng_rpl=0)
   # update networks
   a′ = actor_target(normalize(s′))
   q′ = critic_target(vcat(normalize(s′), a′)) |> gpu
-  #y = r .+ γ .* (1 .- done) .* q′ |> gpu
-  y = r .+ γ .* q′ |> gpu
+  y = r .+ γ .* (1 .- done) .* q′ |> gpu
+  #y = r .+ γ .* q′ |> gpu
 
   # update critic
   update_model!(critic, opt_crit, loss_crit, y, normalize(s), a)
@@ -151,23 +153,22 @@ function act(s_norm; train=true, noiseclamp=false, rng_act=0)
 			return clamp.(act_pred, -1f0, 1f0), mean(noise)
 		elseif noise_type == "ou" # Ornstein-Uhlenbeck noise
 			noise = reduce(hcat, [sample_noise(ou, rng_act + i) for i in 1:size(act_pred)[2]])
-		elseif noise_type == "gn" #Gaussian noise
+		elseif noise_type == "gn" # Gaussian noise
 			noise = reduce(hcat, [sample_noise(gn, rng_act + i) for i in 1:size(act_pred)[2]]) 
+		elseif noise_type == "en" # Epsilon noise
+			eps = sample_noise(en)
+			rng=rand(MersenneTwister(rng_act), Float32)
+			if rng > eps
+				return act_pred, 0f0
+			elseif rng <= eps
+				#noise = noisescale .* randn(MersenneTwister(rng_act), Float32, size(act_pred))
+				act_uni = reduce(hcat, [rand(MersenneTwister(rng_act + i), ACTION_SIZE) for i in 1:size(act_pred)[2]]) .* 2 .- 1 # uniform action [-1,1]
+				return act_uni, mean(abs.(act_pred .- act_uni))
+			end
 		end
-	# 	# #----------------- Epsilon noise ------------------------------
-	# 	# eps = sample_noise(en, rng_noi=rng_act) # add noise only in training / choose noise
-	# 	# rng=rand(MersenneTwister(rng_act))
-	# 	# if rng > eps
-	# 	# 	return act_pred, 0f0
-	# 	# elseif rng <= eps
-	# 	# 	noise = noisescale .* sample_noise(ou, rng_noi=rng_act)
-	# 	#noise = noisescale .* randn(MersenneTwister(rng_act), Float32, size(act_pred))
-	# 	noise = noiseclamp ? clamp.(noise, -5f-1, 5f-1) : noise #add noise clamp?
-	# 	# 	# return action, eps
-	# 	# end
-	# 	#-------------------------------------------------------------
-	return clamp.(act_pred .+ noise, -1f0, 1f0), mean(noise)
+		return clamp.(act_pred .+ noise, -1f0, 1f0), mean(noise)
 	end
+
 	return clamp.(act_pred .+ noise, -1f0, 1f0), mean(noise)
 end
 
@@ -185,7 +186,7 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
   local reward_eps=0f0
   local noise_eps=0f0
   local last_step = 1
-  local results = Array{Float64}(undef, 0, 27)
+  local results = Array{Float64}(undef, 0, 30)
 
   for step=1:NUM_STEPS
 	# create individual random seed
@@ -225,14 +226,14 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
 	  # update network weights
 	  replay(rng_rpl=rng_step)
 	  # break episode in training
-	  ## finished(env, s′) && break
+	  finished(env, s′) && break
     end
   end
 
   if track == 0
-	  return (reward_eps / last_step), last_step, (noise_eps / last_step)
+	  return reward_eps, last_step, noise_eps
   else
-      return (reward_eps / last_step), results
+      return reward_eps, results
   end
 end
 
@@ -249,7 +250,7 @@ function run_episodes(env_train::Shems, env_eval::Shems, total_reward, score_mea
 		# Train set
 		total_reward[i], last_step, noise_mean[i] = episode!(env_train, train=true, render=render,
 													track=track, rng_ep=rng_ep)
-		print("Episode: $(@sprintf "%4i" i) | Mean Score: $(@sprintf "%7.2f" total_reward[i]) "*
+		print("Episode: $(@sprintf "%4i" i) | Mean Score: $(@sprintf "%9.4f" total_reward[i]) "*
 				"| # steps: $(@sprintf "%2i" last_step) | Noise: $(@sprintf "%7.3f" noise_mean[i]) | ")
 
 		# try adjusting the oberservation normalization values
@@ -270,15 +271,15 @@ function run_episodes(env_train::Shems, env_eval::Shems, total_reward, score_mea
 			score_mean[idx] = score_all/test_runs
 			print("Eval score $(@sprintf "%7.3f" score_mean[idx]) | ")
 			#save weights for early stopping
-			# if score_mean[idx] > best_score
-			# 	# save network weights
-			# 	saveBSON(actor,	total_reward, score_mean, best_run, noise_mean,
-			# 						idx=i, path="temp", rng=rng_run)
-			# 	# set new best score
-			# 	best_score = score_mean[idx]
-			# 	# save best run
-			# 	global best_run = i
-			# end
+			if score_mean[idx] > best_score
+				# save network weights
+				saveBSON(actor,	total_reward, score_mean, best_run, noise_mean,
+									idx=i, path="temp", rng=rng_run)
+				# set new best score
+				best_score = score_mean[idx]
+				# save best run
+				global best_run = i
+			end
 		end
 		t_elap = round(now()-t_start, Dates.Minute)
 		println("Time elapsed: $(t_elap)")

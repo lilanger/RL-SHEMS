@@ -6,6 +6,6 @@
 #$ -l h_rt=30000
 #$ -M lissy.langer@tu-berlin.de
 
-cat input.jl > out/$JOB_ID-$TASK_ID-input.jl
+cat input.jl > out/input/$JOB_ID-$TASK_ID-input.jl
 module load julia/1.6.1
 julia  DDPG_reinforce_v12_nf.jl

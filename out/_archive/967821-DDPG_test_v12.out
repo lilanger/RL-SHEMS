@@ -2800,3 +2800,522 @@ Episode: 2792 | Mean Step Score:    -0.104 | Time elapsed: 86 minutes
 Episode: 2793 | Mean Step Score:    -4.743 | Time elapsed: 86 minutes
 Episode: 2794 | Mean Step Score:    -0.238 | Time elapsed: 86 minutes
 Episode: 2795 | Mean Step Score:     0.055 | Time elapsed: 86 minutes
+Episode: 2796 | Mean Step Score:    -0.223 | Time elapsed: 86 minutes
+Episode: 2797 | Mean Step Score:    -0.006 | Time elapsed: 86 minutes
+Episode: 2798 | Mean Step Score:     0.059 | Time elapsed: 86 minutes
+Episode: 2799 | Mean Step Score:    -0.023 | Time elapsed: 86 minutes
+Episode: 2800 | Mean Step Score:     0.208 | Time elapsed: 86 minutes
+Episode: 2801 | Mean Step Score:    -0.329 | Mean score     0.007 and std. deviation     0.002  over 10 evaluation episodes | Time elapsed: 89 minutes
+Episode: 2802 | Mean Step Score:     0.066 | Time elapsed: 89 minutes
+Episode: 2803 | Mean Step Score:    -0.150 | Time elapsed: 89 minutes
+Episode: 2804 | Mean Step Score:    -0.114 | Time elapsed: 89 minutes
+Episode: 2805 | Mean Step Score:    -0.351 | Time elapsed: 89 minutes
+Episode: 2806 | Mean Step Score:    -6.596 | Time elapsed: 89 minutes
+Episode: 2807 | Mean Step Score:    -2.383 | Time elapsed: 89 minutes
+Episode: 2808 | Mean Step Score:    -1.735 | Time elapsed: 89 minutes
+Episode: 2809 | Mean Step Score:    -0.491 | Time elapsed: 89 minutes
+Episode: 2810 | Mean Step Score:    -1.432 | Time elapsed: 89 minutes
+Episode: 2811 | Mean Step Score:    -0.929 | Time elapsed: 89 minutes
+Episode: 2812 | Mean Step Score:    -0.132 | Time elapsed: 89 minutes
+Episode: 2813 | Mean Step Score:     0.047 | Time elapsed: 89 minutes
+Episode: 2814 | Mean Step Score:    -3.954 | Time elapsed: 89 minutes
+Episode: 2815 | Mean Step Score:    -5.750 | Time elapsed: 89 minutes
+Episode: 2816 | Mean Step Score:    -1.765 | Time elapsed: 89 minutes
+Episode: 2817 | Mean Step Score:    -2.022 | Time elapsed: 89 minutes
+Episode: 2818 | Mean Step Score:   -18.691 | Time elapsed: 89 minutes
+Episode: 2819 | Mean Step Score:    -0.139 | Time elapsed: 89 minutes
+Episode: 2820 | Mean Step Score:    -8.518 | Time elapsed: 89 minutes
+Episode: 2821 | Mean Step Score:    -3.081 | Time elapsed: 89 minutes
+Episode: 2822 | Mean Step Score:    -2.155 | Time elapsed: 89 minutes
+Episode: 2823 | Mean Step Score:    -0.084 | Time elapsed: 89 minutes
+Episode: 2824 | Mean Step Score:     0.124 | Time elapsed: 89 minutes
+Episode: 2825 | Mean Step Score:    -0.130 | Time elapsed: 89 minutes
+Episode: 2826 | Mean Step Score:     0.073 | Time elapsed: 89 minutes
+Episode: 2827 | Mean Step Score:    -0.426 | Time elapsed: 89 minutes
+Episode: 2828 | Mean Step Score:    -0.028 | Time elapsed: 89 minutes
+Episode: 2829 | Mean Step Score:    -0.967 | Time elapsed: 89 minutes
+Episode: 2830 | Mean Step Score:    -2.120 | Time elapsed: 89 minutes
+Episode: 2831 | Mean Step Score:    -0.618 | Time elapsed: 89 minutes
+Episode: 2832 | Mean Step Score:    -2.917 | Time elapsed: 89 minutes
+Episode: 2833 | Mean Step Score:    -3.522 | Time elapsed: 89 minutes
+Episode: 2834 | Mean Step Score:    -0.041 | Time elapsed: 89 minutes
+Episode: 2835 | Mean Step Score:    -0.120 | Time elapsed: 89 minutes
+Episode: 2836 | Mean Step Score:    -1.228 | Time elapsed: 89 minutes
+Episode: 2837 | Mean Step Score:    -0.219 | Time elapsed: 89 minutes
+Episode: 2838 | Mean Step Score:    -0.316 | Time elapsed: 89 minutes
+Episode: 2839 | Mean Step Score:    -1.180 | Time elapsed: 89 minutes
+Episode: 2840 | Mean Step Score:    -0.189 | Time elapsed: 89 minutes
+Episode: 2841 | Mean Step Score:    -2.769 | Time elapsed: 89 minutes
+Episode: 2842 | Mean Step Score:    -2.738 | Time elapsed: 89 minutes
+Episode: 2843 | Mean Step Score:    -2.517 | Time elapsed: 89 minutes
+Episode: 2844 | Mean Step Score:    -1.105 | Time elapsed: 89 minutes
+Episode: 2845 | Mean Step Score:    -0.129 | Time elapsed: 89 minutes
+Episode: 2846 | Mean Step Score:    -0.935 | Time elapsed: 89 minutes
+Episode: 2847 | Mean Step Score:    -1.133 | Time elapsed: 89 minutes
+Episode: 2848 | Mean Step Score:     0.106 | Time elapsed: 89 minutes
+Episode: 2849 | Mean Step Score:    -0.058 | Time elapsed: 89 minutes
+Episode: 2850 | Mean Step Score:     0.100 | Time elapsed: 89 minutes
+Episode: 2851 | Mean Step Score:     0.085 | Time elapsed: 89 minutes
+Episode: 2852 | Mean Step Score:     0.103 | Time elapsed: 89 minutes
+Episode: 2853 | Mean Step Score:    -0.355 | Time elapsed: 89 minutes
+Episode: 2854 | Mean Step Score:    -0.339 | Time elapsed: 89 minutes
+Episode: 2855 | Mean Step Score:     0.280 | Time elapsed: 89 minutes
+Episode: 2856 | Mean Step Score:    -0.114 | Time elapsed: 89 minutes
+Episode: 2857 | Mean Step Score:    -0.143 | Time elapsed: 89 minutes
+Episode: 2858 | Mean Step Score:    -3.992 | Time elapsed: 89 minutes
+Episode: 2859 | Mean Step Score:    -0.178 | Time elapsed: 89 minutes
+Episode: 2860 | Mean Step Score:     0.169 | Time elapsed: 89 minutes
+Episode: 2861 | Mean Step Score:    -5.912 | Time elapsed: 89 minutes
+Episode: 2862 | Mean Step Score:    -9.666 | Time elapsed: 89 minutes
+Episode: 2863 | Mean Step Score:    -0.034 | Time elapsed: 89 minutes
+Episode: 2864 | Mean Step Score:   -47.301 | Time elapsed: 89 minutes
+Episode: 2865 | Mean Step Score:    -0.564 | Time elapsed: 89 minutes
+Episode: 2866 | Mean Step Score:   -26.270 | Time elapsed: 89 minutes
+Episode: 2867 | Mean Step Score:     0.027 | Time elapsed: 89 minutes
+Episode: 2868 | Mean Step Score:    -0.186 | Time elapsed: 89 minutes
+Episode: 2869 | Mean Step Score:    -0.240 | Time elapsed: 89 minutes
+Episode: 2870 | Mean Step Score:    -0.328 | Time elapsed: 89 minutes
+Episode: 2871 | Mean Step Score:   -23.114 | Time elapsed: 89 minutes
+Episode: 2872 | Mean Step Score:    -1.144 | Time elapsed: 89 minutes
+Episode: 2873 | Mean Step Score:    -4.633 | Time elapsed: 89 minutes
+Episode: 2874 | Mean Step Score:    -0.286 | Time elapsed: 89 minutes
+Episode: 2875 | Mean Step Score:   -50.825 | Time elapsed: 89 minutes
+Episode: 2876 | Mean Step Score:   -46.313 | Time elapsed: 89 minutes
+Episode: 2877 | Mean Step Score:    -3.902 | Time elapsed: 89 minutes
+Episode: 2878 | Mean Step Score:    -0.976 | Time elapsed: 89 minutes
+Episode: 2879 | Mean Step Score:   -53.773 | Time elapsed: 89 minutes
+Episode: 2880 | Mean Step Score:   -70.883 | Time elapsed: 89 minutes
+Episode: 2881 | Mean Step Score:   -45.222 | Time elapsed: 89 minutes
+Episode: 2882 | Mean Step Score:   -25.549 | Time elapsed: 89 minutes
+Episode: 2883 | Mean Step Score:   -37.385 | Time elapsed: 89 minutes
+Episode: 2884 | Mean Step Score:   -43.294 | Time elapsed: 89 minutes
+Episode: 2885 | Mean Step Score:   -24.106 | Time elapsed: 89 minutes
+Episode: 2886 | Mean Step Score:   -25.116 | Time elapsed: 89 minutes
+Episode: 2887 | Mean Step Score:   -55.472 | Time elapsed: 89 minutes
+Episode: 2888 | Mean Step Score:    -8.900 | Time elapsed: 89 minutes
+Episode: 2889 | Mean Step Score:   -51.087 | Time elapsed: 89 minutes
+Episode: 2890 | Mean Step Score:    -2.498 | Time elapsed: 89 minutes
+Episode: 2891 | Mean Step Score:   -69.214 | Time elapsed: 89 minutes
+Episode: 2892 | Mean Step Score:   -63.482 | Time elapsed: 89 minutes
+Episode: 2893 | Mean Step Score:   -69.035 | Time elapsed: 89 minutes
+Episode: 2894 | Mean Step Score:    -0.118 | Time elapsed: 90 minutes
+Episode: 2895 | Mean Step Score:   -62.521 | Time elapsed: 90 minutes
+Episode: 2896 | Mean Step Score:    -0.243 | Time elapsed: 90 minutes
+Episode: 2897 | Mean Step Score:   -52.834 | Time elapsed: 90 minutes
+Episode: 2898 | Mean Step Score:   -20.084 | Time elapsed: 90 minutes
+Episode: 2899 | Mean Step Score:   -68.276 | Time elapsed: 90 minutes
+Episode: 2900 | Mean Step Score:    -7.309 | Time elapsed: 90 minutes
+Episode: 2901 | Mean Step Score:   -81.904 | Mean score    -0.029 and std. deviation     0.252  over 10 evaluation episodes | Time elapsed: 93 minutes
+Episode: 2902 | Mean Step Score:    -1.146 | Time elapsed: 93 minutes
+Episode: 2903 | Mean Step Score:    -0.972 | Time elapsed: 93 minutes
+Episode: 2904 | Mean Step Score:    -0.778 | Time elapsed: 93 minutes
+Episode: 2905 | Mean Step Score:    -0.803 | Time elapsed: 93 minutes
+Episode: 2906 | Mean Step Score:    -2.335 | Time elapsed: 93 minutes
+Episode: 2907 | Mean Step Score:     0.052 | Time elapsed: 93 minutes
+Episode: 2908 | Mean Step Score:    -0.371 | Time elapsed: 93 minutes
+Episode: 2909 | Mean Step Score:    -4.646 | Time elapsed: 93 minutes
+Episode: 2910 | Mean Step Score:    -0.355 | Time elapsed: 93 minutes
+Episode: 2911 | Mean Step Score:    -1.101 | Time elapsed: 93 minutes
+Episode: 2912 | Mean Step Score:    -0.212 | Time elapsed: 93 minutes
+Episode: 2913 | Mean Step Score:    -7.093 | Time elapsed: 93 minutes
+Episode: 2914 | Mean Step Score:    -3.920 | Time elapsed: 93 minutes
+Episode: 2915 | Mean Step Score:    -1.064 | Time elapsed: 93 minutes
+Episode: 2916 | Mean Step Score:    -1.547 | Time elapsed: 93 minutes
+Episode: 2917 | Mean Step Score:    -2.836 | Time elapsed: 93 minutes
+Episode: 2918 | Mean Step Score:    -0.039 | Time elapsed: 93 minutes
+Episode: 2919 | Mean Step Score:    -4.039 | Time elapsed: 93 minutes
+Episode: 2920 | Mean Step Score:    -3.545 | Time elapsed: 93 minutes
+Episode: 2921 | Mean Step Score:    -4.215 | Time elapsed: 93 minutes
+Episode: 2922 | Mean Step Score:    -1.763 | Time elapsed: 93 minutes
+Episode: 2923 | Mean Step Score:    -0.671 | Time elapsed: 93 minutes
+Episode: 2924 | Mean Step Score:    -1.249 | Time elapsed: 93 minutes
+Episode: 2925 | Mean Step Score:    -0.164 | Time elapsed: 93 minutes
+Episode: 2926 | Mean Step Score:    -0.716 | Time elapsed: 93 minutes
+Episode: 2927 | Mean Step Score:    -0.061 | Time elapsed: 93 minutes
+Episode: 2928 | Mean Step Score:     0.030 | Time elapsed: 93 minutes
+Episode: 2929 | Mean Step Score:    -0.989 | Time elapsed: 93 minutes
+Episode: 2930 | Mean Step Score:    -0.952 | Time elapsed: 93 minutes
+Episode: 2931 | Mean Step Score:    -0.775 | Time elapsed: 93 minutes
+Episode: 2932 | Mean Step Score:    -0.427 | Time elapsed: 93 minutes
+Episode: 2933 | Mean Step Score:     0.079 | Time elapsed: 93 minutes
+Episode: 2934 | Mean Step Score:     0.200 | Time elapsed: 93 minutes
+Episode: 2935 | Mean Step Score:     0.150 | Time elapsed: 93 minutes
+Episode: 2936 | Mean Step Score:     0.136 | Time elapsed: 93 minutes
+Episode: 2937 | Mean Step Score:    -0.358 | Time elapsed: 93 minutes
+Episode: 2938 | Mean Step Score:     0.057 | Time elapsed: 93 minutes
+Episode: 2939 | Mean Step Score:     0.142 | Time elapsed: 93 minutes
+Episode: 2940 | Mean Step Score:    -6.933 | Time elapsed: 93 minutes
+Episode: 2941 | Mean Step Score:   -10.022 | Time elapsed: 93 minutes
+Episode: 2942 | Mean Step Score:     0.055 | Time elapsed: 93 minutes
+Episode: 2943 | Mean Step Score:    -8.680 | Time elapsed: 93 minutes
+Episode: 2944 | Mean Step Score:    -0.293 | Time elapsed: 93 minutes
+Episode: 2945 | Mean Step Score:    -6.914 | Time elapsed: 93 minutes
+Episode: 2946 | Mean Step Score:    -4.717 | Time elapsed: 93 minutes
+Episode: 2947 | Mean Step Score:    -0.305 | Time elapsed: 93 minutes
+Episode: 2948 | Mean Step Score:    -8.873 | Time elapsed: 93 minutes
+Episode: 2949 | Mean Step Score:    -6.402 | Time elapsed: 93 minutes
+Episode: 2950 | Mean Step Score:   -16.463 | Time elapsed: 93 minutes
+Episode: 2951 | Mean Step Score:    -1.670 | Time elapsed: 93 minutes
+Episode: 2952 | Mean Step Score:    -0.129 | Time elapsed: 93 minutes
+Episode: 2953 | Mean Step Score:    -0.263 | Time elapsed: 93 minutes
+Episode: 2954 | Mean Step Score:     0.090 | Time elapsed: 93 minutes
+Episode: 2955 | Mean Step Score:     0.142 | Time elapsed: 93 minutes
+Episode: 2956 | Mean Step Score:     0.263 | Time elapsed: 93 minutes
+Episode: 2957 | Mean Step Score:     0.215 | Time elapsed: 93 minutes
+Episode: 2958 | Mean Step Score:    -0.192 | Time elapsed: 93 minutes
+Episode: 2959 | Mean Step Score:    -0.348 | Time elapsed: 93 minutes
+Episode: 2960 | Mean Step Score:    -0.013 | Time elapsed: 93 minutes
+Episode: 2961 | Mean Step Score:    -0.163 | Time elapsed: 93 minutes
+Episode: 2962 | Mean Step Score:     0.061 | Time elapsed: 93 minutes
+Episode: 2963 | Mean Step Score:    -4.687 | Time elapsed: 93 minutes
+Episode: 2964 | Mean Step Score:    -1.575 | Time elapsed: 93 minutes
+Episode: 2965 | Mean Step Score:    -0.245 | Time elapsed: 93 minutes
+Episode: 2966 | Mean Step Score:    -0.184 | Time elapsed: 93 minutes
+Episode: 2967 | Mean Step Score:    -4.969 | Time elapsed: 93 minutes
+Episode: 2968 | Mean Step Score:   -56.268 | Time elapsed: 93 minutes
+Episode: 2969 | Mean Step Score:   -29.961 | Time elapsed: 93 minutes
+Episode: 2970 | Mean Step Score:   -41.598 | Time elapsed: 93 minutes
+Episode: 2971 | Mean Step Score:   -76.769 | Time elapsed: 93 minutes
+Episode: 2972 | Mean Step Score:   -29.682 | Time elapsed: 93 minutes
+Episode: 2973 | Mean Step Score:   -31.993 | Time elapsed: 93 minutes
+Episode: 2974 | Mean Step Score:   -25.176 | Time elapsed: 93 minutes
+Episode: 2975 | Mean Step Score:    -0.388 | Time elapsed: 93 minutes
+Episode: 2976 | Mean Step Score:    -2.440 | Time elapsed: 93 minutes
+Episode: 2977 | Mean Step Score:    -4.634 | Time elapsed: 93 minutes
+Episode: 2978 | Mean Step Score:   -17.163 | Time elapsed: 93 minutes
+Episode: 2979 | Mean Step Score:   -74.581 | Time elapsed: 93 minutes
+Episode: 2980 | Mean Step Score:   -80.618 | Time elapsed: 93 minutes
+Episode: 2981 | Mean Step Score:   -86.164 | Time elapsed: 93 minutes
+Episode: 2982 | Mean Step Score:   -38.175 | Time elapsed: 93 minutes
+Episode: 2983 | Mean Step Score:   -53.687 | Time elapsed: 93 minutes
+Episode: 2984 | Mean Step Score:   -37.467 | Time elapsed: 93 minutes
+Episode: 2985 | Mean Step Score:   -81.283 | Time elapsed: 93 minutes
+Episode: 2986 | Mean Step Score:   -56.853 | Time elapsed: 93 minutes
+Episode: 2987 | Mean Step Score:    -0.228 | Time elapsed: 93 minutes
+Episode: 2988 | Mean Step Score:   -34.518 | Time elapsed: 93 minutes
+Episode: 2989 | Mean Step Score:   -31.651 | Time elapsed: 93 minutes
+Episode: 2990 | Mean Step Score:   -54.122 | Time elapsed: 93 minutes
+Episode: 2991 | Mean Step Score:    -1.546 | Time elapsed: 93 minutes
+Episode: 2992 | Mean Step Score:   -85.641 | Time elapsed: 93 minutes
+Episode: 2993 | Mean Step Score:   -28.296 | Time elapsed: 93 minutes
+Episode: 2994 | Mean Step Score:   -35.347 | Time elapsed: 93 minutes
+Episode: 2995 | Mean Step Score:   -76.405 | Time elapsed: 93 minutes
+Episode: 2996 | Mean Step Score:   -24.617 | Time elapsed: 93 minutes
+Episode: 2997 | Mean Step Score:   -25.863 | Time elapsed: 93 minutes
+Episode: 2998 | Mean Step Score:   -75.590 | Time elapsed: 93 minutes
+Episode: 2999 | Mean Step Score:  -114.236 | Time elapsed: 93 minutes
+Episode: 3000 | Mean Step Score:   -44.601 | Time elapsed: 93 minutes
+Episode: 3001 | Mean Step Score:    -5.736 | Mean score    -0.002 and std. deviation     0.006  over 10 evaluation episodes | Time elapsed: 96 minutes
+Episode: 3002 | Mean Step Score:    -0.982 | Time elapsed: 96 minutes
+Episode: 3003 | Mean Step Score:    -1.286 | Time elapsed: 96 minutes
+Episode: 3004 | Mean Step Score:    -0.221 | Time elapsed: 96 minutes
+Episode: 3005 | Mean Step Score:    -0.789 | Time elapsed: 96 minutes
+Episode: 3006 | Mean Step Score:    -2.014 | Time elapsed: 96 minutes
+Episode: 3007 | Mean Step Score:    -9.530 | Time elapsed: 96 minutes
+Episode: 3008 | Mean Step Score:    -4.334 | Time elapsed: 96 minutes
+Episode: 3009 | Mean Step Score:    -3.588 | Time elapsed: 96 minutes
+Episode: 3010 | Mean Step Score:    -0.162 | Time elapsed: 96 minutes
+Episode: 3011 | Mean Step Score:    -2.382 | Time elapsed: 96 minutes
+Episode: 3012 | Mean Step Score:    -1.267 | Time elapsed: 96 minutes
+Episode: 3013 | Mean Step Score:     0.051 | Time elapsed: 96 minutes
+Episode: 3014 | Mean Step Score:    -0.384 | Time elapsed: 96 minutes
+Episode: 3015 | Mean Step Score:    -2.271 | Time elapsed: 96 minutes
+Episode: 3016 | Mean Step Score:    -1.261 | Time elapsed: 96 minutes
+Episode: 3017 | Mean Step Score:     0.041 | Time elapsed: 96 minutes
+Episode: 3018 | Mean Step Score:    -1.617 | Time elapsed: 96 minutes
+Episode: 3019 | Mean Step Score:    -1.960 | Time elapsed: 96 minutes
+Episode: 3020 | Mean Step Score:     0.197 | Time elapsed: 96 minutes
+Episode: 3021 | Mean Step Score:     0.138 | Time elapsed: 96 minutes
+Episode: 3022 | Mean Step Score:     0.144 | Time elapsed: 96 minutes
+Episode: 3023 | Mean Step Score:     0.073 | Time elapsed: 96 minutes
+Episode: 3024 | Mean Step Score:    -0.140 | Time elapsed: 96 minutes
+Episode: 3025 | Mean Step Score:    -0.327 | Time elapsed: 96 minutes
+Episode: 3026 | Mean Step Score:    -0.131 | Time elapsed: 96 minutes
+Episode: 3027 | Mean Step Score:     0.040 | Time elapsed: 96 minutes
+Episode: 3028 | Mean Step Score:    -0.063 | Time elapsed: 96 minutes
+Episode: 3029 | Mean Step Score:     0.218 | Time elapsed: 96 minutes
+Episode: 3030 | Mean Step Score:    -0.268 | Time elapsed: 96 minutes
+Episode: 3031 | Mean Step Score:     0.101 | Time elapsed: 96 minutes
+Episode: 3032 | Mean Step Score:     0.157 | Time elapsed: 96 minutes
+Episode: 3033 | Mean Step Score:     0.118 | Time elapsed: 96 minutes
+Episode: 3034 | Mean Step Score:    -0.152 | Time elapsed: 96 minutes
+Episode: 3035 | Mean Step Score:    -0.136 | Time elapsed: 96 minutes
+Episode: 3036 | Mean Step Score:    -0.056 | Time elapsed: 96 minutes
+Episode: 3037 | Mean Step Score:     0.192 | Time elapsed: 96 minutes
+Episode: 3038 | Mean Step Score:     0.096 | Time elapsed: 96 minutes
+Episode: 3039 | Mean Step Score:     0.153 | Time elapsed: 96 minutes
+Episode: 3040 | Mean Step Score:    -0.660 | Time elapsed: 96 minutes
+Episode: 3041 | Mean Step Score:    -0.365 | Time elapsed: 96 minutes
+Episode: 3042 | Mean Step Score:    -9.338 | Time elapsed: 96 minutes
+Episode: 3043 | Mean Step Score:    -0.317 | Time elapsed: 96 minutes
+Episode: 3044 | Mean Step Score:   -42.891 | Time elapsed: 96 minutes
+Episode: 3045 | Mean Step Score:    -0.393 | Time elapsed: 96 minutes
+Episode: 3046 | Mean Step Score:    -0.365 | Time elapsed: 96 minutes
+Episode: 3047 | Mean Step Score:    -1.798 | Time elapsed: 96 minutes
+Episode: 3048 | Mean Step Score:    -0.510 | Time elapsed: 96 minutes
+Episode: 3049 | Mean Step Score:    -4.112 | Time elapsed: 96 minutes
+Episode: 3050 | Mean Step Score:    -9.165 | Time elapsed: 96 minutes
+Episode: 3051 | Mean Step Score:     0.089 | Time elapsed: 96 minutes
+Episode: 3052 | Mean Step Score:    -0.108 | Time elapsed: 96 minutes
+Episode: 3053 | Mean Step Score:    -0.236 | Time elapsed: 96 minutes
+Episode: 3054 | Mean Step Score:    -0.197 | Time elapsed: 96 minutes
+Episode: 3055 | Mean Step Score:    -2.161 | Time elapsed: 96 minutes
+Episode: 3056 | Mean Step Score:    -0.245 | Time elapsed: 96 minutes
+Episode: 3057 | Mean Step Score:    -0.891 | Time elapsed: 96 minutes
+Episode: 3058 | Mean Step Score:    -0.337 | Time elapsed: 96 minutes
+Episode: 3059 | Mean Step Score:     0.029 | Time elapsed: 96 minutes
+Episode: 3060 | Mean Step Score:     0.193 | Time elapsed: 96 minutes
+Episode: 3061 | Mean Step Score:     0.261 | Time elapsed: 96 minutes
+Episode: 3062 | Mean Step Score:    -0.083 | Time elapsed: 96 minutes
+Episode: 3063 | Mean Step Score:    -0.235 | Time elapsed: 96 minutes
+Episode: 3064 | Mean Step Score:    -1.679 | Time elapsed: 96 minutes
+Episode: 3065 | Mean Step Score:   -10.237 | Time elapsed: 96 minutes
+Episode: 3066 | Mean Step Score:   -26.824 | Time elapsed: 96 minutes
+Episode: 3067 | Mean Step Score:   -12.593 | Time elapsed: 96 minutes
+Episode: 3068 | Mean Step Score:   -12.423 | Time elapsed: 96 minutes
+Episode: 3069 | Mean Step Score:    -5.200 | Time elapsed: 96 minutes
+Episode: 3070 | Mean Step Score:    -6.510 | Time elapsed: 96 minutes
+Episode: 3071 | Mean Step Score:    -3.310 | Time elapsed: 96 minutes
+Episode: 3072 | Mean Step Score:    -9.874 | Time elapsed: 96 minutes
+Episode: 3073 | Mean Step Score:   -20.479 | Time elapsed: 96 minutes
+Episode: 3074 | Mean Step Score:    -7.680 | Time elapsed: 96 minutes
+Episode: 3075 | Mean Step Score:   -15.655 | Time elapsed: 96 minutes
+Episode: 3076 | Mean Step Score:    -2.139 | Time elapsed: 96 minutes
+Episode: 3077 | Mean Step Score:    -1.946 | Time elapsed: 96 minutes
+Episode: 3078 | Mean Step Score:     0.179 | Time elapsed: 96 minutes
+Episode: 3079 | Mean Step Score:     0.088 | Time elapsed: 96 minutes
+Episode: 3080 | Mean Step Score:    -0.260 | Time elapsed: 96 minutes
+Episode: 3081 | Mean Step Score:    -0.097 | Time elapsed: 96 minutes
+Episode: 3082 | Mean Step Score:    -0.264 | Time elapsed: 96 minutes
+Episode: 3083 | Mean Step Score:    -0.157 | Time elapsed: 96 minutes
+Episode: 3084 | Mean Step Score:    -0.617 | Time elapsed: 96 minutes
+Episode: 3085 | Mean Step Score:    -0.082 | Time elapsed: 96 minutes
+Episode: 3086 | Mean Step Score:    -0.091 | Time elapsed: 96 minutes
+Episode: 3087 | Mean Step Score:    -0.114 | Time elapsed: 96 minutes
+Episode: 3088 | Mean Step Score:    -1.617 | Time elapsed: 96 minutes
+Episode: 3089 | Mean Step Score:    -0.395 | Time elapsed: 96 minutes
+Episode: 3090 | Mean Step Score:    -0.139 | Time elapsed: 96 minutes
+Episode: 3091 | Mean Step Score:    -1.308 | Time elapsed: 96 minutes
+Episode: 3092 | Mean Step Score:    -2.411 | Time elapsed: 96 minutes
+Episode: 3093 | Mean Step Score:    -6.766 | Time elapsed: 96 minutes
+Episode: 3094 | Mean Step Score:    -0.188 | Time elapsed: 96 minutes
+Episode: 3095 | Mean Step Score:    -0.108 | Time elapsed: 96 minutes
+Episode: 3096 | Mean Step Score:     0.100 | Time elapsed: 96 minutes
+Episode: 3097 | Mean Step Score:    -0.101 | Time elapsed: 96 minutes
+Episode: 3098 | Mean Step Score:    -0.515 | Time elapsed: 96 minutes
+Episode: 3099 | Mean Step Score:    -1.355 | Time elapsed: 96 minutes
+Episode: 3100 | Mean Step Score:    -0.708 | Time elapsed: 96 minutes
+Episode: 3101 | Mean Step Score:    -0.108 | Mean score    -0.122 and std. deviation     0.344  over 10 evaluation episodes | Time elapsed: 99 minutes
+Episode: 3102 | Mean Step Score:    -0.791 | Time elapsed: 99 minutes
+Episode: 3103 | Mean Step Score:     0.058 | Time elapsed: 99 minutes
+Episode: 3104 | Mean Step Score:    -0.466 | Time elapsed: 99 minutes
+Episode: 3105 | Mean Step Score:    -1.040 | Time elapsed: 99 minutes
+Episode: 3106 | Mean Step Score:    -1.056 | Time elapsed: 99 minutes
+Episode: 3107 | Mean Step Score:     0.104 | Time elapsed: 99 minutes
+Episode: 3108 | Mean Step Score:     0.023 | Time elapsed: 99 minutes
+Episode: 3109 | Mean Step Score:    -0.131 | Time elapsed: 99 minutes
+Episode: 3110 | Mean Step Score:    -0.496 | Time elapsed: 99 minutes
+Episode: 3111 | Mean Step Score:    -1.215 | Time elapsed: 99 minutes
+Episode: 3112 | Mean Step Score:    -0.607 | Time elapsed: 99 minutes
+Episode: 3113 | Mean Step Score:    -0.644 | Time elapsed: 99 minutes
+Episode: 3114 | Mean Step Score:    -0.220 | Time elapsed: 99 minutes
+Episode: 3115 | Mean Step Score:    -0.360 | Time elapsed: 100 minutes
+Episode: 3116 | Mean Step Score:    -0.778 | Time elapsed: 100 minutes
+Episode: 3117 | Mean Step Score:    -0.440 | Time elapsed: 100 minutes
+Episode: 3118 | Mean Step Score:     0.173 | Time elapsed: 100 minutes
+Episode: 3119 | Mean Step Score:    -0.436 | Time elapsed: 100 minutes
+Episode: 3120 | Mean Step Score:     0.081 | Time elapsed: 100 minutes
+Episode: 3121 | Mean Step Score:    -0.081 | Time elapsed: 100 minutes
+Episode: 3122 | Mean Step Score:    -0.202 | Time elapsed: 100 minutes
+Episode: 3123 | Mean Step Score:    -0.414 | Time elapsed: 100 minutes
+Episode: 3124 | Mean Step Score:    -0.008 | Time elapsed: 100 minutes
+Episode: 3125 | Mean Step Score:    -0.388 | Time elapsed: 100 minutes
+Episode: 3126 | Mean Step Score:     0.178 | Time elapsed: 100 minutes
+Episode: 3127 | Mean Step Score:     0.132 | Time elapsed: 100 minutes
+Episode: 3128 | Mean Step Score:     0.055 | Time elapsed: 100 minutes
+Episode: 3129 | Mean Step Score:     0.014 | Time elapsed: 100 minutes
+Episode: 3130 | Mean Step Score:    -2.751 | Time elapsed: 100 minutes
+Episode: 3131 | Mean Step Score:    -3.083 | Time elapsed: 100 minutes
+Episode: 3132 | Mean Step Score:    -8.411 | Time elapsed: 100 minutes
+Episode: 3133 | Mean Step Score:    -2.746 | Time elapsed: 100 minutes
+Episode: 3134 | Mean Step Score:    -3.246 | Time elapsed: 100 minutes
+Episode: 3135 | Mean Step Score:    -3.050 | Time elapsed: 100 minutes
+Episode: 3136 | Mean Step Score:     0.101 | Time elapsed: 100 minutes
+Episode: 3137 | Mean Step Score:    -0.415 | Time elapsed: 100 minutes
+Episode: 3138 | Mean Step Score:    -0.182 | Time elapsed: 100 minutes
+Episode: 3139 | Mean Step Score:    -0.795 | Time elapsed: 100 minutes
+Episode: 3140 | Mean Step Score:    -0.101 | Time elapsed: 100 minutes
+Episode: 3141 | Mean Step Score:    -3.301 | Time elapsed: 100 minutes
+Episode: 3142 | Mean Step Score:    -0.019 | Time elapsed: 100 minutes
+Episode: 3143 | Mean Step Score:    -0.291 | Time elapsed: 100 minutes
+Episode: 3144 | Mean Step Score:     0.206 | Time elapsed: 100 minutes
+Episode: 3145 | Mean Step Score:     0.007 | Time elapsed: 100 minutes
+Episode: 3146 | Mean Step Score:    -0.093 | Time elapsed: 100 minutes
+Episode: 3147 | Mean Step Score:     0.224 | Time elapsed: 100 minutes
+Episode: 3148 | Mean Step Score:     0.190 | Time elapsed: 100 minutes
+Episode: 3149 | Mean Step Score:     0.147 | Time elapsed: 100 minutes
+Episode: 3150 | Mean Step Score:     0.013 | Time elapsed: 100 minutes
+Episode: 3151 | Mean Step Score:    -0.274 | Time elapsed: 100 minutes
+Episode: 3152 | Mean Step Score:    -0.212 | Time elapsed: 100 minutes
+Episode: 3153 | Mean Step Score:    -0.035 | Time elapsed: 100 minutes
+Episode: 3154 | Mean Step Score:    -0.176 | Time elapsed: 100 minutes
+Episode: 3155 | Mean Step Score:    -0.385 | Time elapsed: 100 minutes
+Episode: 3156 | Mean Step Score:     0.125 | Time elapsed: 100 minutes
+Episode: 3157 | Mean Step Score:    -0.309 | Time elapsed: 100 minutes
+Episode: 3158 | Mean Step Score:     0.277 | Time elapsed: 100 minutes
+Episode: 3159 | Mean Step Score:     0.127 | Time elapsed: 100 minutes
+Episode: 3160 | Mean Step Score:    -0.013 | Time elapsed: 100 minutes
+Episode: 3161 | Mean Step Score:    -0.229 | Time elapsed: 100 minutes
+Episode: 3162 | Mean Step Score:     0.023 | Time elapsed: 100 minutes
+Episode: 3163 | Mean Step Score:     0.076 | Time elapsed: 100 minutes
+Episode: 3164 | Mean Step Score:     0.154 | Time elapsed: 100 minutes
+Episode: 3165 | Mean Step Score:     0.014 | Time elapsed: 100 minutes
+Episode: 3166 | Mean Step Score:     0.011 | Time elapsed: 100 minutes
+Episode: 3167 | Mean Step Score:    -0.031 | Time elapsed: 100 minutes
+Episode: 3168 | Mean Step Score:     0.163 | Time elapsed: 100 minutes
+Episode: 3169 | Mean Step Score:     0.103 | Time elapsed: 100 minutes
+Episode: 3170 | Mean Step Score:     0.076 | Time elapsed: 100 minutes
+Episode: 3171 | Mean Step Score:    -0.075 | Time elapsed: 100 minutes
+Episode: 3172 | Mean Step Score:    -0.346 | Time elapsed: 100 minutes
+Episode: 3173 | Mean Step Score:    -0.261 | Time elapsed: 100 minutes
+Episode: 3174 | Mean Step Score:    -0.322 | Time elapsed: 100 minutes
+Episode: 3175 | Mean Step Score:     0.062 | Time elapsed: 100 minutes
+Episode: 3176 | Mean Step Score:    -0.164 | Time elapsed: 100 minutes
+Episode: 3177 | Mean Step Score:     0.242 | Time elapsed: 100 minutes
+Episode: 3178 | Mean Step Score:     0.114 | Time elapsed: 100 minutes
+Episode: 3179 | Mean Step Score:     0.017 | Time elapsed: 100 minutes
+Episode: 3180 | Mean Step Score:     0.126 | Time elapsed: 100 minutes
+Episode: 3181 | Mean Step Score:     0.080 | Time elapsed: 100 minutes
+Episode: 3182 | Mean Step Score:    -1.649 | Time elapsed: 100 minutes
+Episode: 3183 | Mean Step Score:    -9.573 | Time elapsed: 100 minutes
+Episode: 3184 | Mean Step Score:     0.044 | Time elapsed: 100 minutes
+Episode: 3185 | Mean Step Score:   -24.055 | Time elapsed: 100 minutes
+Episode: 3186 | Mean Step Score:   -16.230 | Time elapsed: 100 minutes
+Episode: 3187 | Mean Step Score:    -0.242 | Time elapsed: 100 minutes
+Episode: 3188 | Mean Step Score:    -0.076 | Time elapsed: 100 minutes
+Episode: 3189 | Mean Step Score:    -5.899 | Time elapsed: 100 minutes
+Episode: 3190 | Mean Step Score:    -8.769 | Time elapsed: 100 minutes
+Episode: 3191 | Mean Step Score:    -9.077 | Time elapsed: 100 minutes
+Episode: 3192 | Mean Step Score:    -5.848 | Time elapsed: 100 minutes
+Episode: 3193 | Mean Step Score:    -2.561 | Time elapsed: 100 minutes
+Episode: 3194 | Mean Step Score:    -0.175 | Time elapsed: 100 minutes
+Episode: 3195 | Mean Step Score:   -11.262 | Time elapsed: 100 minutes
+Episode: 3196 | Mean Step Score:    -0.198 | Time elapsed: 100 minutes
+Episode: 3197 | Mean Step Score:   -14.822 | Time elapsed: 100 minutes
+Episode: 3198 | Mean Step Score:    -0.100 | Time elapsed: 100 minutes
+Episode: 3199 | Mean Step Score:    -2.034 | Time elapsed: 100 minutes
+Episode: 3200 | Mean Step Score:    -0.220 | Time elapsed: 100 minutes
+Episode: 3201 | Mean Step Score:   -14.523 | Mean score    -0.248 and std. deviation     0.526  over 10 evaluation episodes | Time elapsed: 102 minutes
+Episode: 3202 | Mean Step Score:    -0.141 | Time elapsed: 102 minutes
+Episode: 3203 | Mean Step Score:   -23.181 | Time elapsed: 102 minutes
+Episode: 3204 | Mean Step Score:     0.010 | Time elapsed: 102 minutes
+Episode: 3205 | Mean Step Score:   -30.501 | Time elapsed: 102 minutes
+Episode: 3206 | Mean Step Score:   -45.465 | Time elapsed: 102 minutes
+Episode: 3207 | Mean Step Score:   -50.140 | Time elapsed: 102 minutes
+Episode: 3208 | Mean Step Score:   -38.102 | Time elapsed: 102 minutes
+Episode: 3209 | Mean Step Score:   -15.155 | Time elapsed: 102 minutes
+Episode: 3210 | Mean Step Score:   -16.664 | Time elapsed: 102 minutes
+Episode: 3211 | Mean Step Score:   -23.364 | Time elapsed: 102 minutes
+Episode: 3212 | Mean Step Score:   -62.696 | Time elapsed: 102 minutes
+Episode: 3213 | Mean Step Score:   -24.297 | Time elapsed: 102 minutes
+Episode: 3214 | Mean Step Score:   -80.179 | Time elapsed: 102 minutes
+Episode: 3215 | Mean Step Score:   -97.209 | Time elapsed: 102 minutes
+Episode: 3216 | Mean Step Score:   -26.123 | Time elapsed: 102 minutes
+Episode: 3217 | Mean Step Score:   -39.852 | Time elapsed: 102 minutes
+Episode: 3218 | Mean Step Score:   -43.313 | Time elapsed: 102 minutes
+Episode: 3219 | Mean Step Score:   -11.121 | Time elapsed: 102 minutes
+Episode: 3220 | Mean Step Score:   -31.320 | Time elapsed: 102 minutes
+Episode: 3221 | Mean Step Score:    -0.133 | Time elapsed: 102 minutes
+Episode: 3222 | Mean Step Score:   -34.517 | Time elapsed: 102 minutes
+Episode: 3223 | Mean Step Score:    -0.235 | Time elapsed: 102 minutes
+Episode: 3224 | Mean Step Score:    -4.139 | Time elapsed: 102 minutes
+Episode: 3225 | Mean Step Score:   -11.865 | Time elapsed: 102 minutes
+Episode: 3226 | Mean Step Score:    -2.551 | Time elapsed: 102 minutes
+Episode: 3227 | Mean Step Score:   -14.524 | Time elapsed: 102 minutes
+Episode: 3228 | Mean Step Score:   -23.200 | Time elapsed: 102 minutes
+Episode: 3229 | Mean Step Score:     0.191 | Time elapsed: 102 minutes
+Episode: 3230 | Mean Step Score:   -14.519 | Time elapsed: 102 minutes
+Episode: 3231 | Mean Step Score:   -18.333 | Time elapsed: 102 minutes
+Episode: 3232 | Mean Step Score:   -31.843 | Time elapsed: 102 minutes
+Episode: 3233 | Mean Step Score:    -0.102 | Time elapsed: 102 minutes
+Episode: 3234 | Mean Step Score:    -5.722 | Time elapsed: 102 minutes
+Episode: 3235 | Mean Step Score:    -3.878 | Time elapsed: 102 minutes
+Episode: 3236 | Mean Step Score:   -28.665 | Time elapsed: 102 minutes
+Episode: 3237 | Mean Step Score:   -13.924 | Time elapsed: 102 minutes
+Episode: 3238 | Mean Step Score:   -12.118 | Time elapsed: 102 minutes
+Episode: 3239 | Mean Step Score:    -0.334 | Time elapsed: 102 minutes
+Episode: 3240 | Mean Step Score:    -0.215 | Time elapsed: 102 minutes
+Episode: 3241 | Mean Step Score:    -0.177 | Time elapsed: 103 minutes
+Episode: 3242 | Mean Step Score:     0.189 | Time elapsed: 103 minutes
+Episode: 3243 | Mean Step Score:    -1.066 | Time elapsed: 103 minutes
+Episode: 3244 | Mean Step Score:    -0.049 | Time elapsed: 103 minutes
+Episode: 3245 | Mean Step Score:     0.083 | Time elapsed: 103 minutes
+Episode: 3246 | Mean Step Score:    -0.044 | Time elapsed: 103 minutes
+Episode: 3247 | Mean Step Score:     0.112 | Time elapsed: 103 minutes
+Episode: 3248 | Mean Step Score:     0.044 | Time elapsed: 103 minutes
+Episode: 3249 | Mean Step Score:    -0.110 | Time elapsed: 103 minutes
+Episode: 3250 | Mean Step Score:    -0.289 | Time elapsed: 103 minutes
+Episode: 3251 | Mean Step Score:    -0.053 | Time elapsed: 103 minutes
+Episode: 3252 | Mean Step Score:    -3.548 | Time elapsed: 103 minutes
+Episode: 3253 | Mean Step Score:    -0.196 | Time elapsed: 103 minutes
+Episode: 3254 | Mean Step Score:    -0.832 | Time elapsed: 103 minutes
+Episode: 3255 | Mean Step Score:    -0.958 | Time elapsed: 103 minutes
+
+signal (7): Bus error
+in expression starting at /net/work/llanger/DDPG_reinforce_v12_nf.jl:16
+== at ./promotion.jl:410 [inlined]
+consumeBOM at /homes2/ipdm/llanger/.julia/packages/CSV/CJfFO/src/utils.jl:242 [inlined]
+Header at /homes2/ipdm/llanger/.julia/packages/CSV/CJfFO/src/header.jl:111 [inlined]
+#File#22 at /homes2/ipdm/llanger/.julia/packages/CSV/CJfFO/src/file.jl:217
+File at /homes2/ipdm/llanger/.julia/packages/CSV/CJfFO/src/file.jl:217
+#read#77 at /homes2/ipdm/llanger/.julia/packages/CSV/CJfFO/src/CSV.jl:45
+read at /homes2/ipdm/llanger/.julia/packages/CSV/CJfFO/src/CSV.jl:42 [inlined]
+next_state! at /homes2/ipdm/llanger/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:223
+#step!#3 at /homes2/ipdm/llanger/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:342
+step! at /homes2/ipdm/llanger/.julia/packages/Reinforce/PDz1M/src/envs/shems.jl:239
+_jl_invoke at /buildworker/worker/package_linux64/build/src/gf.c:2237 [inlined]
+jl_apply_generic at /buildworker/worker/package_linux64/build/src/gf.c:2419
+#episode!#10 at /net/work/llanger/run.jl:70
+episode!##kw at /net/work/llanger/run.jl:58
+unknown function (ip: 0x14679c9f4635)
+_jl_invoke at /buildworker/worker/package_linux64/build/src/gf.c:2237 [inlined]
+jl_apply_generic at /buildworker/worker/package_linux64/build/src/gf.c:2419
+#test#12 at /net/work/llanger/testing.jl:11
+test at /net/work/llanger/testing.jl:9 [inlined]
+#run_episodes#11 at /net/work/llanger/run.jl:104
+run_episodes##kw at /net/work/llanger/run.jl:97
+unknown function (ip: 0x1467a0049426)
+_jl_invoke at /buildworker/worker/package_linux64/build/src/gf.c:2237 [inlined]
+jl_apply_generic at /buildworker/worker/package_linux64/build/src/gf.c:2419
+jl_apply at /buildworker/worker/package_linux64/build/src/julia.h:1703 [inlined]
+do_call at /buildworker/worker/package_linux64/build/src/interpreter.c:115
+eval_value at /buildworker/worker/package_linux64/build/src/interpreter.c:204
+eval_stmt_value at /buildworker/worker/package_linux64/build/src/interpreter.c:155 [inlined]
+eval_body at /buildworker/worker/package_linux64/build/src/interpreter.c:562
+jl_interpret_toplevel_thunk at /buildworker/worker/package_linux64/build/src/interpreter.c:670
+jl_toplevel_eval_flex at /buildworker/worker/package_linux64/build/src/toplevel.c:877
+jl_toplevel_eval_flex at /buildworker/worker/package_linux64/build/src/toplevel.c:825
+jl_toplevel_eval_in at /buildworker/worker/package_linux64/build/src/toplevel.c:929
+eval at ./boot.jl:360 [inlined]
+include_string at ./loading.jl:1094
+_jl_invoke at /buildworker/worker/package_linux64/build/src/gf.c:2237 [inlined]
+jl_apply_generic at /buildworker/worker/package_linux64/build/src/gf.c:2419
+_include at ./loading.jl:1148
+include at ./Base.jl:386
+_jl_invoke at /buildworker/worker/package_linux64/build/src/gf.c:2237 [inlined]
+jl_apply_generic at /buildworker/worker/package_linux64/build/src/gf.c:2419
+exec_options at ./client.jl:285
+_start at ./client.jl:485
+jfptr__start_34289.clone_1 at /afs/math.tu-berlin.de/software/julia/1.6.1/lib/julia/sys.so (unknown line)
+_jl_invoke at /buildworker/worker/package_linux64/build/src/gf.c:2237 [inlined]
+jl_apply_generic at /buildworker/worker/package_linux64/build/src/gf.c:2419
+jl_apply at /buildworker/worker/package_linux64/build/src/julia.h:1703 [inlined]
+true_main at /buildworker/worker/package_linux64/build/src/jlapi.c:560
+repl_entrypoint at /buildworker/worker/package_linux64/build/src/jlapi.c:702
+main at julia (unknown line)
+__libc_start_main at /usr/lib64/libc.so.6 (unknown line)
+unknown function (ip: 0x4007d8)
+Allocations: 6995157610 (Pool: 6947429998; Big: 47727612); GC: 4269
+rmdir: failed to remove ‘/sys/fs/cgroup/devices/llanger_J967821.1’: Device or resource busy
+-- Removal of cgroup failed !
+-- PID still in task list: 8920

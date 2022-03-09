@@ -33,38 +33,39 @@ actor = Chain(
 actor_target = deepcopy(actor) |> gpu
 actor_perturb = deepcopy(actor) |> gpu
 
-# struct Critic{C}
-#     c1::C
-#     c2::C
-# end
-# (m::Critic)(s, a) = (inp = vcat(s, a); (m.c1(inp), m.c2(inp)))
-# Flux.@functor Critic
+struct Critic{C}
+    critic_1::C
+    critic_2::C
+end
 
-# critic = Critic(
-#     Chain(
-# 		Dense(STATE_SIZE + ACTION_SIZE, L1, relu, init=init) |> gpu, 
-# 		Dense(L1, L2, relu, init=init) |> gpu, 
-# 		Dense(L2, 1, init=w_init) |> gpu),
-#     Chain(
-# 		Dense(STATE_SIZE + ACTION_SIZE, L1, relu, init=init) |> gpu, 
-# 		Dense(L1, L2, relu, init=init) |> gpu, 
-# 		Dense(L2, 1, init=w_init) |> gpu)
-# ) 
-# critic_target = deepcopy(critic) |> gpu
+(m::Critic)(s, a) = (inp = vcat(s, a); (m.critic_1(inp), m.critic_2(inp)))
+Flux.@functor Critic
 
-critic1 = Chain(
-			Dense(STATE_SIZE + ACTION_SIZE, L1, relu, init=init) |> gpu,
-			Dense(L1, L2, relu, init=init) |> gpu,
-  			Dense(L2, 1, init=w_init) |> gpu)
+critic = Critic(
+    Chain(
+		Dense(STATE_SIZE + ACTION_SIZE, L1, relu, init=init) |> gpu, 
+		Dense(L1, L2, relu, init=init) |> gpu, 
+		Dense(L2, 1, init=w_init) |> gpu),
+    Chain(
+		Dense(STATE_SIZE + ACTION_SIZE, L1, relu, init=init) |> gpu, 
+		Dense(L1, L2, relu, init=init) |> gpu, 
+		Dense(L2, 1, init=w_init) |> gpu)
+) 
+critic_target = deepcopy(critic) |> gpu
 
-critic_target1 = deepcopy(critic1) |> gpu
+# critic1 = Chain(
+# 			Dense(STATE_SIZE + ACTION_SIZE, L1, relu, init=init) |> gpu,
+# 			Dense(L1, L2, relu, init=init) |> gpu,
+#   			Dense(L2, 1, init=w_init) |> gpu)
 
-critic2 = Chain(
-			Dense(STATE_SIZE + ACTION_SIZE, L1, relu, init=init) |> gpu,
-			Dense(L1, L2, relu, init=init) |> gpu,
-  			Dense(L2, 1, init=w_init) |> gpu)
+# critic_target1 = deepcopy(critic1) |> gpu
 
-critic_target2 = deepcopy(critic2) |> gpu
+# critic2 = Chain(
+# 			Dense(STATE_SIZE + ACTION_SIZE, L1, relu, init=init) |> gpu,
+# 			Dense(L1, L2, relu, init=init) |> gpu,
+#   			Dense(L2, 1, init=w_init) |> gpu)
+
+# critic_target2 = deepcopy(critic2) |> gpu
 
 # ------------------------------- Action Noise --------------------------------
 function sample_noise(ou::OUNoise, rng_rpl) #from 1
@@ -135,16 +136,17 @@ end
 Flux.Zygote.@nograd Flux.params
 
 function loss_crit(model, y, s_norm, a)
-  #q1, q2 = model(s_norm, a)
-  q1 = model(vcat(s_norm, a))
-  #return 0.5 .* (Flux.mse(q1, y) + Flux.mse(q2, y)) |> gpu
-  return  Flux.mse(q1, y) |> gpu
+  q1, q2 = model(s_norm, a)
+  return (Flux.mse(q1, y) + Flux.mse(q2, y)) |> gpu
+#   return  Flux.mse(q1, y) |> gpu
 end
+
+# loss_crit(model, y, s_norm, a) = Flux.mse(model(vcat(s_norm, a)), y) |> gpu
 
 function loss_act(model, s_norm)
   actions = model(s_norm)  |> gpu
-  #return -mean(critic(s_norm, actions)[1]) |> gpu # take only critic 1
-  return -mean(critic1(vcat(s_norm, actions))) |> gpu # take only critic 1
+  return -mean(critic(s_norm, actions)[1]) |> gpu # take only critic 1
+#   return -mean(critic1(vcat(s_norm, actions))) |> gpu # take only critic 1
 end
 
 function replay(;rng_rpl=0)
@@ -160,15 +162,15 @@ function replay(;rng_rpl=0)
 					noiseclamp=true, rng_act=rng_rpl) |> gpu
 
 	# min target value against overestimation bias of the q-function
-	#q′_min = min.(critic_target(normalize(s′), a′)...) |> gpu
-	q′_min = min.(critic_target1(vcat(normalize(s′), a′)), critic_target2(vcat(normalize(s′), a′))) |> gpu
+	q′_min = min.(critic_target(normalize(s′), a′)...) |> gpu
+	# q′_min = min.(critic_target1(vcat(normalize(s′), a′)), critic_target2(vcat(normalize(s′), a′))) |> gpu
 	#println(q′_min, size(q′_min))
 	y = r .+ γ .* (1. .- done) .* q′_min |> gpu
   
 	# update critic
-	#update_model!(critic, opt_crit, loss_crit, y, normalize(s), a)
-	update_model!(critic1, opt_crit, loss_crit, y, normalize(s), a)
-	update_model!(critic2, opt_crit, loss_crit, y, normalize(s), a)
+	update_model!(critic, opt_crit, loss_crit, y, normalize(s), a)
+	# update_model!(critic1, opt_crit, loss_crit, y, normalize(s), a)
+	# update_model!(critic2, opt_crit, loss_crit, y, normalize(s), a)
 	
 	# delay update
 	if rng_rpl % 2 == 0
@@ -176,9 +178,9 @@ function replay(;rng_rpl=0)
 		update_model!(actor, opt_act, loss_act, normalize(s))
 		# update target networks
 		soft_update!(actor_target, actor; τ = τ)
-		# soft_update!(critic_target, critic; τ = τ)
-		soft_update!(critic_target1, critic1; τ = τ)
-		soft_update!(critic_target2, critic2; τ = τ)
+		soft_update!(critic_target, critic; τ = τ)
+		# soft_update!(critic_target1, critic1; τ = τ)
+		# soft_update!(critic_target2, critic2; τ = τ)
 	end
 	return nothing
 end
@@ -232,7 +234,7 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
   local reward_eps=0f0
   local noise_eps=0f0
   local last_step = 1
-  local results = Array{Float64}(undef, 0, 27)
+  local results = Array{Float64}(undef, 0, 30)
   for step=1:NUM_STEPS
 	# create individual random seed
 	rng_step = parse(Int, string(rng_ep)*string(step))

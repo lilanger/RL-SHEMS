@@ -1,3 +1,4 @@
+algo="SAC_sep"
 # Parameters and architecture based on:
 # https://github.com/msinto93/DDPG/blob/master/train.py
 # https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/experiments/rl_envs/JuliaRL_DDPG_Pendulum.jl
@@ -12,7 +13,6 @@ using DataStructures: CircularBuffer
 using Distributions: sample, Normal, logpdf
 using Random
 using Reinforce
-using Reinforce.ShemsEnv: Shems
 using Dates
 using Plots
 using CSV, DataFrames
@@ -28,15 +28,16 @@ Task_ID = ENV["SGE_TASK_ID"]
 seed_run = parse(Int, Task_ID)
 #-------------------------------- INPUTS --------------------------------------------
 train = 1
-plot_result = 1
-plot_all = 0
+plot_result = 0
+plot_all = 1
 render = 0
 track = 1  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
 
 season = "all"
-algo="SAC_sep"
 price="fix"  # "fix" "TOU"
-case = "$(season)_$(algo)_$(price)_auto_abort-B"
+
+using Reinforce.ShemsEnv_H8: Shems
+case = "$(season)_$(algo)_$(price)_auto_Env-H8"
 run = "eval"
 NUM_EP = 3_001 #50_000
 L1 = 256 #300
@@ -56,8 +57,8 @@ current_episode = 0
 
 #--------------------------------- Memory ------------------------------------
 BATCH_SIZE = 120 #256 #100
-MEM_SIZE = 24_000
-MIN_EXP_SIZE = 24_000
+MEM_SIZE = 20_000
+MIN_EXP_SIZE = 20_000
 
 ########################################################################################
 memory = CircularBuffer{Any}(MEM_SIZE)
@@ -73,14 +74,21 @@ env_dict = Dict("train" => Shems(EP_LENGTH["train"], "data/$(season)_train_$(pri
 				"eval" => Shems(EP_LENGTH[season, "eval"], "data/$(season)_eval_$(price).csv"),
 				"test" => Shems(EP_LENGTH[season, "test"], "data/$(season)_test_$(price).csv"))
 
+WAIT = Dict(
+          ("summer", "DDPG") => 1500, ("summer", "TD3") => 1500, ("summer", "SAC_sep") => 5000,
+          ("winter", "DDPG") => 2000, ("winter", "TD3") => 2000, ("winter", "SAC_sep") => 7000,
+          ("both", "DDPG") => 3000,   ("both", "TD3") => 3000,  ("both", "SAC_sep") => 10000,
+          ("all", "DDPG") => 4000,    ("all", "TD3") => 5000,   ("all", "SAC_sep") => 20_000) 
 
 # ----------------------------- Environment Parameters -------------------------
 STATE_SIZE = length(env_dict["train"].state)
 ACTION_SIZE = length(env_dict["train"].a)
+ACTION_BOUND_HI = maximum(env_dict["train"].a)
+ACTION_BOUND_LO = minimum(env_dict["train"].a)
 #ACTION_BOUND_HI = Float32[1f0, 1f0] #Float32(actions(env, env.state).hi[1])
 #ACTION_BOUND_LO = Float32[-1f0, -1f0] #Float32(actions(env, env.state).lo[1])
-ACTION_BOUND_HI = Float32[4.6f0, 3.0f0] #Float32(actions(env, env.state).hi[1])
-ACTION_BOUND_LO = Float32[-4.6f0, -3.0f0] #Float32(actions(env, env.state).lo[1])
+# ACTION_BOUND_HI = Float32[4.6f0, 3.0f0] #Float32(actions(env, env.state).hi[1])
+# ACTION_BOUND_LO = Float32[-4.6f0, -3.0f0] #Float32(actions(env, env.state).lo[1])
 
 #------------------------------- Action Noise --------------------------------
 struct OUNoise
@@ -105,7 +113,7 @@ end
 
 mutable struct ParamNoise
 	μ
-    σ_current
+  σ_current
 	σ_target
 	adoption
 end

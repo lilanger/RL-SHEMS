@@ -74,7 +74,7 @@ Flux.Zygote.@nograd Flux.params
 
 function loss_crit(model, y, s_norm, a)
   q1, q2 = model(s_norm, a)
-  return 0.5 .* (Flux.mse(q1, y) + Flux.mse(q2, y)) |> gpu
+  return 0.5 .* (Flux.mse(q1, y) + Flux.mse(q2, y)) 
 end
 
 function loss_act(model, s_norm, rng_rpl)
@@ -95,7 +95,7 @@ function replay(;train= true, rng_rpl=0)
   a′, log_π  = act(normalize(s′), rng_rpl, train=train) 
 
   # update networks
-  q′_min = min.(critic_target(normalize(s′), a′ |> gpu)...) 
+  q′_min = min.(critic_target(normalize(s′), a′)...)
   y = r .+ γ .* (1 .- done) .* (q′_min .- α .* log_π) 
 
   # update critic
@@ -161,7 +161,7 @@ function episode!(env::Shems; NUM_STEPS=EP_LENGTH["train"], train=true, render=f
   local reward_eps=0f0
   local noise_eps=0f0
   local last_step = 1
-  local results = Array{Float64}(undef, 0, 27)
+  local results = Array{Float64}(undef, 0, 30)
   for step=1:NUM_STEPS
 	# create individual random seed
 	rng_step = parse(Int, string(abs(rng_ep))*string(step))

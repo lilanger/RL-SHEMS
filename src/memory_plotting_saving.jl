@@ -56,6 +56,38 @@ function normalize(s; s_min=s_min, s_max=s_max)
 	return (s .- s_min) ./ (s_max .- s_min .+ 1f-8)
 end
 
+# -------------------------------- Testing -------------------------------------
+
+# runs steps through data set without reset, rendering decisions
+function inference(env::Shems; render=false, track=0, idx=NUM_EP, rng_inf=rng_run, best=false)
+	local reward = 0f0
+	local noise=0f0
+	
+	# tracking flows
+	if track != 0
+	  reward, results = episode!(env, NUM_STEPS=EP_LENGTH[season, run], train=false,
+								  render=render, track=track, rng_ep=-1)
+	  write_to_results_file(results, idx=idx, rng=rng_inf, best=best)
+	  return nothing
+  
+	# rendering flows
+	elseif render == true && track == 0
+	  reward, noise = episode!(env, NUM_STEPS=EP_LENGTH[season, run], train=false,
+								  render=true, track=track, rng_ep=-1)
+	  return nothing
+	  
+	# return mean reward over 100 eps
+	else
+	  local runs=100
+	  local reward = zeros(runs)
+	  for e = 1:runs
+		  reward[e], noise = episode!(env, NUM_STEPS=EP_LENGTH[season, run], train=false,
+										  render=render, track=track, rng_ep=e)
+	  end
+	  return (reward / runs)
+	end
+  end
+
 #------------------------------ PLOTTING --------------------------------------
 function plot_scores(;ymin=Inf, total_reward=total_reward, score_mean=score_mean, noise_mean=noise_mean,
 						rng=rng_run)
@@ -83,28 +115,28 @@ function plot_scores(;ymin=Inf, total_reward=total_reward, score_mean=score_mean
 end
 
 function plot_all_scores(;ymin=Inf, score_mean=score_mean)
-	#all_score_mean = mean(score_mean, dims=2);
-	all_score_median = median(score_mean, dims=2);
+	all_score_mean = mean(score_mean, dims=2);
 	all_score_std = std(score_mean, dims=2);
 	all_score_min = minimum(score_mean, dims=2);
 	all_score_max = maximum(score_mean, dims=2);
 
 	println()
-	println("Final score over $(num_seeds) random seeds: $(all_score_median[end])");
+	println("Final score over $(num_seeds) random seeds: $(all_score_mean[end])");
 	println("Final standard deviation over $(num_seeds) random seeds: $(all_score_std[end])");
 	println("Final minimum over $(num_seeds) random seeds: $(all_score_min[end])");
 	println("Final maximum over $(num_seeds) random seeds: $(all_score_max[end])");
+	println(" $(all_score_mean[end]) $(all_score_std[end]) $(all_score_min[end]) $(all_score_max[end])")
 
 	# plot test/evaluation results mean -last
-	plot(1:test_every:NUM_EP, [all_score_median], label="$(run) (median)",
+	plot(1:test_every:NUM_EP, [all_score_mean], label="$(run) (mean)",
 			markersize=2, markerstrokewidth=0.1, ylim=(ymin, 0.5),
 			legend=:bottomright, markershape=:circle, colour =:indigo,
 			left_margin=7Plots.mm, bottom_margin=6Plots.mm);
 
-	# plot test/evaluation 95% confodence inteval (n=100) -last
-	plot!(1:test_every:NUM_EP, [all_score_median .+ 0.6745 .* all_score_std],
-			fillrange = [all_score_median .- 0.6745 .* all_score_std],
-			label="eval (interquartile range)", colour =:darkmagenta, alpha=0.4);
+	# plot test/evaluation 95% confodence interval (n=100) -last
+	plot!(1:test_every:NUM_EP, [all_score_mean .+ 1.96 .* all_score_std],
+			fillrange = [all_score_mean .- 1.96 .* all_score_std],
+			label="eval (95% confidence)", colour =:darkmagenta, alpha=0.4);
 
 	# # plot test/evaluation 95% confodence inteval (n=100) -last
 	# plot!(1:test_every:NUM_EP, [all_score_max],
@@ -112,17 +144,19 @@ function plot_all_scores(;ymin=Inf, score_mean=score_mean)
 	# label="$(run)  (95% confidence interval)", colour =:darkmagenta, alpha=0.4);
 
 	# plot test/evaluation 95% confodence inteval (n=100) -last
+	scatter!(1:test_every:NUM_EP, [score_mean],
+	markersize=2, label="", colour =:magenta, alpha=0.3);
+
+	# plot test/evaluation 95% confodence inteval (n=100) -last
 	scatter!(1:test_every:NUM_EP, [all_score_max],
-				markersize=2,
-				label="$(run) max", colour =:darkmagenta, alpha=0.4);
+				markersize=4, label="$(run) max", colour =:green, alpha=0.4);
 
 	# plot test/evaluation 95% confodence inteval (n=100) -last
 	scatter!(1:test_every:NUM_EP, [all_score_min],
-				markersize=2,
-				label="$(run) min", colour =:darkmagenta, alpha=0.4);
+				markersize=4, label="$(run) min", colour =:red, alpha=0.4);
 
 
-	yaxis!("Average score per time step [€]", font(10, "serif"));
+	yaxis!("Average score per episode [€]", font(10, "serif"));
 	xaxis!("Training episodes", font(10, "serif"));
 
 	savefig("out/fig/$(Job_ID)_DDPG_Shems_v12_$(run)_$(EP_LENGTH["train"])_"*
@@ -130,54 +164,58 @@ function plot_all_scores(;ymin=Inf, score_mean=score_mean)
 end
 
 #------------------------------- SAVING ---------------------------------------
-function write_to_results_file(results; idx=NUM_EP, rng=seed_run)
+function write_to_results_file(results; idx=NUM_EP, rng=seed_run, best=false)
     date=Date(now());
-	if idx == NUM_EP
+	if best == true
+		CSV.write("out/tracker/$(Job_ID)_$(run)_results_v12_$(EP_LENGTH["train"])_"*
+		"$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_best.csv",
+			DataFrame(results, :auto), header=["Temp_FH", "Vol_HW", "Soc_B",
+			"T_FH_plus", "T_FH_minus", "V_HW_plus", "V_HW_minus",
+			"rewards", "comfort", "rewART", "COP_FH","COP_HW","PV_DE", "B_DE", "GR_DE", "PV_B", "PV_GR",
+			"PV_HP","GR_HP", "GR_B", "B_HP","B_GR", "HP_FH", "HP_HW","index", 
+			"B", "HP", "B_tar", "FH_tar", "HW_tar"]);
+
+	elseif idx == NUM_EP
     CSV.write("out/tracker/$(Job_ID)_$(run)_results_v12_$(EP_LENGTH["train"])_"*
 				"$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_$(idx).csv",
 					DataFrame(results, :auto), header=["Temp_FH", "Vol_HW", "Soc_B",
 					"T_FH_plus", "T_FH_minus", "V_HW_plus", "V_HW_minus",
-					"profits", "comfort", "abort", "COP_FH","COP_HW","PV_DE", "B_DE", "GR_DE", "PV_B", "PV_GR",
-					"PV_HP","GR_HP", "GR_B", "B_HP", "B_GR", "HP_FH", "HP_HW","index", "B", "HP"]);
+					"rewards", "comfort", "rewART", "COP_FH","COP_HW","PV_DE", "B_DE", "GR_DE", "PV_B", "PV_GR",
+					"PV_HP","GR_HP", "GR_B", "B_HP", "B_GR", "HP_FH", "HP_HW","index", 
+					"B", "HP", "B_tar", "FH_tar", "HW_tar"]);
 	elseif idx < 0
 	CSV.write("out/tracker/$(Job_ID)_$(run)_results_$(case)_rule_$(idx).csv",
 				DataFrame(results, :auto), header=["Temp_FH", "Vol_HW", "Soc_B",
 				"T_FH_plus", "T_FH_minus", "V_HW_plus", "V_HW_minus",
-				"profits", "comfort", "abort", "COP_FH","COP_HW","PV_DE", "B_DE", "GR_DE", "PV_B", "PV_GR",
-				"PV_HP","GR_HP", "GR_B", "B_HP","B_GR", "HP_FH", "HP_HW","index", "B", "HP"]);
-	else
-	CSV.write("out/tracker/$(Job_ID)_$(run)_results_v12_$(EP_LENGTH["train"])_"*
-				"$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_best.csv",
-					DataFrame(results, :auto), header=["Temp_FH", "Vol_HW", "Soc_B",
-					"T_FH_plus", "T_FH_minus", "V_HW_plus", "V_HW_minus",
-					"profits", "comfort", "abort", "COP_FH","COP_HW","PV_DE", "B_DE", "GR_DE", "PV_B", "PV_GR",
-					"PV_HP","GR_HP", "GR_B", "B_HP","B_GR", "HP_FH", "HP_HW","index", "B", "HP"]);
+				"rewards", "comfort", "rewART", "COP_FH","COP_HW","PV_DE", "B_DE", "GR_DE", "PV_B", "PV_GR",
+				"PV_HP","GR_HP", "GR_B", "B_HP","B_GR", "HP_FH", "HP_HW","index", 
+				"B", "HP", "B_tar", "FH_tar", "HW_tar"]);
 	end
     return nothing
 end
 
-function write_to_tracker_file(;idx=NUM_EP, rng=rng_run)
+function write_to_tracker_file(;idx=NUM_EP, rng=rng_run, best=false)
 	time=now();
 	date=Date(now());
-	if idx == NUM_EP
-		results = CSV.read("out/tracker/$(Job_ID)_$(run)_results_v12_$(EP_LENGTH["train"])_$(NUM_EP)_"*
-								"$(L1)_$(L2)_$(case)_$(rng)_$(idx).csv", DataFrame)
-	elseif idx < 0
-		results = CSV.read("out/tracker/$(Job_ID)_$(run)_results_$(case)_rule_$(idx).csv", DataFrame)
-	else
+	if best == true
 		results = CSV.read("out/tracker/$(Job_ID)_$(run)_results_v12_$(EP_LENGTH["train"])_$(NUM_EP)_"*
 								"$(L1)_$(L2)_$(case)_$(rng)_best.csv", DataFrame)
+	elseif idx == NUM_EP
+		results = CSV.read("out/tracker/$(Job_ID)_$(run)_results_v12_$(EP_LENGTH["train"])_$(NUM_EP)_"*
+								"$(L1)_$(L2)_$(case)_$(rng)_$(idx).csv", DataFrame)
+	else
+		results = CSV.read("out/tracker/$(Job_ID)_$(run)_results_$(case)_rule_$(idx).csv", DataFrame)
 	end
-	# Overall tracker
-	Tracker = CSV.read("out/Tracker.csv", DataFrame, header=true)
-	Tracker = vcat(Matrix(Tracker), [time NUM_EP L1  L2  BATCH_SIZE  MEM_SIZE  MIN_EXP_SIZE season  run Job_ID rng case  idx [
+	# Overall tracker (rewards without comfort costs)
+	Tracker = CSV.read("out/Tracker.csv", DataFrame, header=true);
+	Tracker = vcat(Matrix(Tracker), [time NUM_EP L1  L2  BATCH_SIZE  MEM_SIZE  MIN_EXP_SIZE season  run Job_ID rng case  best idx [
 								sum(results[!, :T_FH_plus])]  sum(results[!, :T_FH_minus]) [
 								sum(results[!, :V_HW_plus])]  sum(results[!, :V_HW_minus]) [
-								sum(results[!, :profits] .- results[!, :comfort])] sum(results[!, :comfort]) sum(results[!, :abort])])
+								sum(results[!, :rewards] .-results[!, :comfort] .-results[!, :rewART])] sum(results[!, :comfort]) sum(results[!, :rewART]) ]);
 
     CSV.write("out/Tracker.csv", DataFrame(Tracker,:auto), header=["time", "NUM_EP", "L1", "L2", "BATCH_SIZE", "MEM_SIZE",
-								"MIN_EXP_SIZE","season", "run", "Job_ID", "seed", "case", "idx", "T_FH_plus", "T_FH_minus", "V_HW_plus",
-								"V_HW_minus", "profits", "comfort", "abort"]);
+								"MIN_EXP_SIZE","season", "run", "Job_ID", "seed", "case", "best", "idx", "T_FH_plus", "T_FH_minus", "V_HW_plus",
+								"V_HW_minus", "rewards", "comfort", "rewART"]);
 
 	# # Cost tracker
 	# Costs = Matrix(CSV.read("out/Costs_$(run).csv", DataFrame, header=true))
@@ -216,8 +254,9 @@ function loadBSON(;idx=NUM_EP, scores_only=false, path="", rng=seed_run)
 	if scores_only==true
 		BSON.@load "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_scores_$(idx).bson" total_reward score_mean best_run noise_mean
 		return total_reward |> gpu, score_mean |> gpu, best_run |> gpu, noise_mean |> gpu
+	else
+		BSON.@load "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_actor_$(idx).bson" actor
+		BSON.@load "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_scores_$(idx).bson" total_reward score_mean best_run noise_mean
+		return actor |> gpu, total_reward |> gpu, score_mean |> gpu, best_run |> gpu, noise_mean |> gpu
 	end
-	BSON.@load "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_actor_$(idx).bson" actor
-	BSON.@load "out/bson/$(path)/DDPG_Shems_v12_$(EP_LENGTH["train"])_$(NUM_EP)_$(L1)_$(L2)_$(case)_$(rng)_scores_$(idx).bson" total_reward score_mean best_run noise_mean
-	return actor |> gpu, total_reward |> gpu, score_mean |> gpu, best_run |> gpu, noise_mean |> gpu
 end
