@@ -54,12 +54,12 @@ end
 # also change path to input file in optimizer
 ########### EVALUATIOM #######################################
 # yearly_SHEMS(1, 360, "summer", 1.0, 0, "eval") #solution time 3 s
-# yearly_SHEMS(1, 360, "winter", 1.0, 0, "eval") #solution time 3902 s
-#yearly_SHEMS(1, 1440, "all", 1.0, 0, "eval") #solution time 6775 s
+ yearly_SHEMS(1, 360, "winter", 1.0, 0, "eval") #solution time 3902 s
+# yearly_SHEMS(1, 1440, "all", 1.0, 0, "eval") #solution time 6775 s
 # yearly_SHEMS(1, 720, "both", 1.0, 0, "eval") #solution time
 
 ########### TESTING #######################################
 # yearly_SHEMS(1, 768, "summer", 1.0, 0, "test") #solution time 696 s
 # yearly_SHEMS(1, 720, "winter", 1.0, 0, "test") #solution time 88 s
- yearly_SHEMS(1, 3000, "all", 1.0, 0, "test") #solution time
+#yearly_SHEMS(1, 3000, "all", 1.0, 0, "test") #solution time
 # yearly_SHEMS(1, 1488, "both", 1.0, 0, "test") #solution time

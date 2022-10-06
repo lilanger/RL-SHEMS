@@ -40,7 +40,7 @@ noise_type = "gn" # "ou", "pn", "gn", "en"
 
 using Reinforce.ShemsEnv_U8: Shems
 case = "$(season)_$(algo)_$(price)_base-256_gn.1_Env-U8-no-layer-norm-winter"
-run = "test"
+run = "eval" # "eval", "test"
 NUM_EP = 3_001 #50_000
 L1 = 300 #256
 L2 = 600 #256

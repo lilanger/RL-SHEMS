@@ -31,14 +31,14 @@ train = 1
 plot_result = 0
 plot_all = 1
 render = 0
-track = 1  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
+track = 1  # 0 - off, 1 - DRL, , rule-based percentage of start Soc e.g. 70% -> -0.7 (has to be negative)
 
 season = "all"
 price= "fix" # "fix", "TOU"
 noise_type = "gn" # "ou", "pn", "gn"
 using Reinforce.ShemsEnv_U6: Shems
 case = "$(season)_$(algo)_$(price)_fudji-yu_gn.1-.1_M-full-20T_Env-U6"
-run = "eval"
+run = "eval" # "eval", "test"
 NUM_EP = 3_001 #50_000
 L1 = 256
 L2 = 256

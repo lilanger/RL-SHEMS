@@ -2,7 +2,7 @@ try
 	# run batch on cluster
 	println("Use cluster setup.")
 	include("out/input/$(ENV["JOB_ID"])--input.jl") # contains the input data
-	sleep(200) # sleep for the input to load before calling algo
+	sleep(400) # sleep for the input to load before calling algo
 catch 
 	# run single file
 	println("Use single run setup.")
