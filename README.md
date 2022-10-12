@@ -27,6 +27,7 @@ When running the model on a cluster the job files can be used, default is for a 
 - The folder [Reinforce.jl...](Reinforce.jl-%20files%20to%20add%20(envs)%20and%20to%20change) contains the RL environments and the file to embed them in the Reinforce package. The environments used in the paper are Case A: [H10](Reinforce.jl-%20files%20to%20add%20(envs)%20and%20to%20change/envs/shems_H10.jl) , CaseB: [H9](Reinforce.jl-%20files%20to%20add%20(envs)%20and%20to%20change/envs/shems_H9.jl) and Case C: [U8](Reinforce.jl-%20files%20to%20add%20(envs)%20and%20to%20change/envs/shems_U8.jl).
 - The [Analysis-cases](Analysis-cases) folder contains the result analysis of the cases run and the results of the main runs illustrated in the paper.
 - The [data](data) folder contains the input data of the RL environment.
+- The [out](out) folder contains the results of the model runs, I have, however, not uploaded all results but just the most recent ones to save on space.
 
 I tried to add some comments in the code, so other people would be able to understand what is going on. I hope I was somewhat successful.
 If you have questions, just raise an issue and I will try to help.
