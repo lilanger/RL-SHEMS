@@ -1,4 +1,4 @@
-algo="DDPG"
+algo="SAC_sep"
 # Parameters and architecture based on:
 # https://github.com/msinto93/DDPG/blob/master/train.py
 # https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/experiments/rl_envs/JuliaRL_DDPG_Pendulum.jl
@@ -13,43 +13,40 @@ using DataStructures: CircularBuffer
 using Distributions: sample, Normal, logpdf
 using Random
 using Reinforce
+using Reinforce.ShemsEnv: Shems
 using Dates
 using Plots
 using CSV, DataFrames
 gr()
 
-# Choose one or the other:
 #------------ local machine ----------
-# Job_ID=1149869
-# Task_ID = 1149869-1 #ENV["SGE_TASK_ID"]
-# seed_run = 10 # run inference over all seeds 
+# Job_ID=10000002
+# seed_run=1
+# Task_ID=10
 #--------cluster jobs------------
 Job_ID = ENV["JOB_ID"]
 Task_ID = ENV["SGE_TASK_ID"]
 seed_run = parse(Int, Task_ID)
-
 #-------------------------------- INPUTS --------------------------------------------
-train = 1         # binary 0/1
-plot_result = 0   # binary 0/1
-plot_all = 1      # binary 0/1
-render = 0        # binary 0/1
-track = 1  # 0 - off, 1 - DRL, , rule-based percentage of start Soc e.g. 70% -> -0.7 (has to be negative)
+train = 1
+plot_result = 1
+plot_all = 0
+render = 0
+track = 1  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
 
-season = "winter"   # "all" "both" "summer" "winter"
+season = "all"
+price="fix"  # "fix" "TOU"
 
-price= "fix"        # "fix", "TOU"
-noise_type = "gn"   # "ou", "pn", "gn", "en"
-
-using Reinforce.ShemsEnv_U8: Shems  # choose RL environment to simulate (has to be added to Reinforce.jl)
-case = "$(season)_$(algo)_$(price)_base-256_gn.1_Env-U8-no-layer-norm-winter"
-run = "test" # "eval", "test"
+using Reinforce.ShemsEnv_H8: Shems
+case = "$(season)_$(algo)_$(price)_auto_Env-H8"
+run = "eval"
 NUM_EP = 3_001 #50_000
-L1 = 300 #256
-L2 = 600 #256
+L1 = 256 #300
+L2 = 256 #600
 idx=NUM_EP
 test_every = 100
 test_runs = 100
-num_seeds = 40
+num_seeds = 10
 
 #-------------------------------------
 seed_ini = 123
@@ -60,9 +57,9 @@ start_time = now()
 current_episode = 0
 
 #--------------------------------- Memory ------------------------------------
-BATCH_SIZE = 120 #100 # Yu: 120
-MEM_SIZE = 24_000
-MIN_EXP_SIZE = 24_000
+BATCH_SIZE = 120 #256 #100
+MEM_SIZE = 20_000
+MIN_EXP_SIZE = 20_000
 
 ########################################################################################
 memory = CircularBuffer{Any}(MEM_SIZE)
@@ -84,15 +81,13 @@ WAIT = Dict(
           ("both", "DDPG") => 3000,   ("both", "TD3") => 3000,  ("both", "SAC") => 10000,
           ("all", "DDPG") => 4000,    ("all", "TD3") => 5000,   ("all", "SAC") => 20_000) 
 
-
-
 # ----------------------------- Environment Parameters -------------------------
 STATE_SIZE = length(env_dict["train"].state)
 ACTION_SIZE = length(env_dict["train"].a)
 ACTION_BOUND_HI = maximum(env_dict["train"].a)
 ACTION_BOUND_LO = minimum(env_dict["train"].a)
-# ACTION_BOUND_HI = Float32[1f0, 1f0, 1f0] #Float32(actions(env, env.state).hi[1])
-# ACTION_BOUND_LO = Float32[-1f0, -1f0, -1f0] #Float32(actions(env, env.state).lo[1])
+#ACTION_BOUND_HI = Float32[1f0, 1f0] #Float32(actions(env, env.state).hi[1])
+#ACTION_BOUND_LO = Float32[-1f0, -1f0] #Float32(actions(env, env.state).lo[1])
 # ACTION_BOUND_HI = Float32[4.6f0, 3.0f0] #Float32(actions(env, env.state).hi[1])
 # ACTION_BOUND_LO = Float32[-4.6f0, -3.0f0] #Float32(actions(env, env.state).lo[1])
 
@@ -127,18 +122,17 @@ end
 # Ornstein-Uhlenbeck / Gaussian Noise params
 # based on: https://github.com/openai/baselines/blob/master/baselines/ddpg/noise.py
 μ = 0f0 #mu
-σ = 0.1f0 #0.2f0 #sigma
+σ = 0.1f0 #sigma
 θ = 0.15f0 #theta
 dt = 1f-2
-
 # Epsilon Noise parameters based on Yu et al. 2019
 ζ = 0.0005f0
 ξ_0 = 0.5f0
 ξ_min = 0.1f0
 
 # Noise actor
-noise_act = 0.1f0 #0.1f0 #2f-1
-noise_trg = 0.2f0 #3f-1
+noise_act = 1f-1 #2f-1
+noise_trg = 2f-1 #3f-1
 
 # Fill struct with values
 ou = OUNoise(μ, σ, θ, dt, zeros(Float32, ACTION_SIZE))

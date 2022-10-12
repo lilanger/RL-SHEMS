@@ -18,31 +18,29 @@ using Plots
 using CSV, DataFrames
 gr()
 
-# Choose one or the other:
 #------------ local machine ----------
-# Job_ID=1149869
-# Task_ID = 1149869-1 #ENV["SGE_TASK_ID"]
-# seed_run = 10 # run inference over all seeds 
+Job_ID=1454619
+Task_ID = 1454619-1 #ENV["SGE_TASK_ID"]
+seed_run = 40 # run inference over all seeds 
 #--------cluster jobs------------
-Job_ID = ENV["JOB_ID"]
-Task_ID = ENV["SGE_TASK_ID"]
-seed_run = parse(Int, Task_ID)
-
+# Job_ID = ENV["JOB_ID"]
+# Task_ID = ENV["SGE_TASK_ID"]
+# seed_run = parse(Int, Task_ID)
 #-------------------------------- INPUTS --------------------------------------------
-train = 1         # binary 0/1
-plot_result = 0   # binary 0/1
-plot_all = 1      # binary 0/1
-render = 0        # binary 0/1
-track = 1  # 0 - off, 1 - DRL, , rule-based percentage of start Soc e.g. 70% -> -0.7 (has to be negative)
+train = 0
+plot_result = 0
+plot_all = 1
+render = 0
+track = 0  # 0 - off, 1 - DRL, rule-based percentage of start Soc e.g. 70% -> -0.7
 
-season = "winter"   # "all" "both" "summer" "winter"
+season = "all" # "all" "both" "summer" "winter"
 
-price= "fix"        # "fix", "TOU"
-noise_type = "gn"   # "ou", "pn", "gn", "en"
+price= "fix" # "fix", "TOU"
+noise_type = "gn" # "ou", "pn", "gn", "en"
 
-using Reinforce.ShemsEnv_U8: Shems  # choose RL environment to simulate (has to be added to Reinforce.jl)
-case = "$(season)_$(algo)_$(price)_base-256_gn.1_Env-U8-no-layer-norm-winter"
-run = "test" # "eval", "test"
+using Reinforce.ShemsEnv_U8: Shems
+case = "$(season)_$(algo)_$(price)_base-256_gn.1_Env-U8-no-layer-norm"
+run = "test"
 NUM_EP = 3_001 #50_000
 L1 = 300 #256
 L2 = 600 #256

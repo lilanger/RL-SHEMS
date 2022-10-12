@@ -1,4 +1,3 @@
-algo="DDPG"
 # Parameters and architecture based on:
 # https://github.com/msinto93/DDPG/blob/master/train.py
 # https://github.com/JuliaReinforcementLearning/ReinforcementLearningZoo.jl/blob/master/src/experiments/rl_envs/JuliaRL_DDPG_Pendulum.jl
@@ -18,38 +17,36 @@ using Plots
 using CSV, DataFrames
 gr()
 
-# Choose one or the other:
 #------------ local machine ----------
-# Job_ID=1149869
-# Task_ID = 1149869-1 #ENV["SGE_TASK_ID"]
-# seed_run = 10 # run inference over all seeds 
+# Job_ID=1132814
+# seed_run=10
+# Task_ID=10
 #--------cluster jobs------------
 Job_ID = ENV["JOB_ID"]
 Task_ID = ENV["SGE_TASK_ID"]
 seed_run = parse(Int, Task_ID)
-
 #-------------------------------- INPUTS --------------------------------------------
-train = 1         # binary 0/1
-plot_result = 0   # binary 0/1
-plot_all = 1      # binary 0/1
-render = 0        # binary 0/1
-track = 1  # 0 - off, 1 - DRL, , rule-based percentage of start Soc e.g. 70% -> -0.7 (has to be negative)
+train = 1
+plot_result = 0
+plot_all = 1
+render = 0
+track = 1  # 0 - off, 1 - DRL, -1 - rule-based 1, -2 rule-based 2
 
-season = "winter"   # "all" "both" "summer" "winter"
+season = "all" # "all" "both" "summer" "winter"
+algo="DDPG"
+price= "fix" # "fix", "TOU"
+noise_type = "gn" # "ou", "pn", "gn", "en"
 
-price= "fix"        # "fix", "TOU"
-noise_type = "gn"   # "ou", "pn", "gn", "en"
-
-using Reinforce.ShemsEnv_U8: Shems  # choose RL environment to simulate (has to be added to Reinforce.jl)
-case = "$(season)_$(algo)_$(price)_base-256_gn.1_Env-U8-no-layer-norm-winter"
-run = "test" # "eval", "test"
+using Reinforce.ShemsEnv_V: Shems
+case = "$(season)_$(algo)_$(price)_fudji-yu_gn.1_M-full-20T_Env-V"
+run = "eval"
 NUM_EP = 3_001 #50_000
-L1 = 300 #256
-L2 = 600 #256
+L1 = 256
+L2 = 256
 idx=NUM_EP
 test_every = 100
 test_runs = 100
-num_seeds = 40
+num_seeds = 10
 
 #-------------------------------------
 seed_ini = 123
@@ -60,9 +57,9 @@ start_time = now()
 current_episode = 0
 
 #--------------------------------- Memory ------------------------------------
-BATCH_SIZE = 120 #100 # Yu: 120
-MEM_SIZE = 24_000
-MIN_EXP_SIZE = 24_000
+BATCH_SIZE = 120 #128
+MEM_SIZE = 20_000
+MIN_EXP_SIZE = 20_000
 
 ########################################################################################
 memory = CircularBuffer{Any}(MEM_SIZE)
